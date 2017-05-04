@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {StudentDasboard} from "../student-dasboard/student-dasboard";
+import {CoachDashboard} from "../coach-dashboard/coach-dashboard";
 
 /**
  * Generated class for the RollenPage page.
@@ -19,11 +21,11 @@ export class RollenPage {
 
   //Go to the Student page
   goToStudentDashboard() {
-    this.navCtrl.push(StudentDashboard);
+    this.navCtrl.push(StudentDasboard);
   }
 
   //Go to the Coach page
-  goToCoachDashboard()() {
+  goToCoachDashboard() {
     this.navCtrl.push(CoachDashboard);
   }
 
