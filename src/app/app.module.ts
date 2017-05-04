@@ -9,6 +9,7 @@ import { HomePage } from '../pages/home/home';
 import { RegisterPage } from "../pages/register-page/register-page";
 import { LoginPage } from "../pages/login-page/login-page";
 import { InviteStudentPage } from "../pages/invite-student-page/invite-student-page";
+import {RollenPage} from "../pages/rollen-page/rollen-page";
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { InviteStudentPage } from "../pages/invite-student-page/invite-student-p
     HomePage,
     RegisterPage,
     LoginPage,
-    InviteStudentPage
+    InviteStudentPage,
+    RollenPage
   ],
   imports: [
     BrowserModule,
@@ -28,7 +30,8 @@ import { InviteStudentPage } from "../pages/invite-student-page/invite-student-p
     HomePage,
     RegisterPage,
     LoginPage,
-    InviteStudentPage
+    InviteStudentPage,
+    RollenPage
   ],
   providers: [
     StatusBar,
