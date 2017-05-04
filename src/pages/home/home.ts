@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { RegisterPage } from "../register-page/register-page";
 import { LoginPage } from "../login-page/login-page";
+import { InviteStudentPage } from "../invite-student-page/invite-student-page";
 
 @Component({
   selector: 'page-home',
@@ -20,5 +21,10 @@ export class HomePage {
   //Go to the login page
   goToLoginPage() {
     this.navCtrl.push(LoginPage);
+  }
+
+  //Go to the invite student page
+  goToInviteStudentPage() {
+    this.navCtrl.push(InviteStudentPage);
   }
 }

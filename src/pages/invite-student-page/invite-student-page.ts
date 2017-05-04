@@ -3,9 +3,9 @@ import { IonicPage } from 'ionic-angular';
 
 @IonicPage()
 @Component({
-  selector: 'page-register-page',
-  templateUrl: 'register-page.html',
+  selector: 'page-invite-student-page',
+  templateUrl: 'invite-student-page.html',
 })
-export class RegisterPage {
+export class InviteStudentPage {
 
 }
