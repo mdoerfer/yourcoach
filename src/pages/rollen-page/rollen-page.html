@@ -7,14 +7,15 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>rollen-page</ion-title>
+    <ion-title>Rollenauswahl</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-  <ion-img width="80" height="80" src="platzhalter.jpg"></ion-img>
-  <button ion-button (click)="goToStudentDashboard()">Schüler</button>
-  <button ion-button (click)="goToCoachDashboard()">Coach</button>
+  <p>Willst du lernen oder lehren?</p>
+  <ion-img width="200" height="200" src="../../assets/platzhalter.jpg" (click)="goToStudentDashboard()"></ion-img>
+  <ion-img width="200" height="200" src="../../assets/platzhalter2.jpg" (click)="goToCoachDashboard()"></ion-img>
+
 </ion-content>
