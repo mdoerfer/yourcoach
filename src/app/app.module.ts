@@ -10,6 +10,8 @@ import { RegisterPage } from "../pages/register-page/register-page";
 import { LoginPage } from "../pages/login-page/login-page";
 import { InviteStudentPage } from "../pages/invite-student-page/invite-student-page";
 import {RollenPage} from "../pages/rollen-page/rollen-page";
+import {CoachDashboard} from "../pages/coach-dashboard/coach-dashboard";
+import {StudentDasboard} from "../pages/student-dasboard/student-dasboard";
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import {RollenPage} from "../pages/rollen-page/rollen-page";
     RegisterPage,
     LoginPage,
     InviteStudentPage,
-    RollenPage
+    RollenPage,
+    CoachDashboard,
+    StudentDasboard
   ],
   imports: [
     BrowserModule,
@@ -31,7 +35,9 @@ import {RollenPage} from "../pages/rollen-page/rollen-page";
     RegisterPage,
     LoginPage,
     InviteStudentPage,
-    RollenPage
+    RollenPage,
+    CoachDashboard,
+    StudentDasboard
   ],
   providers: [
     StatusBar,

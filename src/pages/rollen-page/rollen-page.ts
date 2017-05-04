@@ -17,6 +17,16 @@ export class RollenPage {
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
+  //Go to the Student page
+  goToStudentDashboard() {
+    this.navCtrl.push(StudentDashboard);
+  }
+
+  //Go to the Coach page
+  goToCoachDashboard()() {
+    this.navCtrl.push(CoachDashboard);
+  }
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad RollenPage');
   }
