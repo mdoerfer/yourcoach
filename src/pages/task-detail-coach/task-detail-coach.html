@@ -31,11 +31,8 @@
 
   <div [ngSwitch]="task">
     <ion-list *ngSwitchCase="'offen'">
-      <ion-item>
-        <ion-thumbnail item-left>
-          <img src="assets/icon/favicon.ico">
-        </ion-thumbnail>
-        <h2>Mae</h2>
+      <ion-item (click)="openTask(task.id)" *ngFor="let task of tasks">
+        {{task.name}}
       </ion-item>
     </ion-list>
 
