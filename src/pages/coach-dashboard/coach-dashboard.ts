@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {TaskDetailCoach} from "../task-detail-coach/task-detail-coach";
 
 /**
  * Generated class for the CoachDashboard page.
@@ -17,8 +18,10 @@ export class CoachDashboard {
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad CoachDashboard');
+  //Go to TaskDetailCoachPage
+  goToTaskDetailCoachPage() {
+    this.navCtrl.push(TaskDetailCoach);
   }
+
 
 }
