@@ -12,6 +12,7 @@ import { InviteStudentPage } from "../pages/invite-student-page/invite-student-p
 import {RollenPage} from "../pages/rollen-page/rollen-page";
 import {CoachDashboard} from "../pages/coach-dashboard/coach-dashboard";
 import {StudentDasboard} from "../pages/student-dasboard/student-dasboard";
+import {TaskDetailCoach} from "../pages/task-detail-coach/task-detail-coach";
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import {StudentDasboard} from "../pages/student-dasboard/student-dasboard";
     InviteStudentPage,
     RollenPage,
     CoachDashboard,
-    StudentDasboard
+    StudentDasboard,
+    TaskDetailCoach
   ],
   imports: [
     BrowserModule,
@@ -37,7 +39,8 @@ import {StudentDasboard} from "../pages/student-dasboard/student-dasboard";
     InviteStudentPage,
     RollenPage,
     CoachDashboard,
-    StudentDasboard
+    StudentDasboard,
+    TaskDetailCoach
   ],
   providers: [
     StatusBar,
