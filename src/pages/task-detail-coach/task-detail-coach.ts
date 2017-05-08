@@ -13,9 +13,13 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'task-detail-coach.html',
 })
 export class TaskDetailCoach {
+  task: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+
+    this.task = "offen";
   }
+
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad TaskDetailCoach');

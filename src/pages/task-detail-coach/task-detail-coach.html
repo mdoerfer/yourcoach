@@ -10,9 +10,53 @@
     <ion-title>TaskDetailCoach</ion-title>
   </ion-navbar>
 
+  <ion-toolbar no-border-top>
+    <ion-segment [(ngModel)]="task">
+      <ion-segment-button value="offen">
+        Offen
+      </ion-segment-button>
+      <ion-segment-button value="bewerten">
+        Bewerten
+      </ion-segment-button>
+      <ion-segment-button value="fertig">
+        Fertig
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
 </ion-header>
 
 
 <ion-content padding>
+
+  <div [ngSwitch]="task">
+    <ion-list *ngSwitchCase="'offen'">
+      <ion-item>
+        <ion-thumbnail item-left>
+          <img src="assets/icon/favicon.ico">
+        </ion-thumbnail>
+        <h2>Mae</h2>
+      </ion-item>
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'bewerten'">
+      <ion-item>
+        <ion-thumbnail item-left>
+          <img src="assets/icon/favicon.ico">
+        </ion-thumbnail>
+        <h2>Mirjam</h2>
+      </ion-item>
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'fertig'">
+      <ion-item>
+        <ion-thumbnail item-left>
+          <img src="assets/icon/favicon.ico">
+        </ion-thumbnail>
+        <h2>Dirk</h2>
+      </ion-item>
+    </ion-list>
+  </div>
+
 
 </ion-content>
