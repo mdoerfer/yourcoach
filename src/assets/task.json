@@ -1,0 +1,17 @@
+[{
+    "id": 1,
+    "name": "Sit-ups",
+    "description": "Eine 1a Pizza - ohne Fleisch, okay - aber es gibt Menschen, die das mögen."
+}, {
+    "id": 2,
+    "name": "Push-ups",
+    "description": "Mit herzhafter Eselsalami, aus ökologischem Anbau und nur künstlichen Aromen!"
+}, {
+    "id": 3,
+    "name": "Runs",
+    "description": "Lecker Fisch! Delfine im Netz -> Das macht uns nix! Ahoi, Seemänner."
+}, {
+    "id": 4,
+    "name": "Jumps",
+    "description": "Das Sahnestück in unserem Angebot und das vollkommen GRATIS, GRATIS, GRATIS und auch kostenlos!"
+}]

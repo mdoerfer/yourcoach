@@ -1,0 +1,44 @@
+<!--
+  Generated template for the TaskDetailCoachView page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{task?.name}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-card *ngIf="task">
+    <ion-item>
+      <ion-icon name="task" item-left large></ion-icon>
+      <h2>{{task.name}}</h2>
+      <p>Ist in unserem Angebot die Nummer {{task.id}}</p>
+    </ion-item>
+
+    <ion-item>
+      <p>{{task.description}}</p>
+    </ion-item>
+
+    <ion-item>
+      <ion-range min="1" max="6" step="1" snaps="true" [(ngModel)]="warmth" color="dark">
+        <ion-icon range-left small color="dark" name="star"></ion-icon>
+        <ion-icon range-right color="dark" name="star"></ion-icon>
+      </ion-range>
+    </ion-item>
+
+
+
+
+
+
+  </ion-card>
+  <button ion-button full  >Erledigt</button>
+
+</ion-content>

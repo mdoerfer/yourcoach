@@ -13,6 +13,9 @@ import {RollenPage} from "../pages/rollen-page/rollen-page";
 import {CoachDashboard} from "../pages/coach-dashboard/coach-dashboard";
 import {StudentDasboard} from "../pages/student-dasboard/student-dasboard";
 import {TaskDetailCoach} from "../pages/task-detail-coach/task-detail-coach";
+import {TaskService} from "../providers/task-service";
+import {HttpModule} from "@angular/http";
+import {TaskDetailCoachView} from "../pages/task-detail-coach-view/task-detail-coach-view";
 
 @NgModule({
   declarations: [
@@ -24,10 +27,12 @@ import {TaskDetailCoach} from "../pages/task-detail-coach/task-detail-coach";
     RollenPage,
     CoachDashboard,
     StudentDasboard,
-    TaskDetailCoach
+    TaskDetailCoach,
+    TaskDetailCoachView
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -40,12 +45,14 @@ import {TaskDetailCoach} from "../pages/task-detail-coach/task-detail-coach";
     RollenPage,
     CoachDashboard,
     StudentDasboard,
-    TaskDetailCoach
+    TaskDetailCoach,
+    TaskDetailCoachView
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    TaskService
   ]
 })
 export class AppModule {}
