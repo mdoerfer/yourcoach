@@ -17,6 +17,9 @@ import {TaskDetailCoachView} from "../task-detail-coach-view/task-detail-coach-v
 })
 export class TaskDetailCoach {
   task: string;
+  tasksOffen: Task[] = [];
+  tasksBewerten: Task[] = [];
+  tasksFertig: Task[] = [];
   tasks: Task[] = [];
 
 
@@ -34,6 +37,19 @@ export class TaskDetailCoach {
   ngOnInit() {
     this.taskService.getTasks().subscribe(tasks => {
       this.tasks = tasks;
+      for (let task of this.tasks) {
+        if (task.state === "offen") {
+          this.tasksOffen.push(task)
+        }
+        if (task.state === "bewerten") {
+          this.tasksBewerten.push(task)
+        }
+        if (task.state === "fertig") {
+          this.tasksFertig.push(task)
+        }
+      }
+
+
     });
   }
 

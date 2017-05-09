@@ -30,9 +30,10 @@ export class TaskService {
       .get('assets/task.json')
       .delay(0)
       .map((res: Response) => res.json());
+
   }
 
-  getTasksId(id): Observable<Task> {
+  getTasksById(id): Observable<Task> {
     return this.http
       .get('assets/task.json')
       .map((res: Response) => res.json())
@@ -44,6 +45,7 @@ export class TaskService {
         }
       });
   }
+
 
 
 

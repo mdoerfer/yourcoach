@@ -28,7 +28,7 @@ export class TaskDetailCoachView {
 
   ngOnInit(): void {
     this.taskService
-      .getTasksId(this.navParams.get('id'))
+      .getTasksById(this.navParams.get('id'))
       .toPromise()
       .then(task => this.task = task);
   }
