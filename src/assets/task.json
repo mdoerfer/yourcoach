@@ -2,20 +2,28 @@
     "id": 1,
     "state": "offen",
     "name": "Sit-ups",
-    "description": "Eine 1a Pizza - ohne Fleisch, okay - aber es gibt Menschen, die das mögen."
+    "instruction": "3 Mal 30 Sit-ups",
+    "description": "Eine 1a Pizza - ohne Fleisch, okay - aber es gibt Menschen, die das mögen.",
+    "respond": "Hat super geklappt habe mir nur beide Arme und ein Bein gebrochen :)"
 }, {
     "id": 2,
-  "state": "offen",
+    "state": "offen",
     "name": "Push-ups",
-    "description": "Mit herzhafter Eselsalami, aus ökologischem Anbau und nur künstlichen Aromen!"
+    "instruction": "5 Mal 15 Push-ups",
+    "description": "Mit herzhafter Eselsalami, aus ökologischem Anbau und nur künstlichen Aromen!",
+    "respond": "Es wurde noch keine Rückmeldung geliefert"
 }, {
     "id": 3,
-  "state": "bewerten",
+    "state": "bewerten",
     "name": "Runs",
-    "description": "Lecker Fisch! Delfine im Netz -> Das macht uns nix! Ahoi, Seemänner."
+    "instruction": "10 Mal 200m",
+    "description": "Lecker Fisch! Delfine im Netz -> Das macht uns nix! Ahoi, Seemänner.",
+    "respond": "Es wurde noch keine Rückmeldung geliefert"
 }, {
     "id": 4,
-  "state": "fertig",
+    "state": "fertig",
     "name": "Jumps",
-    "description": "Das Sahnestück in unserem Angebot und das vollkommen GRATIS, GRATIS, GRATIS und auch kostenlos!"
+    "instruction": "20 Mal 10 Jumps",
+    "description": "Das Sahnestück in unserem Angebot und das vollkommen GRATIS, GRATIS, GRATIS und auch kostenlos!",
+    "respond": "Es wurde noch keine Rückmeldung geliefert"
 }]

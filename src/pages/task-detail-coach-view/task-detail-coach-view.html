@@ -15,18 +15,28 @@
 
 <ion-content padding>
 
-  <ion-card *ngIf="task">
+  <ion-list  *ngIf="task">
     <ion-item>
-      <ion-icon name="task" item-left large></ion-icon>
+      <h1>Task Overview</h1>
       <h2>{{task.name}}</h2>
-      <p>Ist in unserem Angebot die Nummer {{task.id}}</p>
+      <p>{{task.instruction}} </p>
+      <button ion-button item-right >Erledigt</button>
     </ion-item>
 
     <ion-item>
-      <p>{{task.description}}</p>
+      <h2>Beschreibung</h2>
+      <p text-wrap>{{task.description}}</p>
     </ion-item>
 
     <ion-item>
+      <h2>Abgegebne Rückmeldung</h2>
+      <p text-wrap>{{task.respond}}</p>
+    </ion-item>
+
+    <ion-item>
+      <ion-item>
+        <h2>Task Bewerten</h2>
+      </ion-item>
       <ion-range min="1" max="6" step="1" snaps="true" [(ngModel)]="warmth" color="dark">
         <ion-icon range-left small color="dark" name="star"></ion-icon>
         <ion-icon range-right color="dark" name="star"></ion-icon>
@@ -34,11 +44,22 @@
     </ion-item>
 
 
+    <ion-item>
+      <h2>Aktivitätshistorie</h2>
+    </ion-item>
 
+    <ion-item>
+      <h2>Name Nachname</h2>
+      <p  text-wrap>Kommentar text text text text text text  text text text text text text</p>
+    </ion-item>
+  <ion-item>
+    <ion-input placeholder="Kommetar schreiben"></ion-input>
 
+  </ion-item>
+  <ion-item>
+    <button ion-button item-right="" >kommentieren</button>
+  </ion-item>
 
-
-  </ion-card>
-  <button ion-button full  >Erledigt</button>
+  </ion-list>
 
 </ion-content>
