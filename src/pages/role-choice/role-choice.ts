@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {IonicPage} from 'ionic-angular';
+import {AuthService} from "../../services/auth.service";
 
 @IonicPage()
 @Component({
@@ -7,6 +8,12 @@ import {IonicPage} from 'ionic-angular';
   templateUrl: 'role-choice.html',
 })
 export class RoleChoicePage {
+  constructor(private authService: AuthService) {}
 
+  setRole(role: string) {
+    this.authService.setUserRole(role);
+
+    //TODO: Open correct dashboard
+  }
 
 }

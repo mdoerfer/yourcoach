@@ -8,5 +8,21 @@
 
 
 <ion-content padding>
-
+  <h2>Willst du lehren oder lernen?</h2>
+  <ion-grid>
+    <ion-row class="card-background-page">
+      <ion-col no-padding>
+        <ion-card (click)="setRole('coach')">
+          <img src="../../assets/images/lehren.jpeg"/>
+          <div class="card-title">Coach</div>
+        </ion-card>
+      </ion-col>
+      <ion-col no-padding>
+        <ion-card (click)="setRole('student')">
+          <img src="../../assets/images/lernen.jpeg"/>
+          <div class="card-title">Schüler</div>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

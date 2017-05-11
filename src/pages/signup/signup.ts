@@ -59,7 +59,7 @@ export class SignupPage {
             this.authService.getCurrentUser().sendEmailVerification()
               .then(data => {
                 loader.dismiss();
-                this.showToast('Registrierung erfolgreich');
+                this.showToast('Registrierung erfolgreich. Bitte klicken Sie den Aktivierungs-Link in der Ihnen zugesandten Email.');
               })
               .catch(error => {
                 loader.dismiss();
