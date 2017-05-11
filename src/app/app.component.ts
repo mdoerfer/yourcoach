@@ -6,6 +6,8 @@ import firebase from 'firebase';
 
 import {SignupPage} from "../pages/signup/signup";
 import {RoleChoicePage} from "../pages/role-choice/role-choice";
+import {SigninPage} from "../pages/signin/signin";
+import {AuthService} from "../services/auth.service";
 
 @Component({
   templateUrl: 'app.html'
@@ -13,7 +15,7 @@ import {RoleChoicePage} from "../pages/role-choice/role-choice";
 export class MyApp {
   rootPage: any = SignupPage;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private authService: AuthService) {
     firebase.initializeApp({
       apiKey: "AIzaSyBpt2x5kZIDvSBs1M7uxKpwuRllO3_LjXQ",
       authDomain: "yourcoach-dc0ca.firebaseapp.com",
@@ -24,12 +26,7 @@ export class MyApp {
     });
 
     firebase.auth().onAuthStateChanged(user => {
-      if(user && user.emailVerified) {
-        this.rootPage = RoleChoicePage;
-      }
-      else {
-        this.rootPage = SignupPage;
-      }
+      this.setRootPage(user);
     });
 
     platform.ready().then(() => {
@@ -38,6 +35,24 @@ export class MyApp {
       statusBar.styleDefault();
       splashScreen.hide();
     });
+
+    //Set root page on app init
+    this.setRootPage(this.authService.getCurrentUser());
+  }
+
+  private setRootPage(user) {
+    //If user is logged in and verified
+    if(user && user.emailVerified) {
+      this.rootPage = RoleChoicePage;
+    }
+    //If user is logged in but not verified
+    else if(user && !user.emailVerified) {
+      this.rootPage = SigninPage;
+    }
+    //If user is null
+    else {
+      this.rootPage = SignupPage;
+    }
   }
 }
 
