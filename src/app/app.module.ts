@@ -10,6 +10,9 @@ import {SignupPage} from "../pages/signup/signup";
 import {ForgotPasswordPage} from "../pages/forgot-password/forgot-password";
 import {AuthService} from "../services/auth.service";
 import {RoleChoicePage} from "../pages/role-choice/role-choice";
+import {CoachDashboardPage} from "../pages/coach-dashboard/coach-dashboard";
+import {StudentDashboardPage} from "../pages/student-dashboard/student-dashboard";
+
 
 @NgModule({
   declarations: [
@@ -17,7 +20,9 @@ import {RoleChoicePage} from "../pages/role-choice/role-choice";
     SigninPage,
     SignupPage,
     ForgotPasswordPage,
-    RoleChoicePage
+    RoleChoicePage,
+    CoachDashboardPage,
+    StudentDashboardPage
   ],
   imports: [
     BrowserModule,
@@ -29,7 +34,9 @@ import {RoleChoicePage} from "../pages/role-choice/role-choice";
     SigninPage,
     SignupPage,
     ForgotPasswordPage,
-    RoleChoicePage
+    RoleChoicePage,
+    CoachDashboardPage,
+    StudentDashboardPage
   ],
   providers: [
     StatusBar,
