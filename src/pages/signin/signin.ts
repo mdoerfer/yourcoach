@@ -46,14 +46,10 @@ export class SigninPage {
       .then(data => {
         loader.dismiss();
 
-        this.authService.isAuthenticated = true;
-
         this.showToast('Erfolgreich eingeloggt.');
       })
       .catch(error => {
         loader.dismiss();
-
-        this.authService.isAuthenticated = false;
 
         this.showToast(error.message);
       })

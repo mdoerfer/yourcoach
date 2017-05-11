@@ -46,7 +46,13 @@ export class SignupPage {
       .then(data => {
         loader.dismiss();
 
-        //TODO: Add username to firebase database
+        /**
+         * Set display name of user
+         */
+        this.authService.getCurrentUser().updateProfile({
+          displayName: name,
+          photoURL: ''
+        });
 
         this.showToast('Registrierung erfolgreich');
       })
