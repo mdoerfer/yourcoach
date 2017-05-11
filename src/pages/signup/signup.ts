@@ -44,7 +44,6 @@ export class SignupPage {
      */
     this.authService.signup(email, password)
       .then(data => {
-        loader.dismiss();
 
         /**
          * Set display name of user
@@ -52,14 +51,28 @@ export class SignupPage {
         this.authService.getCurrentUser().updateProfile({
           displayName: name,
           photoURL: ''
-        });
+        })
+          .then(data => {
+            /**
+             * Send verification email
+             */
+            this.authService.getCurrentUser().sendEmailVerification()
+              .then(data => {
+                loader.dismiss();
+                this.showToast('Registrierung erfolgreich');
+              })
+              .catch(error => {
+                loader.dismiss();
+                this.showToast(error.message);
+              });
 
-        /**
-         * Send verification email
-         */
-        this.authService.getCurrentUser().sendEmailVerification();
+          })
+          .catch(error => {
+            loader.dismiss();
+            this.showToast(error.message);
+          });
 
-        this.showToast('Registrierung erfolgreich');
+
       })
       .catch(error => {
         loader.dismiss();
