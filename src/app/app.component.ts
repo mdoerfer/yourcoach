@@ -24,7 +24,7 @@ export class MyApp {
     });
 
     firebase.auth().onAuthStateChanged(user => {
-      if(user) {
+      if(user && user.emailVerified) {
         this.rootPage = RoleChoicePage;
       }
       else {

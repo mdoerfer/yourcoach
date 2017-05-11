@@ -54,6 +54,11 @@ export class SignupPage {
           photoURL: ''
         });
 
+        /**
+         * Send verification email
+         */
+        this.authService.getCurrentUser().sendEmailVerification();
+
         this.showToast('Registrierung erfolgreich');
       })
       .catch(error => {
