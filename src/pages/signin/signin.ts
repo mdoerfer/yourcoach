@@ -46,7 +46,14 @@ export class SigninPage {
       .then(data => {
         loader.dismiss();
 
-        this.showToast('Erfolgreich eingeloggt.');
+        let user = this.authService.getCurrentUser();
+
+        if(user.emailVerified) {
+          this.showToast('Erfolgreich eingeloggt');
+        }
+        else {
+          this.showToast('Ihr Konto ist noch nicht aktiviert. Bitte überprüfen Sie Ihr E-Mail Postfach.')
+        }
       })
       .catch(error => {
         loader.dismiss();
