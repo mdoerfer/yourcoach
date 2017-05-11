@@ -1,6 +1,9 @@
 import {Component} from '@angular/core';
-import {IonicPage} from 'ionic-angular';
+import {IonicPage, NavController} from 'ionic-angular';
 import {AuthService} from "../../services/auth.service";
+
+import {CoachDashboardPage} from "../coach-dashboard/coach-dashboard";
+import {StudentDashboardPage} from "../student-dashboard/student-dashboard";
 
 @IonicPage()
 @Component({
@@ -8,12 +11,21 @@ import {AuthService} from "../../services/auth.service";
   templateUrl: 'role-choice.html',
 })
 export class RoleChoicePage {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService,
+              private navCtrl: NavController) {
+  }
 
   setRole(role: string) {
-    this.authService.setUserRole(role);
+    this.authService.setUserRef({
+      role: role
+    });
 
-    //TODO: Open correct dashboard
+    if(role == 'coach') {
+      this.navCtrl.push(CoachDashboardPage);
+    }
+    else if(role == 'student') {
+      this.navCtrl.push(StudentDashboardPage);
+    }
   }
 
 }

@@ -37,7 +37,7 @@ export class MyApp {
     });
 
     //Set root page on app init
-    this.setRootPage(this.authService.getCurrentUser());
+    this.setRootPage(this.authService.getAuthenticatedUser());
   }
 
   private setRootPage(user) {

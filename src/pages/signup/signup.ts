@@ -48,7 +48,7 @@ export class SignupPage {
         /**
          * Set display name of user
          */
-        this.authService.getCurrentUser().updateProfile({
+        this.authService.getAuthenticatedUser().updateProfile({
           displayName: name,
           photoURL: ''
         })
@@ -56,7 +56,7 @@ export class SignupPage {
             /**
              * Send verification email
              */
-            this.authService.getCurrentUser().sendEmailVerification()
+            this.authService.getAuthenticatedUser().sendEmailVerification()
               .then(data => {
                 loader.dismiss();
                 this.showToast('Registrierung erfolgreich. Bitte klicken Sie den Aktivierungs-Link in der Ihnen zugesandten Email.');
