@@ -8,6 +8,7 @@ import {MyApp} from './app.component';
 import {SigninPage} from "../pages/signin/signin";
 import {SignupPage} from "../pages/signup/signup";
 import {ForgotPasswordPage} from "../pages/forgot-password/forgot-password";
+import {AuthService} from "../services/auth.service";
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import {ForgotPasswordPage} from "../pages/forgot-password/forgot-password";
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    AuthService
   ]
 })
 export class AppModule {
