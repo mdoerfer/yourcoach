@@ -25,6 +25,16 @@ export class AuthService {
   }
 
   /**
+   * Send password reset email
+   *
+   * @param email
+   * @returns {firebase.Promise<any>}
+   */
+  resetPassword(email: string) {
+    return firebase.auth().sendPasswordResetEmail(email);
+  }
+
+  /**
    * Get the currently authenticated user
    *
    * @returns {firebase.User|null}

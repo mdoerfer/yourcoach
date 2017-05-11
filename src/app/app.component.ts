@@ -44,6 +44,8 @@ export class MyApp {
     //If user is logged in and verified
     if(user && user.emailVerified) {
       this.rootPage = RoleChoicePage;
+
+      //TODO: If setting "Dont show role choice on app open" is false open RoleDashboard, else open RoleChoicePage
     }
     //If user is logged in but not verified
     else if(user && !user.emailVerified) {
