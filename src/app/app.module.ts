@@ -9,13 +9,15 @@ import {SigninPage} from "../pages/signin/signin";
 import {SignupPage} from "../pages/signup/signup";
 import {ForgotPasswordPage} from "../pages/forgot-password/forgot-password";
 import {AuthService} from "../services/auth.service";
+import {RoleChoicePage} from "../pages/role-choice/role-choice";
 
 @NgModule({
   declarations: [
     MyApp,
     SigninPage,
     SignupPage,
-    ForgotPasswordPage
+    ForgotPasswordPage,
+    RoleChoicePage
   ],
   imports: [
     BrowserModule,
@@ -26,7 +28,8 @@ import {AuthService} from "../services/auth.service";
     MyApp,
     SigninPage,
     SignupPage,
-    ForgotPasswordPage
+    ForgotPasswordPage,
+    RoleChoicePage
   ],
   providers: [
     StatusBar,

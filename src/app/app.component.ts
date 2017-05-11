@@ -5,6 +5,7 @@ import {SplashScreen} from '@ionic-native/splash-screen';
 import firebase from 'firebase';
 
 import {SignupPage} from "../pages/signup/signup";
+import {RoleChoicePage} from "../pages/role-choice/role-choice";
 
 @Component({
   templateUrl: 'app.html'
@@ -20,6 +21,15 @@ export class MyApp {
       projectId: "yourcoach-dc0ca",
       storageBucket: "yourcoach-dc0ca.appspot.com",
       messagingSenderId: "600282368434"
+    });
+
+    firebase.auth().onAuthStateChanged(user => {
+      if(user) {
+        this.rootPage = RoleChoicePage;
+      }
+      else {
+        this.rootPage = SignupPage;
+      }
     });
 
     platform.ready().then(() => {
