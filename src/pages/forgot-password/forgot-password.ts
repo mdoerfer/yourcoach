@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {IonicPage, LoadingController, ToastController} from 'ionic-angular';
 import {NgForm} from "@angular/forms";
 import {AuthService} from "../../services/auth.service";
+import {SignupPage} from "../signup/signup";
 
 @IonicPage()
 @Component({
@@ -9,6 +10,7 @@ import {AuthService} from "../../services/auth.service";
   templateUrl: 'forgot-password.html',
 })
 export class ForgotPasswordPage {
+  signupPage = SignupPage;
 
   constructor(private authService: AuthService,
               private loadingCtrl: LoadingController,
