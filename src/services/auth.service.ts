@@ -25,6 +25,15 @@ export class AuthService {
   }
 
   /**
+   * Sign a user out
+   *
+   * @returns {firebase.Promise<any>}
+   */
+  signout() {
+    return firebase.auth().signOut();
+  }
+
+  /**
    * Send password reset email
    *
    * @param email
