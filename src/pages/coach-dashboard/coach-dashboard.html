@@ -9,7 +9,7 @@
         </button>
       </ion-buttons>
       <ion-buttons end>
-        <button ion-button icon-only>
+        <button ion-button icon-only (click)="presentPopover($event)">
           <ion-icon name="more"></ion-icon>
         </button>
       </ion-buttons>
@@ -40,6 +40,6 @@
   </ion-list>
 
   <ion-fab right bottom>
-    <button ion-fab color="secondary"><ion-icon name="add"></ion-icon></button>
+    <button ion-fab color="secondary" (click)="showPrompt()"><ion-icon name="add"></ion-icon></button>
   </ion-fab>
 </ion-content>

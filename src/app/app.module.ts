@@ -12,6 +12,7 @@ import {AuthService} from "../services/auth.service";
 import {RoleChoicePage} from "../pages/role-choice/role-choice";
 import {CoachDashboardPage} from "../pages/coach-dashboard/coach-dashboard";
 import {StudentDashboardPage} from "../pages/student-dashboard/student-dashboard";
+import {MorePopoverPage} from "../pages/coach-dashboard/more-popover/more-popover";
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import {StudentDashboardPage} from "../pages/student-dashboard/student-dashboard
     ForgotPasswordPage,
     RoleChoicePage,
     CoachDashboardPage,
-    StudentDashboardPage
+    StudentDashboardPage,
+    MorePopoverPage
   ],
   imports: [
     BrowserModule,
@@ -36,7 +38,8 @@ import {StudentDashboardPage} from "../pages/student-dashboard/student-dashboard
     ForgotPasswordPage,
     RoleChoicePage,
     CoachDashboardPage,
-    StudentDashboardPage
+    StudentDashboardPage,
+    MorePopoverPage
   ],
   providers: [
     StatusBar,
