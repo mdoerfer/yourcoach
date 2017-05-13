@@ -13,6 +13,8 @@ import {RoleChoicePage} from "../pages/role-choice/role-choice";
 import {CoachDashboardPage} from "../pages/coach-dashboard/coach-dashboard";
 import {StudentDashboardPage} from "../pages/student-dashboard/student-dashboard";
 import {MorePopoverPage} from "../pages/coach-dashboard/more-popover/more-popover";
+import {TaskService} from "../services/task.service";
+import {UserService} from "../services/user.service";
 
 
 @NgModule({
@@ -45,7 +47,9 @@ import {MorePopoverPage} from "../pages/coach-dashboard/more-popover/more-popove
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    AuthService
+    AuthService,
+    UserService,
+    TaskService
   ]
 })
 export class AppModule {

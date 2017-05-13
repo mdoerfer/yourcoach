@@ -1,8 +1,9 @@
 import {Component} from '@angular/core';
-import {IonicPage, LoadingController, NavController, ToastController} from 'ionic-angular';
+import {IonicPage, LoadingController, ToastController} from 'ionic-angular';
 import {NgForm} from "@angular/forms";
 import {SigninPage} from "../signin/signin";
 import {AuthService} from "../../services/auth.service";
+import {UserService} from "../../services/user.service";
 
 @IonicPage()
 @Component({
@@ -13,9 +14,9 @@ export class SignupPage {
   signinPage = SigninPage;
 
   constructor(private authService: AuthService,
+              private userService: UserService,
               private toastCtrl: ToastController,
-              private loadingCtrl: LoadingController,
-              private navCtrl: NavController) {
+              private loadingCtrl: LoadingController) {
   }
 
   /**
@@ -44,11 +45,12 @@ export class SignupPage {
      */
     this.authService.signup(email, password)
       .then(data => {
+        let user = this.userService.getUser();
 
         /**
          * Set display name of user
          */
-        this.authService.getAuthenticatedUser().updateProfile({
+        user.updateProfile({
           displayName: name,
           photoURL: ''
         })
@@ -56,7 +58,7 @@ export class SignupPage {
             /**
              * Send verification email
              */
-            this.authService.getAuthenticatedUser().sendEmailVerification()
+            user.sendEmailVerification()
               .then(data => {
                 loader.dismiss();
                 this.showToast('Registrierung erfolgreich. Bitte klicken Sie den Aktivierungs-Link in der Ihnen zugesandten Email.');

@@ -7,7 +7,7 @@ import firebase from 'firebase';
 import {SignupPage} from "../pages/signup/signup";
 import {RoleChoicePage} from "../pages/role-choice/role-choice";
 import {SigninPage} from "../pages/signin/signin";
-import {AuthService} from "../services/auth.service";
+import {UserService} from "../services/user.service";
 
 @Component({
   templateUrl: 'app.html'
@@ -15,7 +15,7 @@ import {AuthService} from "../services/auth.service";
 export class MyApp {
   rootPage: any = SignupPage;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private authService: AuthService) {
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private userService: UserService) {
     firebase.initializeApp({
       apiKey: "AIzaSyBpt2x5kZIDvSBs1M7uxKpwuRllO3_LjXQ",
       authDomain: "yourcoach-dc0ca.firebaseapp.com",
@@ -26,21 +26,28 @@ export class MyApp {
     });
 
     firebase.auth().onAuthStateChanged(user => {
-      this.setRootPage(user);
+      this.setRootPage();
     });
 
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
+
+      //Set root page on app init
+      this.setRootPage();
+
       splashScreen.hide();
     });
-
-    //Set root page on app init
-    this.setRootPage(this.authService.getAuthenticatedUser());
   }
 
-  private setRootPage(user) {
+  /**
+   * Set the right root page depending on the authentication
+   * state of the user
+   */
+  private setRootPage() {
+    let user = this.userService.getUser();
+
     //If user is logged in and verified
     if(user && user.emailVerified) {
       this.rootPage = RoleChoicePage;

@@ -4,6 +4,7 @@ import {SignupPage} from "../signup/signup";
 import {ForgotPasswordPage} from "../forgot-password/forgot-password";
 import {NgForm} from "@angular/forms";
 import {AuthService} from "../../services/auth.service";
+import {UserService} from "../../services/user.service";
 
 @IonicPage()
 @Component({
@@ -15,6 +16,7 @@ export class SigninPage {
   forgotPasswordPage = ForgotPasswordPage;
 
   constructor(private authService: AuthService,
+              private userService: UserService,
               private loadingCtrl: LoadingController,
               private toastCtrl: ToastController) {
   }
@@ -46,7 +48,7 @@ export class SigninPage {
       .then(data => {
         loader.dismiss();
 
-        let user = this.authService.getAuthenticatedUser();
+        let user = this.userService.getUser();
 
         if(user.emailVerified) {
           this.showToast('Erfolgreich eingeloggt');

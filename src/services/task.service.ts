@@ -1,6 +1,8 @@
 import {Task} from "../models/task.model";
 import {AuthService} from "./auth.service";
+import {Injectable} from "@angular/core";
 
+@Injectable()
 export class TaskService {
   constructor(private authService: AuthService) {
   }
