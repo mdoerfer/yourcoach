@@ -16,6 +16,9 @@ export class MyApp {
   rootPage: any = SignupPage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private userService: UserService) {
+    /**
+     * Initialize Firebase
+     */
     firebase.initializeApp({
       apiKey: "AIzaSyBpt2x5kZIDvSBs1M7uxKpwuRllO3_LjXQ",
       authDomain: "yourcoach-dc0ca.firebaseapp.com",
@@ -25,10 +28,16 @@ export class MyApp {
       messagingSenderId: "600282368434"
     });
 
+    /**
+     * Change rootPage on changes on authentication state
+     */
     firebase.auth().onAuthStateChanged(user => {
       this.setRootPage();
     });
 
+    /**
+     * Call platform ready events
+     */
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.

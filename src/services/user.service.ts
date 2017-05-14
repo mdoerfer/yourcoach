@@ -16,11 +16,12 @@ export class UserService {
    * the method, or creates new properties if they haven't existed before
    *
    * @param ref
+   * @returns {firebase.Promise<any>}
    */
   setUserRef(ref: object) {
     let uid = this.getUser().uid;
 
-    firebase.database().ref('users/' + uid).set(ref);
+    return firebase.database().ref('users/' + uid).set(ref);
   }
 
   /**

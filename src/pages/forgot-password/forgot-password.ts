@@ -17,12 +17,17 @@ export class ForgotPasswordPage {
               private toastCtrl: ToastController) {
   }
 
+  /**
+   * Resets the users password
+   *
+   * @param form
+   */
   onResetPassword(form: NgForm) {
     /**
      * Create loader
      */
     let loader = this.loadingCtrl.create({
-      content: "Sending password reset email..."
+      content: "Passwort wird zurückgesetzt..."
     });
     loader.present();
 
@@ -38,7 +43,7 @@ export class ForgotPasswordPage {
       .then(data => {
         loader.dismiss();
 
-        this.showToast('A password reset email has been sent to you.')
+        this.showToast('Ein Mail zum Zurücksetzen Ihres Passwortes wurde versandt.');
       })
       .catch(error => {
         loader.dismiss();
