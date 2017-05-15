@@ -4,6 +4,7 @@ import {IonicPage, NavController, ToastController} from 'ionic-angular';
 import {CoachDashboardPage} from "../coach-dashboard/coach-dashboard";
 import {StudentDashboardPage} from "../student-dashboard/student-dashboard";
 import {UserService} from "../../services/user.service";
+import {CoachTaskPage} from "../coach-task/coach-task";
 
 @IonicPage()
 @Component({
@@ -11,6 +12,8 @@ import {UserService} from "../../services/user.service";
   templateUrl: 'role-choice.html',
 })
 export class RoleChoicePage {
+  coachTaskPage = CoachTaskPage;
+
   constructor(private userService: UserService,
               private navCtrl: NavController,
               private toastCtrl: ToastController) {
