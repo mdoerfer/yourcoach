@@ -48,6 +48,12 @@ export class UserService {
     return firebase.database().ref('/users/' + uid).once('value');
   }
 
+  getInvites() {
+    let uid = this.getUser().uid;
+
+    firebase.database().ref('/users/' + uid + '/invites').once('value');
+  }
+
   /**
    * Send an invite to a student
    *
@@ -58,7 +64,7 @@ export class UserService {
     //Coach ID
     let uid = this.getUser().uid;
 
-    //Find student
+    //Find students
     firebase.database().ref('/users').orderByChild('email').equalTo(email).once('child_added', snapshot => {
       //Student ID
       let sid = snapshot.key;
