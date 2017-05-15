@@ -23,7 +23,7 @@ export class RoleChoicePage {
    * @param role
    */
   setRole(role: string) {
-    this.userService.setUserRef({
+    this.userService.updateUserRef({
       role: role
     })
       .then(data => {

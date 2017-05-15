@@ -45,16 +45,16 @@ export class SignupPage {
      */
     this.authService.signup(email, password)
       .then(data => {
-        let user = this.userService.getUser();
-
         /**
          * Set display name of user
          */
-        user.updateProfile({
-          displayName: name,
-          photoURL: ''
+        this.userService.updateUserRef({
+          name: name,
+          email: email
         })
           .then(data => {
+            let user = this.userService.getUser();
+
             /**
              * Send verification email
              */

@@ -8,11 +8,11 @@ export class TaskService {
   }
 
   createTask(task: Task) {
-    firebase.database().ref('tasks/').set(task);
+
   }
 
   getAllTasksFromMe() {
-    return firebase.database().ref('tasks/').once('value');
+
   }
 
   getTaskWithId(taskId: string) {

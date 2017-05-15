@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {IonicPage, PopoverController, AlertController} from 'ionic-angular';
 import {MorePopoverPage} from "./more-popover/more-popover";
+import {UserService} from "../../services/user.service";
 
 @IonicPage()
 @Component({
@@ -9,7 +10,8 @@ import {MorePopoverPage} from "./more-popover/more-popover";
 })
 export class CoachDashboardPage {
   constructor(private popoverCtrl: PopoverController,
-              private alertCtrl: AlertController) {
+              private alertCtrl: AlertController,
+              private userService: UserService) {
   }
 
   showPrompt() {
@@ -19,7 +21,7 @@ export class CoachDashboardPage {
       inputs: [
         {
           type: 'email',
-          name: 'e-mail',
+          name: 'email',
           placeholder: 'E-Mail'
         },
       ],
@@ -34,7 +36,7 @@ export class CoachDashboardPage {
         {
           text: 'Senden',
           handler: data => {
-            console.log('Send Invite');
+            this.userService.inviteStudent(data.email);
           }
         }
       ]

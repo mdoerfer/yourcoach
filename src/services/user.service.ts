@@ -13,7 +13,7 @@ export class UserService {
   /**
    * Sets the user node in the firebase database to the passed object
    * and overrides any properties that might have existed prior to calling
-   * the method, or creates new properties if they haven't existed before
+   * the method.
    *
    * @param ref
    * @returns {firebase.Promise<any>}
@@ -25,6 +25,19 @@ export class UserService {
   }
 
   /**
+   * Updates the user node in the firebase database with the provided object
+   * and doesn't override any properties except existing ones
+   *
+   * @param ref
+   * @returns {firebase.Promise<any>}
+   */
+  updateUserRef(ref: object) {
+    let uid = this.getUser().uid;
+
+    return firebase.database().ref('users/' + uid).update(ref);
+  }
+
+  /**
    * Returns the promise containing the user node
    *
    * @returns {firebase.Promise<any>}
@@ -33,5 +46,25 @@ export class UserService {
     let uid = this.getUser().uid;
 
     return firebase.database().ref('/users/' + uid).once('value');
+  }
+
+  inviteStudent(email: string) {
+    let uid = this.getUser().uid;
+
+    /**
+     * Find student
+     */
+    firebase.database().ref('/users').orderByChild('email').equalTo(email).once('child_added', snapshot => {
+      let sid = snapshot.key;
+
+      /**
+       * Add student to students node but inactive
+       */
+      return firebase.database().ref('/users/' + uid + '/students/' + sid).update({
+        accepted: false
+      });
+    });
+
+
   }
 }
