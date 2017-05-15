@@ -48,34 +48,59 @@ export class UserService {
     return firebase.database().ref('/users/' + uid).once('value');
   }
 
-  inviteStudent(email: string) {
+  /**
+   * Send an invite to a student
+   *
+   * @param email
+   * @returns {firebase.Promise<any>}
+   */
+  sendInviteToStudent(email: string) {
+    //Coach ID
     let uid = this.getUser().uid;
 
-    /**
-     * Find student
-     */
+    //Find student
     firebase.database().ref('/users').orderByChild('email').equalTo(email).once('child_added', snapshot => {
+      //Student ID
       let sid = snapshot.key;
 
-      this.sendInquiryToStudent(sid);
-      /**
-       * Add student to students node but inactive
-       */
-      return firebase.database().ref('/users/' + uid + '/students/' + sid).update({
-        accepted: false
+      //Add inquiry to inquiries node to sid
+      return firebase.database().ref('/users/' + sid + '/invites/' + uid).update({
+        created_at: new Date().valueOf()
       });
-
     });
-
-
   }
 
-  sendInquiryToStudent(sid: string) {
+  /**
+   * Accept/decline an invite from a coach
+   *
+   * @param cid
+   * @param accepted
+   */
+  respondToInviteFromCoach(cid: string, accepted: boolean) {
+    //Student ID
     let uid = this.getUser().uid;
-    /**
-     * Add inquiry to inquiries node to sid
-     */
-    return firebase.database().ref('/users/' + sid + '/inquiries/' + uid).update({read: false});
 
+    //Delete invite from student
+    firebase.database().ref('/users/' + uid + '/invites/' + cid).remove()
+      .then(data => {
+        if(accepted) {
+          //Add student to coach
+          return firebase.database().ref('/users/' + cid + '/students/' + uid).update({
+            created_at: new Date().valueOf()
+          })
+            .then(data => {
+              console.log('Student accepted invite');
+            })
+            .catch(error => {
+              console.log(error.message);
+            });
+        }
+        else {
+          console.log('Student declined invite');
+        }
+      })
+      .catch(error => {
+        console.log(error.message);
+      });
   }
 }

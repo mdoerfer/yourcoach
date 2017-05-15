@@ -36,8 +36,7 @@ export class CoachDashboardPage {
         {
           text: 'Senden',
           handler: data => {
-            this.userService.inviteStudent(data.email);
-            //this.userService.sendInquiryToStudent(data.email);
+            this.userService.sendInviteToStudent(data.email);
           }
         }
       ]
