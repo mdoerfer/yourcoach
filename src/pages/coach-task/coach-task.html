@@ -26,10 +26,37 @@
 
 <ion-content padding>
   <div [ngSwitch]="taskchange">
-    <ion-list *ngSwitchCase="'open'">
-      <ion-item>
-        Test
-      </ion-item>
-    </ion-list>
+      <ion-card *ngSwitchCase="'open'">
+
+        <ion-item>
+          <h2>Task 1</h2>
+          <p>10.05.2017</p>
+        </ion-item>
+
+        <ion-card-content>
+          <p>Erst musst du X machen, dann Y. Außerdem musst du das auch eine gewisse Zeit machen, du Lusche</p>
+        </ion-card-content>
+
+        <ion-item>
+          <h2>Rüchmeldung</h2>
+          <p>Info über Eingabefeld</p>
+        </ion-item>
+
+        <ion-row>
+          <ion-col>
+            <button ion-button icon-left clear small>
+              <ion-icon name="text"></ion-icon>
+              <div>Chat</div>
+            </button>
+          </ion-col>
+        </ion-row>
+
+      </ion-card>
   </div>
+
+  <ion-fab right bottom>
+    <button ion-fab color="secondary">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>
