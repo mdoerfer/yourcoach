@@ -1,0 +1,35 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>Dirk</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="presentPopover($event)">
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+  <ion-toolbar color="primary">
+    <ion-segment color="navtext" [(ngModel)]="taskchange">
+      <ion-segment-button value="open">
+        OFFEN
+      </ion-segment-button>
+      <ion-segment-button value="grade">
+        BEWERTEN
+      </ion-segment-button>
+      <ion-segment-button value="done">
+        ERLEDIGT
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <div [ngSwitch]="taskchange">
+    <ion-list *ngSwitchCase="'open'">
+      <ion-item>
+        Test
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>
