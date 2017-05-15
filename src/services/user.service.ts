@@ -57,14 +57,25 @@ export class UserService {
     firebase.database().ref('/users').orderByChild('email').equalTo(email).once('child_added', snapshot => {
       let sid = snapshot.key;
 
+      this.sendInquiryToStudent(sid);
       /**
        * Add student to students node but inactive
        */
       return firebase.database().ref('/users/' + uid + '/students/' + sid).update({
         accepted: false
       });
+
     });
 
+
+  }
+
+  sendInquiryToStudent(sid: string) {
+    let uid = this.getUser().uid;
+    /**
+     * Add inquiry to inquiries node to sid
+     */
+    return firebase.database().ref('/users/' + sid + '/inquiries/' + uid).update({read: false});
 
   }
 }
