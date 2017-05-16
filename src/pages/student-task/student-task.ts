@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage } from 'ionic-angular';
+import {Component, OnInit} from '@angular/core';
+import {IonicPage, NavParams} from 'ionic-angular';
 
 /**
  * Generated class for the StudentTaskPage page.
@@ -12,7 +12,13 @@ import { IonicPage } from 'ionic-angular';
   selector: 'page-student-task',
   templateUrl: 'student-task.html',
 })
-export class StudentTaskPage {
+export class StudentTaskPage implements OnInit {
   taskchange: string = "open";
+
+  constructor(private navParams: NavParams) {}
+
+  ngOnInit() {
+    console.log(this.navParams.data);
+}
 
 }
