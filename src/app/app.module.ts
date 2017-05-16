@@ -3,6 +3,8 @@ import {ErrorHandler, NgModule} from '@angular/core';
 import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {StatusBar} from '@ionic-native/status-bar';
+// Import ionic2-rating module
+import { Ionic2RatingModule } from 'ionic2-rating';
 
 import {MyApp} from './app.component';
 import {SigninPage} from "../pages/signin/signin";
@@ -36,7 +38,8 @@ import {StudentTaskPage} from "../pages/student-task/student-task";
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    Ionic2RatingModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
