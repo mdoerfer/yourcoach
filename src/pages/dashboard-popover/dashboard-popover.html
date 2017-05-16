@@ -1,5 +1,7 @@
 <ion-list>
-  <button ion-item>Benachrichtigungen</button>
-  <button ion-item>Task Templates</button>
-  <button ion-item>Einstellungen</button>
+  <button ion-item (click)="goToRoleChoice()">Rollenauswahl</button>
+  <button ion-item (click)="goToNotifications()">Benachrichtigungen</button>
+  <button ion-item (click)="goToTaskTemplates()">Task Templates</button>
+  <button ion-item (click)="goToSettings()">Einstellungen</button>
+  <button ion-item (click)="signOut()">Logout</button>
 </ion-list>
