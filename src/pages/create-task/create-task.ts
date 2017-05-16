@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {IonicPage, AlertController} from 'ionic-angular';
 
 /**
  * Generated class for the CreateTaskPage page.
@@ -13,12 +13,49 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'create-task.html',
 })
 export class CreateTaskPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private alertCtrl: AlertController) {
   }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad CreateTaskPage');
+  showAnswer() {
+    let prompt = this.alertCtrl.create({
+      title: 'Art der Rückmeldung',
+      inputs: [
+        {
+          type: 'radio',
+          name: 'choice1',
+          label: 'Text'
+        },
+        {
+          type: 'radio',
+          name: 'choice2',
+          label: 'Bild'
+        },
+        {
+          type: 'radio',
+          name: 'choice3',
+          label: 'Video'
+        },
+        {
+          type: 'radio',
+          name: 'choice4',
+          label: 'Sprachnachricht'
+        },
+        {
+          type: 'radio',
+          name: 'choice5',
+          label: 'Definierte Auswahl...'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Abbrechen',
+          role: 'cancel',
+        },
+        {
+          text: 'Senden'
+        }
+      ]
+    });
+    prompt.present();
   }
 
 }
