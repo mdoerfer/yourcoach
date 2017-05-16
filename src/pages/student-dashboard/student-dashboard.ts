@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {IonicPage, NavController} from 'ionic-angular';
+import {IonicPage, NavController, PopoverController} from 'ionic-angular';
 import {UserService} from "../../services/user.service";
 import {StudentTaskPage} from "../student-task/student-task";
+import {DashboardPopoverPage} from "../dashboard-popover/dashboard-popover";
 
 
 @IonicPage()
@@ -14,7 +15,8 @@ export class StudentDashboardPage implements OnInit {
   private pendingInvites: any[] = [];
 
   constructor(private userService: UserService,
-              private navCtrl: NavController) {
+              private navCtrl: NavController,
+              private popoverCtrl: PopoverController) {
   }
 
   /**
@@ -96,6 +98,18 @@ export class StudentDashboardPage implements OnInit {
           this.pendingInvites.push(newCoach);
         })
       }
+    });
+  }
+
+  /**
+   * Present popover at event location
+   *
+   * @param myEvent
+   */
+  presentPopover(myEvent) {
+    let popover = this.popoverCtrl.create(DashboardPopoverPage);
+    popover.present({
+      ev: myEvent
     });
   }
 }
