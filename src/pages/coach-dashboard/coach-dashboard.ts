@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {IonicPage, PopoverController, AlertController} from 'ionic-angular';
+import {IonicPage, PopoverController, AlertController, NavController} from 'ionic-angular';
 import {MorePopoverPage} from "./more-popover/more-popover";
 import {UserService} from "../../services/user.service";
+import {CoachTaskPage} from "../coach-task/coach-task";
 
 @IonicPage()
 @Component({
@@ -12,7 +13,7 @@ export class CoachDashboardPage implements OnInit{
   private students: any[] = [];
   constructor(private popoverCtrl: PopoverController,
               private alertCtrl: AlertController,
-              private userService: UserService) {
+              private userService: UserService, private navCtrl: NavController) {
   }
 
   ngOnInit(){
@@ -32,6 +33,11 @@ export class CoachDashboardPage implements OnInit{
         })
       }
     })
+  }
+
+  goToTasks(i: number) {
+    this.navCtrl.push(CoachTaskPage);
+
   }
 
   showPrompt() {

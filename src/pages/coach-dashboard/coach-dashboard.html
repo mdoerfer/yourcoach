@@ -18,25 +18,20 @@
 
 
 <ion-content padding>
-  <ion-list>
-    <ion-item>
+  <ion-list-header>Deine Studenten</ion-list-header>
+  <p padding *ngIf="students.length == 0">
+    Du hast keine Studenten zur Zeit
+  </p>
+  <ion-list *ngIf="students.length > 0">
+    <ion-item *ngFor="let student of students; let i = index" (click)="goToTasks(i)">
       <ion-avatar item-left>
         <img src="../../assets/images/dummy-avatar.png">
       </ion-avatar>
-      <h2>Mae</h2>
-      <p>2 Tasks offen</p>
-      <ion-badge color="light" item-right>2</ion-badge>
-    </ion-item>
+      <h2>{{student.name}}</h2>
 
-    <ion-item>
-      <ion-avatar item-left>
-        <img src="../../assets/images/dummy-avatar.png">
-      </ion-avatar>
-      <h2>Dirk</h2>
-      <p>1 Task offen</p>
-      <ion-badge color="light" item-right>1</ion-badge>
+      <!--p>2 Tasks offen</p> TODO: Tasks and Badgeds
+      <ion-badge color="light" item-right>2</ion-badge-->
     </ion-item>
-
   </ion-list>
 
   <ion-fab right bottom>
