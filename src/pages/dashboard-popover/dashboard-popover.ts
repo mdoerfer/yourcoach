@@ -2,10 +2,10 @@ import {Component} from '@angular/core';
 import {ViewController} from "ionic-angular";
 
 @Component({
-  selector: 'page-more-popover',
-  templateUrl: 'more-popover.html',
+  selector: 'page-dashboard-popover',
+  templateUrl: 'dashboard-popover.html',
 })
-export class MorePopoverPage {
+export class DashboardPopoverPage {
   constructor(public viewCtrl: ViewController) {}
 
   close() {

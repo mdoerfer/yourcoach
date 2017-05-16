@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {IonicPage, PopoverController, AlertController, NavController} from 'ionic-angular';
-import {MorePopoverPage} from "./more-popover/more-popover";
+import {DashboardPopoverPage} from "../dashboard-popover/dashboard-popover";
 import {UserService} from "../../services/user.service";
 import {CoachTaskPage} from "../coach-task/coach-task";
 
@@ -95,7 +95,7 @@ export class CoachDashboardPage implements OnInit{
    * @param myEvent
    */
   presentPopover(myEvent) {
-    let popover = this.popoverCtrl.create(MorePopoverPage);
+    let popover = this.popoverCtrl.create(DashboardPopoverPage);
     popover.present({
       ev: myEvent
     });

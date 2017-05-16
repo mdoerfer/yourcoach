@@ -12,7 +12,7 @@ import {AuthService} from "../services/auth.service";
 import {RoleChoicePage} from "../pages/role-choice/role-choice";
 import {CoachDashboardPage} from "../pages/coach-dashboard/coach-dashboard";
 import {StudentDashboardPage} from "../pages/student-dashboard/student-dashboard";
-import {MorePopoverPage} from "../pages/coach-dashboard/more-popover/more-popover";
+import {DashboardPopoverPage} from "../pages/dashboard-popover/dashboard-popover";
 import {TaskService} from "../services/task.service";
 import {UserService} from "../services/user.service";
 import {CoachTaskPage} from "../pages/coach-task/coach-task";
@@ -29,7 +29,7 @@ import {StudentTaskPage} from "../pages/student-task/student-task";
     RoleChoicePage,
     CoachDashboardPage,
     StudentDashboardPage,
-    MorePopoverPage,
+    DashboardPopoverPage,
     CoachTaskPage,
     CreateTaskPage,
     StudentTaskPage
@@ -47,7 +47,7 @@ import {StudentTaskPage} from "../pages/student-task/student-task";
     RoleChoicePage,
     CoachDashboardPage,
     StudentDashboardPage,
-    MorePopoverPage,
+    DashboardPopoverPage,
     CoachTaskPage,
     CreateTaskPage,
     StudentTaskPage
