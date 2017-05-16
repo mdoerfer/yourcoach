@@ -10,6 +10,25 @@ import {CreateTaskPage} from "../create-task/create-task";
 })
 export class CoachTaskPage {
   createTaskPage = CreateTaskPage;
+  tasks: any[] = [
+    {
+      title: 'Task1',
+      description: 'Du musst was tun',
+      answer: 'Per Nachricht',
+      date: '10.05.2017',
+      open: false
+    },
+    {
+      title: 'Task2',
+      description: 'Du musst was tun',
+      answer: 'Per Nachricht',
+      date: '12.05.2017',
+      open: false
+    }
+  ];
   taskchange: string = "open";
 
+  toggle(task: any) {
+    task.open = !task.open;
+  }
 }

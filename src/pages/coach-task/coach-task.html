@@ -26,20 +26,21 @@
 
 <ion-content padding>
   <div [ngSwitch]="taskchange">
-      <ion-card *ngSwitchCase="'open'">
+    <div *ngSwitchCase="'open'">
+      <ion-card *ngFor="let task of tasks; let i = index; let isOpen = false;" (click)="toggle(task)">
 
         <ion-item>
-          <h2>Task 1</h2>
-          <p>10.05.2017</p>
+          <h2>{{task.title}}</h2>
+          <p item-right>{{task.date}}</p>
         </ion-item>
 
-        <ion-card-content>
-          <p>Erst musst du X machen, dann Y. Außerdem musst du das auch eine gewisse Zeit machen, du Lusche</p>
+        <ion-card-content *ngIf="task.open">
+          <p>{{task.description}}</p>
         </ion-card-content>
 
-        <ion-item>
+        <ion-item *ngIf="task.open">
           <h2>Rückmeldung</h2>
-          <p>Info über Eingabefeld</p>
+          <p>{{task.answer}}</p>
         </ion-item>
 
         <ion-row>
@@ -52,6 +53,7 @@
         </ion-row>
 
       </ion-card>
+    </div>
   </div>
 
   <ion-fab right bottom>

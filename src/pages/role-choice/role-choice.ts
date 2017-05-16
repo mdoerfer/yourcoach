@@ -12,7 +12,6 @@ import {CoachTaskPage} from "../coach-task/coach-task";
   templateUrl: 'role-choice.html',
 })
 export class RoleChoicePage {
-  coachTaskPage = CoachTaskPage;
 
   constructor(private userService: UserService,
               private navCtrl: NavController,
