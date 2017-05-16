@@ -21,12 +21,22 @@ export class StudentDashboardPage implements OnInit {
     this.initializePendingInvites();
   }
 
+  /**
+   * Accept invite
+   *
+   * @param i
+   */
   onAcceptInvite(i: number) {
     let cid = this.pendingInvites[i]._id;
 
     this.userService.acceptInviteById(cid);
   }
 
+  /**
+   * Decline invite
+   *
+   * @param i
+   */
   onDeclineInvite(i: number) {
     let cid = this.pendingInvites[i]._id;
 
@@ -34,7 +44,8 @@ export class StudentDashboardPage implements OnInit {
   }
 
   /**
-   * Get pending invites from coaches
+   * Get pending invites and the related coaches
+   * Automatically update on changes to the database
    */
   private initializePendingInvites() {
     //Get pending invites
@@ -50,8 +61,6 @@ export class StudentDashboardPage implements OnInit {
           this.pendingInvites.push(newCoach);
         })
       }
-
-      console.log(this.pendingInvites);
     });
   }
 }

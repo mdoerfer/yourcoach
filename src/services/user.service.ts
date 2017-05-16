@@ -69,6 +69,8 @@ export class UserService {
 
   /**
    * Remove invite by coach id
+   *
+   * @param cid
    */
   removeInviteById(cid: string) {
     let uid = this.authService.getActiveUser().uid;
@@ -78,6 +80,8 @@ export class UserService {
 
   /**
    * Accept invite by id
+   *
+   * @param cid
    */
   acceptInviteById(cid: string) {
     let uid = this.authService.getActiveUser().uid;
@@ -110,45 +114,12 @@ export class UserService {
       //Student ID
       let sid = snapshot.key;
 
-      //TODO: Check if student/coach were already paired
+      //TODO: Check if student/coach were already paired, if yes dont create invite
 
       //Add invite to invites node to sid
       return firebase.database().ref('/users/' + sid + '/invites/' + uid).update({
         created_at: new Date().valueOf()
       });
     });
-  }
-
-  /**
-   * Accept/decline an invite from a coach
-   *
-   * @param cid
-   * @param accepted
-   */
-  respondToInviteFromCoach(cid: string, accepted: boolean) {
-    let uid = this.authService.getActiveUser().uid;
-
-    //Delete invite from student
-    firebase.database().ref('/users/' + uid + '/invites/' + cid).remove()
-      .then(data => {
-        if (accepted) {
-          //Add student to coach
-          return firebase.database().ref('/users/' + cid + '/students/' + uid).update({
-            created_at: new Date().valueOf()
-          })
-            .then(data => {
-              console.log('Student accepted invite');
-            })
-            .catch(error => {
-              console.log(error.message);
-            });
-        }
-        else {
-          console.log('Student declined invite');
-        }
-      })
-      .catch(error => {
-        console.log(error.message);
-      });
   }
 }
