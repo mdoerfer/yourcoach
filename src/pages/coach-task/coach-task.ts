@@ -10,7 +10,9 @@ import {TaskPopoverPage} from "../task-popover/task-popover";
 })
 export class CoachTaskPage implements OnInit {
   createTaskPage = CreateTaskPage;
+  activeTab: string = "open";
 
+  //Dummy data for tasks
   tasks: any[] = [
     {
       title: 'Task1',
@@ -33,17 +35,16 @@ export class CoachTaskPage implements OnInit {
       open: false
     }
   ];
-  taskchange: string = "open";
 
   constructor(private navParams: NavParams,
               private popoverCtrl: PopoverController) {}
 
-  toggle(task: any) {
-    task.open = !task.open;
-  }
-
   ngOnInit() {
     console.log(this.navParams.data);
+  }
+
+  toggle(task: any) {
+    task.open = !task.open;
   }
 
   presentPopover(myEvent) {

@@ -3,14 +3,14 @@
   <ion-navbar color="primary">
     <ion-title>Student</ion-title>
     <ion-buttons end>
-      <button ion-button icon-only>
+      <button ion-button icon-only (click)="presentPopover($event)">
         <ion-icon name="more"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
 
   <ion-toolbar color="primary">
-    <ion-segment color="navtext" [(ngModel)]="taskchange">
+    <ion-segment color="navtext" [(ngModel)]="activeTab">
       <ion-segment-button value="open">
         Offen
       </ion-segment-button>
@@ -25,7 +25,7 @@
 </ion-header>
 
 <ion-content padding>
-  <div [ngSwitch]="taskchange">
+  <div [ngSwitch]="activeTab">
     <ion-card *ngSwitchCase="'open'">
 
       <ion-item>

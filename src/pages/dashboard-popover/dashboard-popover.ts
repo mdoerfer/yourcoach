@@ -21,10 +21,12 @@ export class DashboardPopoverPage {
 
   goToTaskTemplates() {
     console.log('Task Templates clicked. View not created yet.');
+    this.close();
   }
 
   goToNotifications() {
     console.log('Benachrichtigungen clicked. View not created yet.');
+    this.close();
   }
 
   goToSettings() {

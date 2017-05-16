@@ -12,16 +12,19 @@ export class TaskPopoverPage {
               private navCtrl: NavController) {
   }
 
-  goToRProfilePage() {
+  goToProfile() {
     console.log('Profile clicked. View not created yet.');
+    this.close();
   }
 
   goToStatistic() {
     console.log('Statistic clicked. View not created yet.');
+    this.close();
   }
 
   goToDelete() {
     console.log('Delete clicked. View not created yet.');
+    this.close();
   }
 
   private close() {
