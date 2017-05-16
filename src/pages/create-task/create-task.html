@@ -1,0 +1,32 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>Erstellen</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+    <ion-list>
+
+      <ion-item>
+        <ion-label>Titel</ion-label>
+        <ion-input type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <button ion-button outline>Leicht</button>
+        <button ion-button color="secondary" outline>Mittel</button>
+        <button ion-button color="danger" outline>Schwer</button>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Beschreibung</ion-label>
+        <ion-input type="text"></ion-input>
+      </ion-item>
+
+    </ion-list>
+<button ion-button (click)="showAnswer()"><ion-icon name="add"></ion-icon>Rückmeldung gewünscht</button>
+</ion-content>

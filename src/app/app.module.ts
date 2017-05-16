@@ -16,6 +16,7 @@ import {MorePopoverPage} from "../pages/coach-dashboard/more-popover/more-popove
 import {TaskService} from "../services/task.service";
 import {UserService} from "../services/user.service";
 import {CoachTaskPage} from "../pages/coach-task/coach-task";
+import {CreateTaskPage} from "../pages/create-task/create-task";
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import {CoachTaskPage} from "../pages/coach-task/coach-task";
     CoachDashboardPage,
     StudentDashboardPage,
     MorePopoverPage,
-    CoachTaskPage
+    CoachTaskPage,
+    CreateTaskPage
   ],
   imports: [
     BrowserModule,
@@ -44,7 +46,8 @@ import {CoachTaskPage} from "../pages/coach-task/coach-task";
     CoachDashboardPage,
     StudentDashboardPage,
     MorePopoverPage,
-    CoachTaskPage
+    CoachTaskPage,
+    CreateTaskPage
   ],
   providers: [
     StatusBar,
