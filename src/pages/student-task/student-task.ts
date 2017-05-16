@@ -11,6 +11,9 @@ export class StudentTaskPage implements OnInit {
 
   constructor(private navParams: NavParams) {}
 
+  /**
+   * Initialize component
+   */
   ngOnInit() {
     console.log(this.navParams.data);
 }

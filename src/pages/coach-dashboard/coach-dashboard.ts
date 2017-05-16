@@ -16,10 +16,17 @@ export class CoachDashboardPage implements OnInit{
               private userService: UserService, private navCtrl: NavController) {
   }
 
+  /**
+   * Initialize component
+   */
   ngOnInit(){
     this.initializeStudents();
   }
 
+  /**
+   * Read students from database and watch for changes
+   * If change occurs automatically reload array
+   */
   private initializeStudents() {
     this.userService.getStudents().on('value', students => {
       this.students = [];
@@ -35,6 +42,11 @@ export class CoachDashboardPage implements OnInit{
     })
   }
 
+  /**
+   * Open task page with tasks for student
+   *
+   * @param i
+   */
   goToTasks(i: number) {
     let sid = this.students[i]._id;
 
@@ -44,6 +56,9 @@ export class CoachDashboardPage implements OnInit{
 
   }
 
+  /**
+   * Show student invite prompt
+   */
   showPrompt() {
     let prompt = this.alertCtrl.create({
       title: 'Student einladen',
@@ -74,6 +89,11 @@ export class CoachDashboardPage implements OnInit{
     prompt.present();
   }
 
+  /**
+   * Present popover at event location
+   *
+   * @param myEvent
+   */
   presentPopover(myEvent) {
     let popover = this.popoverCtrl.create(MorePopoverPage);
     popover.present({

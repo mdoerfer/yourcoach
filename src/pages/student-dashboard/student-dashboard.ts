@@ -18,7 +18,7 @@ export class StudentDashboardPage implements OnInit {
   }
 
   /**
-   * Init component
+   * Initialize component
    */
   ngOnInit() {
     this.initializePendingInvites();
@@ -47,6 +47,11 @@ export class StudentDashboardPage implements OnInit {
     this.userService.removeInviteById(cid);
   }
 
+  /**
+   * Open task page with tasks from coach
+   *
+   * @param i
+   */
   goToTasks(i: number) {
     let cid = this.coaches[i]._id;
     this.navCtrl.push(StudentTaskPage, {
@@ -54,7 +59,10 @@ export class StudentDashboardPage implements OnInit {
     });
   }
 
-
+  /**
+   * Read coaches from database and watch for changes
+   * If change occurs automatically reload array
+   */
   private initializeCoaches() {
     this.userService.getCoaches().on('value', coaches => {
       this.coaches = [];
