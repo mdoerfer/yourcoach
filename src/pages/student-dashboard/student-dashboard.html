@@ -7,23 +7,20 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-list>
-    <ion-item>
-      <ion-avatar item-left>
-        <img src="../../assets/images/dummy-avatar.png">
-      </ion-avatar>
-      <h2>Coach 1</h2>
-      <p>2 Tasks offen</p>
-      <ion-badge color="light" item-right>2</ion-badge>
-    </ion-item>
+  <ion-list-header>Deine Coaches</ion-list-header>
+  <p padding *ngIf="coaches.length == 0">
+    Es liegen keine Einladungen vor
+  </p>
 
-    <ion-item>
+  <ion-list *ngIf="coaches.length > 0">
+    <ion-item *ngFor="let coach of coaches; let i = index" (click)="goToTasks(i)">
       <ion-avatar item-left>
         <img src="../../assets/images/dummy-avatar.png">
       </ion-avatar>
-      <h2>Coach 2</h2>
-      <p>1 Task offen</p>
-      <ion-badge color="light" item-right>1</ion-badge>
+      <h2>{{coach.name}}</h2>
+      <!--TODO: Show open tasks-->
+      <!--p>2 Tasks offen</p>
+      <ion-badge color="light" item-right>2</ion-badge-->
     </ion-item>
   </ion-list>
   <ion-list-header>Anfragen</ion-list-header>
@@ -44,9 +41,9 @@
           <button ion-button outline (click)="onDeclineInvite(i)">
             Ablehnen
           </button>
-      <button ion-button (click)="onAcceptInvite(i)">
-        Akzeptieren
-      </button>
+          <button ion-button (click)="onAcceptInvite(i)">
+            Akzeptieren
+          </button>
         </ion-item>
       </ion-card>
     </p>
