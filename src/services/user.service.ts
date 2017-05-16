@@ -136,12 +136,16 @@ export class UserService {
       //Student ID
       let sid = snapshot.key;
 
+      //Check if student/coach is already paired
       firebase.database().ref('/users/' + uid + '/students/' + sid).once('value', snapshot => {
         if(!snapshot.hasChild('created_at')) {
-          //Add invite to invites node to sid
-          return firebase.database().ref('/users/' + sid + '/invites/' + uid).update({
-            created_at: new Date().valueOf()
-          });
+
+          //Add invite to invites node to sid, if not trying to invite myself
+          if(sid != uid) {
+            return firebase.database().ref('/users/' + sid + '/invites/' + uid).update({
+              created_at: new Date().valueOf()
+            });
+          }
         }
       });
     });
