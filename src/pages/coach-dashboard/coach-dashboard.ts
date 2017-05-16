@@ -36,7 +36,11 @@ export class CoachDashboardPage implements OnInit{
   }
 
   goToTasks(i: number) {
-    this.navCtrl.push(CoachTaskPage);
+    let sid = this.students[i]._id;
+
+    this.navCtrl.push(CoachTaskPage, {
+      sid: sid
+    });
 
   }
 

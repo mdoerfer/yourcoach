@@ -1,12 +1,6 @@
 import { Component } from '@angular/core';
 import {IonicPage, AlertController} from 'ionic-angular';
 
-/**
- * Generated class for the CreateTaskPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 @IonicPage()
 @Component({
   selector: 'page-create-task',
