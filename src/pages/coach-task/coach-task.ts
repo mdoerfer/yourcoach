@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {IonicPage, NavParams} from 'ionic-angular';
-import {CreateTaskPageModule} from "../create-task/create-task.module";
 import {CreateTaskPage} from "../create-task/create-task";
 
 @IonicPage()
