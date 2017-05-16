@@ -27,9 +27,9 @@
 <ion-content padding>
   <div [ngSwitch]="taskchange">
     <div *ngSwitchCase="'open'">
-      <ion-card *ngFor="let task of tasks; let i = index; let isOpen = false;" (click)="toggle(task)">
+      <ion-card *ngFor="let task of tasks; let i = index; let isOpen = false;">
 
-        <ion-item>
+        <ion-item (click)="toggle(task)">
           <h2>{{task.title}}</h2>
           <ion-note item-right>{{task.duration}}</ion-note>
           <ion-badge item-right *ngIf="task.difficulty=='hard'" color="badgehard">{{task.difficulty}}</ion-badge>
@@ -62,9 +62,9 @@
     </div>
 
     <div *ngSwitchCase="'grade'">
-      <ion-card *ngFor="let task of tasks; let i = index; let isOpen = false;" (click)="toggle(task)">
+      <ion-card *ngFor="let task of tasks; let i = index; let isOpen = false;">
 
-        <ion-item>
+        <ion-item (click)="toggle(task)">
           <h2>{{task.title}}</h2>
           <ion-note item-right>{{task.duration}}</ion-note>
           <ion-badge item-right *ngIf="task.difficulty=='hard'" color="badgehard">{{task.difficulty}}</ion-badge>
