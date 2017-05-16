@@ -51,7 +51,7 @@ export class CreateTaskPage {
           role: 'cancel',
         },
         {
-          text: 'Senden'
+          text: 'Auswählen'
         }
       ]
     });
