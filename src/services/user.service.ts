@@ -68,6 +68,28 @@ export class UserService {
   }
 
   /**
+   * Get all coaches from student
+   *
+   * @returns {firebase.Promise<any>}
+   */
+  getCoaches() {
+    let uid = this.authService.getActiveUser().uid;
+
+    return firebase.database().ref('/users/' + uid + '/coaches');
+  }
+
+  /**
+   * Get all students from coaches
+   *
+   * @returns {firebase.Promise<any>}
+   */
+  getStudents() {
+    let uid = this.authService.getActiveUser().uid;
+
+    return firebase.database().ref('/users/' + uid + '/students');
+  }
+
+  /**
    * Remove invite by coach id
    *
    * @param cid

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {IonicPage, PopoverController, AlertController} from 'ionic-angular';
 import {MorePopoverPage} from "./more-popover/more-popover";
 import {UserService} from "../../services/user.service";
@@ -8,10 +8,30 @@ import {UserService} from "../../services/user.service";
   selector: 'page-coach-dashboard',
   templateUrl: 'coach-dashboard.html',
 })
-export class CoachDashboardPage {
+export class CoachDashboardPage implements OnInit{
+  private students: any[] = [];
   constructor(private popoverCtrl: PopoverController,
               private alertCtrl: AlertController,
               private userService: UserService) {
+  }
+
+  ngOnInit(){
+    this.initializeStudents();
+  }
+
+  private initializeStudents() {
+    this.userService.getStudents().on('value', students => {
+      this.students = [];
+
+      for (let studentId in students.val()) {
+        this.userService.getUserRefById(studentId).once('value', user => {
+          let newStudent = user.val();
+          newStudent._id = studentId;
+
+          this.students.push(newStudent);
+        })
+      }
+    })
   }
 
   showPrompt() {

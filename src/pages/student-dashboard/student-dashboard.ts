@@ -9,6 +9,7 @@ import {UserService} from "../../services/user.service";
   templateUrl: 'student-dashboard.html',
 })
 export class StudentDashboardPage implements OnInit {
+  private coaches: any[] = [];
   private pendingInvites: any[] = [];
 
   constructor(private userService: UserService) {
@@ -19,6 +20,7 @@ export class StudentDashboardPage implements OnInit {
    */
   ngOnInit() {
     this.initializePendingInvites();
+    this.initializeCoaches();
   }
 
   /**
@@ -41,6 +43,22 @@ export class StudentDashboardPage implements OnInit {
     let cid = this.pendingInvites[i]._id;
 
     this.userService.removeInviteById(cid);
+  }
+
+
+  private initializeCoaches() {
+    this.userService.getCoaches().on('value', coaches => {
+      this.coaches = [];
+
+      for (let coachId in coaches.val()) {
+        this.userService.getUserRefById(coachId).once('value', user => {
+          let newCoach = user.val();
+          newCoach._id = coachId;
+
+          this.coaches.push(newCoach);
+        })
+      }
+    })
   }
 
   /**
