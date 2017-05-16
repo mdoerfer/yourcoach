@@ -9,24 +9,59 @@
 
 <ion-content padding>
 
-    <ion-list>
-
+  <ion-list>
+    <form #f="ngForm" (ngSubmit)="onCreateTask(f)">
       <ion-item>
-        <ion-label>Titel</ion-label>
-        <ion-input type="text"></ion-input>
+        <ion-label floating>Titel</ion-label>
+        <ion-input
+          type="text"
+          required
+          block
+          ngModel
+          name="title">
+        </ion-input>
       </ion-item>
 
-      <ion-item>
-        <button ion-button outline>Leicht</button>
-        <button ion-button color="secondary" outline>Mittel</button>
-        <button ion-button color="danger" outline>Schwer</button>
-      </ion-item>
+      <ion-list radio-group ngModel name="difficulty">
+        <ion-item>
+          <ion-label>Leicht</ion-label>
+          <ion-radio value="easy" checked></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>Mittel</ion-label>
+          <ion-radio value="medium" checked></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>Schwer</ion-label>
+          <ion-radio value="hard" checked></ion-radio>
+        </ion-item>
+      </ion-list>
 
       <ion-item>
-        <ion-label>Beschreibung</ion-label>
-        <ion-input type="text"></ion-input>
+        <ion-label floating>Beschreibung</ion-label>
+        <ion-input
+          type="text"
+          required
+          block
+          ngModel
+          name="description">
+        ></ion-input>
       </ion-item>
 
-    </ion-list>
-<button ion-button (click)="showAnswer()"><ion-icon name="add"></ion-icon>Rückmeldung gewünscht</button>
+
+  <button ion-button icon-left (click)="showAnswer()">
+    <ion-icon name="add"></ion-icon>
+    Rückmeldung gewünscht
+  </button>
+  <button
+    ion-button
+    type="submit"
+    block>
+    speichern
+  </button>
+
+  </form>
+  </ion-list>
 </ion-content>
+
+

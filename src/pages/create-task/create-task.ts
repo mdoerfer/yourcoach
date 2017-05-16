@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {IonicPage, AlertController} from 'ionic-angular';
+import {NgForm} from "@angular/forms";
 
 @IonicPage()
 @Component({
@@ -7,8 +8,20 @@ import {IonicPage, AlertController} from 'ionic-angular';
   templateUrl: 'create-task.html',
 })
 export class CreateTaskPage {
+  difficulty: string;
+
   constructor(private alertCtrl: AlertController) {
   }
+
+  onCreateTask(form: NgForm) {
+    console.log(form.value);
+    console.log('Test');
+  }
+
+  setDifficulty(d: string) {
+    this.difficulty = d;
+  }
+
   showAnswer() {
     let prompt = this.alertCtrl.create({
       title: 'Art der Rückmeldung',
@@ -45,7 +58,10 @@ export class CreateTaskPage {
           role: 'cancel',
         },
         {
-          text: 'Auswählen'
+          text: 'Auswählen',
+          handler: data => {
+            console.log(data);
+          }
         }
       ]
     });
