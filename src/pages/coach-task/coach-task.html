@@ -31,7 +31,10 @@
 
         <ion-item>
           <h2>{{task.title}}</h2>
-          <p item-right>{{task.date}}</p>
+          <ion-note item-right>{{task.duration}}</ion-note>
+          <ion-badge item-right *ngIf="task.difficulty=='hard'" color="badgehard">{{task.difficulty}}</ion-badge>
+          <ion-badge item-right *ngIf="task.difficulty=='medium'" color="badgemedium">{{task.difficulty}}</ion-badge>
+          <ion-badge item-right *ngIf="task.difficulty=='easy'" color="badgeeasy">{{task.difficulty}}</ion-badge>
         </ion-item>
 
         <ion-card-content *ngIf="task.open">
@@ -44,7 +47,39 @@
         </ion-item>
 
         <ion-row>
-          <ion-col>
+          <ion-col text-right *ngIf="task.open">
+            <button ion-button icon-left clear small>
+              <ion-icon name="text"></ion-icon>
+              <div>Chat</div>
+            </button>
+          </ion-col>
+        </ion-row>
+
+      </ion-card>
+    </div>
+
+    <div *ngSwitchCase="'grade'">
+      <ion-card *ngFor="let task of tasks; let i = index; let isOpen = false;" (click)="toggle(task)">
+
+        <ion-item>
+          <h2>{{task.title}}</h2>
+          <ion-note item-right>{{task.duration}}</ion-note>
+          <ion-badge item-right *ngIf="task.difficulty=='hard'" color="badgehard">{{task.difficulty}}</ion-badge>
+          <ion-badge item-right *ngIf="task.difficulty=='medium'" color="badgemedium">{{task.difficulty}}</ion-badge>
+          <ion-badge item-right *ngIf="task.difficulty=='easy'" color="badgeeasy">{{task.difficulty}}</ion-badge>
+        </ion-item>
+
+        <ion-card-content *ngIf="task.open">
+          <p>{{task.description}}</p>
+        </ion-card-content>
+
+        <ion-item *ngIf="task.open">
+          <h2>Rückmeldung</h2>
+          <p>{{task.answer}}</p>
+        </ion-item>
+
+        <ion-row>
+          <ion-col text-right *ngIf="task.open">
             <button ion-button icon-left clear small>
               <ion-icon name="text"></ion-icon>
               <div>Chat</div>

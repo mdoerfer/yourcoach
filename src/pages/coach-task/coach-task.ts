@@ -15,14 +15,20 @@ export class CoachTaskPage {
       title: 'Task1',
       description: 'Du musst was tun',
       answer: 'Per Nachricht',
-      date: '10.05.2017',
+      duration: '11Std',
+      difficulty: 'hard',
+      state: 'open',
+      authorid: '#1',
       open: false
     },
     {
       title: 'Task2',
       description: 'Du musst was tun',
       answer: 'Per Nachricht',
-      date: '12.05.2017',
+      duration: '2T',
+      difficulty: 'medium',
+      state: 'grade',
+      authorid: '#1',
       open: false
     }
   ];
@@ -32,3 +38,4 @@ export class CoachTaskPage {
     task.open = !task.open;
   }
 }
+
