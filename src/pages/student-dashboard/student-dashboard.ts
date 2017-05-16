@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {IonicPage} from 'ionic-angular';
+import {IonicPage, NavController} from 'ionic-angular';
 import {UserService} from "../../services/user.service";
+import {StudentTaskPage} from "../student-task/student-task";
 
 
 @IonicPage()
@@ -12,7 +13,8 @@ export class StudentDashboardPage implements OnInit {
   private coaches: any[] = [];
   private pendingInvites: any[] = [];
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService,
+              private navCtrl: NavController) {
   }
 
   /**
@@ -43,6 +45,10 @@ export class StudentDashboardPage implements OnInit {
     let cid = this.pendingInvites[i]._id;
 
     this.userService.removeInviteById(cid);
+  }
+
+  goToTasks(i: number) {
+    this.navCtrl.push(StudentTaskPage);
   }
 
 
