@@ -8,5 +8,25 @@
 
 
 <ion-content padding>
+  <p *ngIf="pendingInvites.length == 0">
+    Es liegen keine Einladungen vor
+  </p>
+  <div *ngIf="pendingInvites.length > 0">
+    <p *ngFor="let coach of pendingInvites; let i = index">
+      ID: {{coach._id}}<br>
+      Name: {{coach.name}}<br>
+      Email: {{coach.email}}<br>
+      Role: {{coach.role}}<br>
+      Created at: {{coach.created_at}}<br>
+      Updated at: {{coach.updated_at}}<br>
+      <button ion-button icon-only (click)="onAcceptInvite(i)">
+        <ion-icon name="checkmark"></ion-icon>
+      </button>
+      <button ion-button icon-only color="danger" (click)="onDeclineInvite(i)">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </p>
+  </div>
+
 
 </ion-content>

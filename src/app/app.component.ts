@@ -7,7 +7,8 @@ import firebase from 'firebase';
 import {SignupPage} from "../pages/signup/signup";
 import {RoleChoicePage} from "../pages/role-choice/role-choice";
 import {SigninPage} from "../pages/signin/signin";
-import {UserService} from "../services/user.service";
+
+import {AuthService} from "../services/auth.service";
 
 @Component({
   templateUrl: 'app.html'
@@ -15,7 +16,7 @@ import {UserService} from "../services/user.service";
 export class MyApp {
   rootPage: any = SignupPage;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private userService: UserService) {
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private authService: AuthService) {
     /**
      * Initialize Firebase
      */
@@ -29,13 +30,6 @@ export class MyApp {
     });
 
     /**
-     * Change rootPage on changes on authentication state
-     */
-    firebase.auth().onAuthStateChanged(user => {
-      this.setRootPage();
-    });
-
-    /**
      * Call platform ready events
      */
     platform.ready().then(() => {
@@ -43,10 +37,19 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
 
-      //Set root page on app init
+      this.onAuthStateChanged();
       this.setRootPage();
 
       splashScreen.hide();
+    });
+  }
+
+  /**
+   * Change root page on authentication state change
+   */
+  private onAuthStateChanged() {
+    firebase.auth().onAuthStateChanged(user => {
+      this.setRootPage();
     });
   }
 
@@ -55,13 +58,11 @@ export class MyApp {
    * state of the user
    */
   private setRootPage() {
-    let user = this.userService.getUser();
+    let user = this.authService.getActiveUser();
 
     //If user is logged in and verified
     if(user && user.emailVerified) {
       this.rootPage = RoleChoicePage;
-
-      //TODO: If setting "Dont show role choice on app open" is false open RoleDashboard, else open RoleChoicePage
     }
     //If user is logged in but not verified
     else if(user && !user.emailVerified) {

@@ -42,4 +42,13 @@ export class AuthService {
   resetPassword(email: string) {
     return firebase.auth().sendPasswordResetEmail(email);
   }
+
+  /**
+   * Returns currently active user
+   *
+   * @returns {firebase.User|null}
+   */
+  getActiveUser() {
+    return firebase.auth().currentUser;
+  }
 }

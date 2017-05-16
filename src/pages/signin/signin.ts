@@ -48,7 +48,7 @@ export class SigninPage {
       .then(data => {
         loader.dismiss();
 
-        let user = this.userService.getUser();
+        let user = this.authService.getActiveUser();
 
         if(user.emailVerified) {
           this.showToast('Erfolgreich eingeloggt');

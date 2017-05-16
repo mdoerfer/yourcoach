@@ -1,13 +1,11 @@
 import firebase from 'firebase';
+import {Injectable} from "@angular/core";
 
+import {AuthService} from "./auth.service";
+
+@Injectable()
 export class UserService {
-  /**
-   * Get the currently authenticated user
-   *
-   * @returns {firebase.User|null}
-   */
-  getUser() {
-    return firebase.auth().currentUser;
+  constructor(private authService: AuthService) {
   }
 
   /**
@@ -18,8 +16,8 @@ export class UserService {
    * @param ref
    * @returns {firebase.Promise<any>}
    */
-  setUserRef(ref: object) {
-    let uid = this.getUser().uid;
+  setActiveUserRef(ref: object) {
+    let uid = this.authService.getActiveUser().uid;
 
     return firebase.database().ref('users/' + uid).set(ref);
   }
@@ -31,8 +29,8 @@ export class UserService {
    * @param ref
    * @returns {firebase.Promise<any>}
    */
-  updateUserRef(ref: object) {
-    let uid = this.getUser().uid;
+  updateActiveUserRef(ref: object) {
+    let uid = this.authService.getActiveUser().uid;
 
     return firebase.database().ref('users/' + uid).update(ref);
   }
@@ -42,16 +40,60 @@ export class UserService {
    *
    * @returns {firebase.Promise<any>}
    */
-  getUserRef() {
-    let uid = this.getUser().uid;
+  getActiveUserRef() {
+    let uid = this.authService.getActiveUser().uid;
 
-    return firebase.database().ref('/users/' + uid).once('value');
+    return firebase.database().ref('/users/' + uid);
   }
 
-  getInvites() {
-    let uid = this.getUser().uid;
+  /**
+   * Returns the corresponding user
+   *
+   * @param id
+   * @returns {firebase.database.Reference}
+   */
+  getUserRefById(id: string) {
+    return firebase.database().ref('/users/' + id);
+  }
 
-    firebase.database().ref('/users/' + uid + '/invites').once('value');
+  /**
+   * Get all invites from coaches
+   *
+   * @returns {firebase.Promise<any>}
+   */
+  getInvites() {
+    let uid = this.authService.getActiveUser().uid;
+
+    return firebase.database().ref('/users/' + uid + '/invites');
+  }
+
+  /**
+   * Remove invite by coach id
+   */
+  removeInviteById(cid: string) {
+    let uid = this.authService.getActiveUser().uid;
+
+    return firebase.database().ref('/users/' + uid + '/invites/' + cid).remove();
+  }
+
+  /**
+   * Accept invite by id
+   */
+  acceptInviteById(cid: string) {
+    let uid = this.authService.getActiveUser().uid;
+
+    //Add coach to student
+    firebase.database().ref('/users/' + uid + '/coaches/' + cid).set({
+      created_at: new Date().valueOf()
+    });
+
+    //Add student to coach
+    firebase.database().ref('/users/' + cid + '/students/' + uid).set({
+      created_at: new Date().valueOf()
+    });
+
+    //Remove invite
+    this.removeInviteById(cid);
   }
 
   /**
@@ -61,15 +103,16 @@ export class UserService {
    * @returns {firebase.Promise<any>}
    */
   sendInviteToStudent(email: string) {
-    //Coach ID
-    let uid = this.getUser().uid;
+    let uid = this.authService.getActiveUser().uid;
 
     //Find students
     firebase.database().ref('/users').orderByChild('email').equalTo(email).once('child_added', snapshot => {
       //Student ID
       let sid = snapshot.key;
 
-      //Add inquiry to inquiries node to sid
+      //TODO: Check if student/coach were already paired
+
+      //Add invite to invites node to sid
       return firebase.database().ref('/users/' + sid + '/invites/' + uid).update({
         created_at: new Date().valueOf()
       });
@@ -83,13 +126,12 @@ export class UserService {
    * @param accepted
    */
   respondToInviteFromCoach(cid: string, accepted: boolean) {
-    //Student ID
-    let uid = this.getUser().uid;
+    let uid = this.authService.getActiveUser().uid;
 
     //Delete invite from student
     firebase.database().ref('/users/' + uid + '/invites/' + cid).remove()
       .then(data => {
-        if(accepted) {
+        if (accepted) {
           //Add student to coach
           return firebase.database().ref('/users/' + cid + '/students/' + uid).update({
             created_at: new Date().valueOf()

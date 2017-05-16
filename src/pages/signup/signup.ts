@@ -48,12 +48,14 @@ export class SignupPage {
         /**
          * Set display name of user
          */
-        this.userService.updateUserRef({
+        this.userService.updateActiveUserRef({
           name: name,
-          email: email
+          email: email,
+          created_at: new Date().valueOf(),
+          updated_at: new Date().valueOf()
         })
           .then(data => {
-            let user = this.userService.getUser();
+            let user = this.authService.getActiveUser();
 
             /**
              * Send verification email
