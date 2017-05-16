@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {IonicPage} from 'ionic-angular';
+import {Component, OnInit} from '@angular/core';
+import {IonicPage, NavParams} from 'ionic-angular';
 import {CreateTaskPageModule} from "../create-task/create-task.module";
 import {CreateTaskPage} from "../create-task/create-task";
 
@@ -8,8 +8,9 @@ import {CreateTaskPage} from "../create-task/create-task";
   selector: 'page-coach-task',
   templateUrl: 'coach-task.html',
 })
-export class CoachTaskPage {
+export class CoachTaskPage implements OnInit {
   createTaskPage = CreateTaskPage;
+
   tasks: any[] = [
     {
       title: 'Task1',
@@ -34,8 +35,14 @@ export class CoachTaskPage {
   ];
   taskchange: string = "open";
 
+  constructor(private navParams: NavParams) {}
+
   toggle(task: any) {
     task.open = !task.open;
+  }
+
+  ngOnInit() {
+    console.log(this.navParams.data);
   }
 }
 
