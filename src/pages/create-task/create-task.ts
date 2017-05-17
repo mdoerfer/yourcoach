@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import {IonicPage, AlertController} from 'ionic-angular';
-import {NgForm} from "@angular/forms";
+import {IonicPage} from 'ionic-angular';
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @IonicPage()
 @Component({
@@ -8,64 +8,41 @@ import {NgForm} from "@angular/forms";
   templateUrl: 'create-task.html',
 })
 export class CreateTaskPage {
-  difficulty: string;
+  taskForm: FormGroup;
+  difficulties: string[];
+  responses: string[];
 
-  constructor(private alertCtrl: AlertController) {
+  constructor() {
+    this.initializeForm();
   }
 
-  onCreateTask(form: NgForm) {
-    console.log(form.value);
-    console.log('Test');
+  private initializeForm() {
+    //Schwierigkeitsstufen
+    this.difficulties = [
+      'Einfach',
+      'Mittel',
+      'Schwer'
+    ];
+
+    //Rückmeldungsarten
+    this.responses = [
+      'Keine',
+      'Text',
+      'Bild',
+      'Video',
+      'Sprachnachricht'
+    ];
+
+    //Create form
+    this.taskForm = new FormGroup({
+      title: new FormControl(null, Validators.required),
+      description: new FormControl(null, Validators.required),
+      difficulty: new FormControl(this.difficulties[1], Validators.required),
+      response: new FormControl(this.responses[0], null)
+    })
   }
 
-  setDifficulty(d: string) {
-    this.difficulty = d;
+  onCreateTask() {
+    console.log(this.taskForm.value);
   }
-
-  showAnswer() {
-    let prompt = this.alertCtrl.create({
-      title: 'Art der Rückmeldung',
-      inputs: [
-        {
-          type: 'radio',
-          name: 'choice1',
-          label: 'Text'
-        },
-        {
-          type: 'radio',
-          name: 'choice2',
-          label: 'Bild'
-        },
-        {
-          type: 'radio',
-          name: 'choice3',
-          label: 'Video'
-        },
-        {
-          type: 'radio',
-          name: 'choice4',
-          label: 'Sprachnachricht'
-        },
-        {
-          type: 'radio',
-          name: 'choice5',
-          label: 'Definierte Auswahl...'
-        },
-      ],
-      buttons: [
-        {
-          text: 'Abbrechen',
-          role: 'cancel',
-        },
-        {
-          text: 'Auswählen',
-          handler: data => {
-            console.log(data);
-          }
-        }
-      ]
-    });
-    prompt.present();
-  }
-
 }

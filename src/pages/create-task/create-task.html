@@ -9,59 +9,54 @@
 
 <ion-content padding>
 
-  <ion-list>
-    <form #f="ngForm" (ngSubmit)="onCreateTask(f)">
-      <ion-item>
-        <ion-label floating>Titel</ion-label>
-        <ion-input
-          type="text"
-          required
-          block
-          ngModel
-          name="title">
-        </ion-input>
-      </ion-item>
+  <form [formGroup]="taskForm" (ngSubmit)="onCreateTask()">
+    <ion-item>
+      <ion-label floating>Titel</ion-label>
+      <ion-input
+        type="text"
+        block
+        formControlName="title">
+      </ion-input>
+    </ion-item>
 
-      <ion-list radio-group ngModel name="difficulty">
-        <ion-item>
-          <ion-label>Leicht</ion-label>
-          <ion-radio value="easy" checked></ion-radio>
-        </ion-item>
-        <ion-item>
-          <ion-label>Mittel</ion-label>
-          <ion-radio value="medium" checked></ion-radio>
-        </ion-item>
-        <ion-item>
-          <ion-label>Schwer</ion-label>
-          <ion-radio value="hard" checked></ion-radio>
-        </ion-item>
-      </ion-list>
+    <ion-item>
+      <ion-label floating>Beschreibung</ion-label>
+      <ion-input
+        type="text"
+        block
+        formControlName="description">
+      </ion-input>
+    </ion-item>
 
-      <ion-item>
-        <ion-label floating>Beschreibung</ion-label>
-        <ion-input
-          type="text"
-          required
-          block
-          ngModel
-          name="description">
-        ></ion-input>
-      </ion-item>
+    <ion-item>
+      <ion-label>Schwierigkeit</ion-label>
+      <ion-select formControlName="difficulty">
+        <ion-option
+          *ngFor="let difficulty of difficulties"
+          [value]="difficulty">{{ difficulty }}
+        </ion-option>
+      </ion-select>
+    </ion-item>
 
+    <ion-item>
+      <ion-label>Rückmeldung</ion-label>
+      <ion-select formControlName="response">
+        <ion-option
+          *ngFor="let response of responses"
+          [value]="response">{{ response }}
+        </ion-option>
+      </ion-select>
+    </ion-item>
 
-  <button ion-button icon-left (click)="showAnswer()">
-    <ion-icon name="add"></ion-icon>
-    Rückmeldung gewünscht
-  </button>
-  <button
-    ion-button
-    type="submit"
-    block>
-    speichern
-  </button>
+    <button
+      ion-button
+      type="submit"
+      block
+      [disabled]="!taskForm.valid">
+      speichern
+    </button>
 
   </form>
-  </ion-list>
 </ion-content>
 
 
