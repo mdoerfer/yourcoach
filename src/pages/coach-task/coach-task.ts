@@ -11,6 +11,7 @@ import {TaskPopoverPage} from "../task-popover/task-popover";
 export class CoachTaskPage implements OnInit {
   createTaskPage = CreateTaskPage;
   activeTab: string = "open";
+  sid: string;
 
   //Dummy data for tasks
   tasks: any[] = [
@@ -40,7 +41,7 @@ export class CoachTaskPage implements OnInit {
               private popoverCtrl: PopoverController) {}
 
   ngOnInit() {
-    console.log(this.navParams.data);
+    this.sid = this.navParams.get('sid');
   }
 
   toggle(task: any) {

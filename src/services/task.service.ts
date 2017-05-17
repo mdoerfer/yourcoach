@@ -1,4 +1,3 @@
-import {Task} from "../models/task.model";
 import {AuthService} from "./auth.service";
 import {Injectable} from "@angular/core";
 import firebase from 'firebase';
@@ -14,7 +13,7 @@ export class TaskService {
    * @param task
    * @returns {firebase.database.ThenableReference}
    */
-  createTask(task: Task) {
+  createTask(task) {
     return firebase.database().ref('/tasks/').push(task);
   }
 
