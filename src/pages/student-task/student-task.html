@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar color="primary">
-    <ion-title>Student</ion-title>
+    <ion-title>{{user?.name}}</ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="presentPopover($event)">
         <ion-icon name="more"></ion-icon>
@@ -108,7 +108,6 @@
 
     <div *ngSwitchCase="'done'">
       <div *ngIf="doneTasks.length == 0">Es liegen keine erledigten Aufgaben für diesen Studenten vor</div>
-      d be
       <div *ngIf="doneTasks.length > 0">
         <ion-card *ngFor="let task of doneTasks; let i = index;">
           <div>
