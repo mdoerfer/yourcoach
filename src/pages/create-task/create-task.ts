@@ -37,7 +37,8 @@ export class CreateTaskPage implements OnInit {
       'Text',
       'Bild',
       'Video',
-      'Sprachnachricht'
+      'Sprachnachricht',
+      'Auswahlmöglichkeit...'
     ];
 
     //Create form
