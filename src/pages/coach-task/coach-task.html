@@ -107,7 +107,7 @@
 
     <div *ngSwitchCase="'done'">
       <div *ngIf="doneTasks.length == 0">Es liegen keine erledigten Aufgaben für diesen Studenten vor</div>
-d be
+
       <div *ngIf="doneTasks.length > 0">
         <ion-card *ngFor="let task of doneTasks; let i = index;">
           <div>
