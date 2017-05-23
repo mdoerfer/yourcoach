@@ -1,15 +1,18 @@
-import {AuthService} from "../services/auth.service";
 export class Task {
-  _id: string;
-  state: string;
-  title: string;
-  description: string;
-  responseType: string;
-  response: any;
-  difficulty: string;
-  rating: number;
   from: string;
   to: string;
+  title: string;
+  description: string;
+  difficulty: string;
+  response: string;
+  responseInstructions: string;
   created_at: number;
   updated_at: number;
+
+  constructor() {
+    let d = new Date().valueOf();
+
+    this.created_at = d;
+    this.updated_at = d;
+  }
 }
