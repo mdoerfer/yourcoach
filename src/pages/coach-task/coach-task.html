@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar color="primary">
-    <ion-title>Dirk</ion-title>
+    <ion-title>{{user?.name}}</ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="presentPopover($event)">
         <ion-icon name="more"></ion-icon>
@@ -27,70 +27,120 @@
 <ion-content padding>
   <div [ngSwitch]="activeTab">
     <div *ngSwitchCase="'open'">
-      <ion-card *ngFor="let task of tasks; let i = index; let isOpen = false;">
+      <div *ngIf="openTasks.length == 0">Es liegen keine offenen Aufgaben für diesen Studenten vor</div>
 
-        <ion-item (click)="toggle(task)">
-          <h2>{{task.title}}</h2>
-          <ion-note item-right>{{task.duration}}</ion-note>
-          <ion-badge item-right *ngIf="task.difficulty=='hard'" color="badgehard">{{task.difficulty}}</ion-badge>
-          <ion-badge item-right *ngIf="task.difficulty=='medium'" color="badgemedium">{{task.difficulty}}</ion-badge>
-          <ion-badge item-right *ngIf="task.difficulty=='easy'" color="badgeeasy">{{task.difficulty}}</ion-badge>
-        </ion-item>
+      <div *ngIf="openTasks.length > 0">
+        <ion-card *ngFor="let task of openTasks; let i = index">
+          <div>
+            <ion-item (click)="toggle(task)">
+              <h2>{{task.title}}</h2>
+              <ion-note item-right>{{task.created_at | date}}</ion-note>
+              <ion-badge item-right *ngIf="task.difficulty=='Schwer'" color="badgehard">{{task.difficulty}}</ion-badge>
+              <ion-badge item-right *ngIf="task.difficulty=='Mittel'" color="badgemedium">{{task.difficulty}}
+              </ion-badge>
+              <ion-badge item-right *ngIf="task.difficulty=='Einfach'" color="badgeeasy">{{task.difficulty}}</ion-badge>
+            </ion-item>
 
-        <ion-card-content *ngIf="task.open">
-          <p>{{task.description}}</p>
-        </ion-card-content>
+            <ion-card-content *ngIf="task.open">
+              <p>{{task.description}}</p>
+            </ion-card-content>
 
-        <ion-item *ngIf="task.open">
-          <h2>Rückmeldung</h2>
-          <p>{{task.answer}}</p>
-        </ion-item>
+            <ion-item *ngIf="task.open">
+              <h2>Rückmeldung</h2>
+              <p>{{task.response}}</p>
+              <p *ngIf="task.responseInstructions">{{task.responseInstructions}}</p>
+            </ion-item>
 
-        <ion-row *ngIf="task.open">
-          <ion-col text-left>
-            <rating [(ngModel)]="rate" readOnly="false" max="3"></rating>
-          </ion-col>
-          <ion-col text-right>
-            <button ion-button icon-left clear small>
-              <ion-icon name="text"></ion-icon>
-              <div>Chat</div>
-            </button>
-          </ion-col>
-        </ion-row>
-
-      </ion-card>
+            <ion-row *ngIf="task.open">
+              <ion-col text-left>
+                <rating [(ngModel)]="rate" readOnly="false" max="3"></rating>
+              </ion-col>
+              <ion-col text-right>
+                <button ion-button icon-left clear small>
+                  <ion-icon name="text"></ion-icon>
+                  <div>Chat</div>
+                </button>
+              </ion-col>
+            </ion-row>
+          </div>
+        </ion-card>
+      </div>
     </div>
 
     <div *ngSwitchCase="'grade'">
-      <ion-card *ngFor="let task of tasks; let i = index; let isOpen = false;">
+      <div *ngIf="gradeTasks.length == 0">Es liegen keine zu bewertenden Aufgaben für diesen Studenten vor</div>
 
-        <ion-item (click)="toggle(task)">
-          <h2>{{task.title}}</h2>
-          <ion-note item-right>{{task.duration}}</ion-note>
-          <ion-badge item-right *ngIf="task.difficulty=='hard'" color="badgehard">{{task.difficulty}}</ion-badge>
-          <ion-badge item-right *ngIf="task.difficulty=='medium'" color="badgemedium">{{task.difficulty}}</ion-badge>
-          <ion-badge item-right *ngIf="task.difficulty=='easy'" color="badgeeasy">{{task.difficulty}}</ion-badge>
-        </ion-item>
+      <div *ngIf="gradeTasks.length > 0">
+        <ion-card *ngFor="let task of gradeTasks; let i = index;">
+          <div>
+            <ion-item (click)="toggle(task)">
+              <h2>{{task.title}}</h2>
+              <ion-note item-right>{{task.created_at | date}}</ion-note>
+              <ion-badge item-right *ngIf="task.difficulty=='Schwer'" color="badgehard">{{task.difficulty}}</ion-badge>
+              <ion-badge item-right *ngIf="task.difficulty=='Mittel'" color="badgemedium">{{task.difficulty}}
+              </ion-badge>
+              <ion-badge item-right *ngIf="task.difficulty=='Einfach'" color="badgeeasy">{{task.difficulty}}</ion-badge>
+            </ion-item>
 
-        <ion-card-content *ngIf="task.open">
-          <p>{{task.description}}</p>
-        </ion-card-content>
+            <ion-card-content *ngIf="task.open">
+              <p>{{task.description}}</p>
+            </ion-card-content>
 
-        <ion-item *ngIf="task.open">
-          <h2>Rückmeldung</h2>
-          <p>{{task.answer}}</p>
-        </ion-item>
+            <ion-item *ngIf="task.open">
+              <h2>Rückmeldung</h2>
+              <p>{{task.response}}</p>
+              <p *ngIf="task.responseInstructions">{{task.responseInstructions}}</p>
+            </ion-item>
 
-        <ion-row>
-          <ion-col text-right *ngIf="task.open">
-            <button ion-button icon-left clear small>
-              <ion-icon name="text"></ion-icon>
-              <div>Chat</div>
-            </button>
-          </ion-col>
-        </ion-row>
+            <ion-row>
+              <ion-col text-right *ngIf="task.open">
+                <button ion-button icon-left clear small>
+                  <ion-icon name="text"></ion-icon>
+                  <div>Chat</div>
+                </button>
+              </ion-col>
+            </ion-row>
+          </div>
+        </ion-card>
+      </div>
+    </div>
 
-      </ion-card>
+    <div *ngSwitchCase="'done'">
+      <div *ngIf="doneTasks.length == 0">Es liegen keine erledigten Aufgaben für diesen Studenten vor</div>
+
+      <div *ngIf="doneTasks.length > 0">
+        <ion-card *ngFor="let task of doneTasks; let i = index;">
+          <div>
+            <ion-item (click)="toggle(task)">
+              <h2>{{task.title}}</h2>
+              <ion-note item-right>{{task.created_at | date}}</ion-note>
+              <ion-badge item-right *ngIf="task.difficulty=='Schwer'" color="badgehard">{{task.difficulty}}</ion-badge>
+              <ion-badge item-right *ngIf="task.difficulty=='Mittel'" color="badgemedium">{{task.difficulty}}
+              </ion-badge>
+              <ion-badge item-right *ngIf="task.difficulty=='Einfach'" color="badgeeasy">{{task.difficulty}}</ion-badge>
+            </ion-item>
+
+            <ion-card-content *ngIf="task.open">
+              <p>{{task.description}}</p>
+            </ion-card-content>
+
+            <ion-item *ngIf="task.open">
+              <h2>Rückmeldung</h2>
+              <p>{{task.response}}</p>
+              <p *ngIf="task.responseInstructions">{{task.responseInstructions}}</p>
+            </ion-item>
+
+            <ion-row>
+              <ion-col text-right *ngIf="task.open">
+                <button ion-button icon-left clear small>
+                  <ion-icon name="text"></ion-icon>
+                  <div>Chat</div>
+                </button>
+              </ion-col>
+            </ion-row>
+          </div>
+        </ion-card>
+      </div>
     </div>
   </div>
 

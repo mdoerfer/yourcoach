@@ -67,11 +67,15 @@ export class CreateTaskPage implements OnInit {
     this.taskService.createTask({
       from: this.authService.getActiveUser().uid,
       to: this.navParams.get('sid'),
+      from_to: this.authService.getActiveUser().uid + '_' + this.navParams.get('sid'),
       title: this.taskForm.get('title').value,
       description: this.taskForm.get('description').value,
       difficulty: this.taskForm.get('difficulty').value,
       response: this.taskForm.get('response').value,
-      responseInstructions: this.taskForm.get('responseInstructions').value
+      responseInstructions: this.taskForm.get('responseInstructions').value,
+      state: 'open',
+      created_at: new Date().valueOf(),
+      updated_at: new Date().valueOf()
     })
       .then(data => {
         this.showToast("Aufgabe wurde erfolgreich gesendet.");

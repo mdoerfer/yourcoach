@@ -18,25 +18,27 @@ export class TaskService {
   }
 
   /**
-   * Get all tasks that were created by me
+   * Get all tasks that were created by me for a specific student
    *
+   * @param sid
    * @returns {firebase.database.Query}
    */
-  getAllTasksFromMe() {
+  getAllTasksFromMeToStudent(sid: string) {
     let uid = this.authService.getActiveUser().uid;
 
-    return firebase.database().ref('/tasks/').orderByChild('from').equalTo(uid);
+    return firebase.database().ref('/tasks/').orderByChild('from_to').equalTo(uid + '_' + sid);
   }
 
   /**
-   * Get all tasks that are meant for me
+   * Get all tasks meant for me, from a specific coach
    *
+   * @param cid
    * @returns {firebase.database.Query}
    */
-  getAllTasksForMe() {
+  getAllTasksForMeFromCoach(cid: string) {
     let uid = this.authService.getActiveUser().uid;
 
-    return firebase.database().ref('/tasks/').orderByChild('to').equalTo(uid);
+    return firebase.database().ref('/tasks/').orderByChild('from_to').equalTo(cid + '_' + uid);
   }
 
   /**
@@ -76,7 +78,7 @@ export class TaskService {
    * @param taskId
    * @param rating
    */
-  rateTask(taskId: string, rating: string) {
+  rateTaskById(taskId: string, rating: string) {
     this.updateTaskById(taskId, {
       rating: rating
     });
@@ -88,7 +90,7 @@ export class TaskService {
    * @param taskId
    * @param state
    */
-  changeState(taskId: string, state: string) {
+  changeTaskStateById(taskId: string, state: string) {
     this.updateTaskById(taskId, {
       state: state
     })

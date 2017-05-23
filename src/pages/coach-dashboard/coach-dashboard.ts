@@ -39,7 +39,7 @@ export class CoachDashboardPage implements OnInit{
           this.students.push(newStudent);
         })
       }
-    })
+    });
   }
 
   /**
