@@ -15,10 +15,10 @@
         Offen
       </ion-segment-button>
       <ion-segment-button value="grade">
-        Bewerten
+        Zu bewerten
       </ion-segment-button>
       <ion-segment-button value="done">
-        Erledigt
+        Abgeschlossen
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
@@ -52,9 +52,6 @@
             </ion-item>
 
             <ion-row *ngIf="task.open">
-              <ion-col text-left>
-                <rating [(ngModel)]="rate" readOnly="false" max="3"></rating>
-              </ion-col>
               <ion-col text-right>
                 <button ion-button icon-left clear small>
                   <ion-icon name="text"></ion-icon>
@@ -93,6 +90,9 @@
             </ion-item>
 
             <ion-row>
+              <ion-col text-left>
+                <rating [(ngModel)]="rate" readOnly="false" max="3"></rating>
+              </ion-col>
               <ion-col text-right *ngIf="task.open">
                 <button ion-button icon-left clear small>
                   <ion-icon name="text"></ion-icon>
@@ -107,7 +107,7 @@
 
     <div *ngSwitchCase="'done'">
       <div *ngIf="doneTasks.length == 0">Es liegen keine erledigten Aufgaben für diesen Studenten vor</div>
-
+d be
       <div *ngIf="doneTasks.length > 0">
         <ion-card *ngFor="let task of doneTasks; let i = index;">
           <div>

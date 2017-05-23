@@ -38,7 +38,7 @@ export class CoachTaskPage implements OnInit {
   }
 
   /**
-   *
+   * Load the currently active student data
    */
   private initializeStudent() {
     this.userService.getUserRefById(this.sid).once('value', user => {
@@ -86,10 +86,20 @@ export class CoachTaskPage implements OnInit {
     });
   }
 
+  /**
+   * Open the task card
+   *
+   * @param task
+   */
   toggle(task: any) {
     task.open = !task.open;
   }
 
+  /**
+   * Show the popover at event location
+   *
+   * @param myEvent
+   */
   presentPopover(myEvent) {
     let popover = this.popoverCtrl.create(TaskPopoverPage);
     popover.present({
