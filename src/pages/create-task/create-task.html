@@ -48,11 +48,12 @@
       </ion-select>
     </ion-item>
 
-    <ion-item> //TODO: Beschreibung nur anzeigen wenn Rückmeldungsart ausgewählt
+    <ion-item *ngIf="taskForm.get('response').value != 'Keine'">
       <ion-label floating>Was soll der Schüler rückmelden?</ion-label>
       <ion-input
         type="text"
-        block>
+        block
+        formControlName="responseInstructions">
       </ion-input>
     </ion-item>
 
@@ -61,7 +62,7 @@
       type="submit"
       block
       [disabled]="!taskForm.valid">
-      speichern
+      Aufgabe senden
     </button>
 
   </form>

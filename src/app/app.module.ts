@@ -3,20 +3,26 @@ import {ErrorHandler, NgModule} from '@angular/core';
 import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {StatusBar} from '@ionic-native/status-bar';
-// Import ionic2-rating module
+
+//App
+import {MyApp} from './app.component';
+
+//Modules
 import { Ionic2RatingModule } from 'ionic2-rating';
 
-import {MyApp} from './app.component';
+//Services
+import {AuthService} from "../services/auth.service";
+import {TaskService} from "../services/task.service";
+import {UserService} from "../services/user.service";
+
+//Pages
 import {SigninPage} from "../pages/signin/signin";
 import {SignupPage} from "../pages/signup/signup";
 import {ForgotPasswordPage} from "../pages/forgot-password/forgot-password";
-import {AuthService} from "../services/auth.service";
 import {RoleChoicePage} from "../pages/role-choice/role-choice";
 import {CoachDashboardPage} from "../pages/coach-dashboard/coach-dashboard";
 import {StudentDashboardPage} from "../pages/student-dashboard/student-dashboard";
 import {DashboardPopoverPage} from "../pages/dashboard-popover/dashboard-popover";
-import {TaskService} from "../services/task.service";
-import {UserService} from "../services/user.service";
 import {CoachTaskPage} from "../pages/coach-task/coach-task";
 import {CreateTaskPage} from "../pages/create-task/create-task";
 import {StudentTaskPage} from "../pages/student-task/student-task";

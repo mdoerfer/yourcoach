@@ -1,25 +1,10 @@
 import firebase from 'firebase';
 import {Injectable} from "@angular/core";
-
 import {AuthService} from "./auth.service";
 
 @Injectable()
 export class UserService {
   constructor(private authService: AuthService) {
-  }
-
-  /**
-   * Sets the user node in the firebase database to the passed object
-   * and overrides any properties that might have existed prior to calling
-   * the method.
-   *
-   * @param ref
-   * @returns {firebase.Promise<any>}
-   */
-  setActiveUserRef(ref: object) {
-    let uid = this.authService.getActiveUser().uid;
-
-    return firebase.database().ref('users/' + uid).set(ref);
   }
 
   /**
@@ -57,17 +42,6 @@ export class UserService {
   }
 
   /**
-   * Get all invites from coaches
-   *
-   * @returns {firebase.Promise<any>}
-   */
-  getInvites() {
-    let uid = this.authService.getActiveUser().uid;
-
-    return firebase.database().ref('/users/' + uid + '/invites');
-  }
-
-  /**
    * Get all coaches from student
    *
    * @returns {firebase.Promise<any>}
@@ -87,6 +61,17 @@ export class UserService {
     let uid = this.authService.getActiveUser().uid;
 
     return firebase.database().ref('/users/' + uid + '/students');
+  }
+
+  /**
+   * Get all invites from coaches
+   *
+   * @returns {firebase.Promise<any>}
+   */
+  getInvites() {
+    let uid = this.authService.getActiveUser().uid;
+
+    return firebase.database().ref('/users/' + uid + '/invites');
   }
 
   /**
