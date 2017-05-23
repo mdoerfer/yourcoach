@@ -132,6 +132,9 @@
             </ion-item>
 
             <ion-row>
+              <ion-col text-left>
+                <rating [(ngModel)]="task.rating" readOnly="true" max="3"></rating>
+              </ion-col>
               <ion-col text-right *ngIf="task.open">
                 <button ion-button icon-left clear small>
                   <ion-icon name="text"></ion-icon>
