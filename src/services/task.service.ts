@@ -71,30 +71,4 @@ export class TaskService {
   updateTaskById(taskId: string, updateObj: object) {
     return firebase.database().ref('/tasks/').child(taskId).update(updateObj);
   }
-
-  /**
-   * Rate a task via ID
-   *
-   * @param taskId
-   * @param rating
-   */
-  rateTaskById(taskId: string, rating: string) {
-    this.updateTaskById(taskId, {
-      rating: rating
-    });
-  }
-
-  /**
-   * Change a task state via ID
-   *
-   * @param taskId
-   * @param state
-   */
-  changeTaskStateById(taskId: string, state: string) {
-    this.updateTaskById(taskId, {
-      state: state
-    })
-  }
-
-
 }

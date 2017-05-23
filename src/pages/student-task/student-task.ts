@@ -73,8 +73,15 @@ export class StudentTaskPage implements OnInit {
     });
   }
 
-  changeTaskState(task: any, state: string) {
-    this.taskService.changeTaskStateById(task._id, state);
+  /**
+   * Change the task state
+   *
+   * @param task
+   */
+  markTaskAsGradeable(task: any) {
+    this.taskService.updateTaskById(task._id, {
+      state: 'grade'
+    });
   }
 
   /**

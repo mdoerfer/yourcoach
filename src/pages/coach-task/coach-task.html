@@ -91,7 +91,7 @@
 
             <ion-row>
               <ion-col text-left>
-                <rating [(ngModel)]="rate" readOnly="false" max="3"></rating>
+                <rating [(ngModel)]="task.rating" readOnly="false" max="3" (click)="rateTaskAndMarkAsDone(task)"></rating>
               </ion-col>
               <ion-col text-right *ngIf="task.open">
                 <button ion-button icon-left clear small>

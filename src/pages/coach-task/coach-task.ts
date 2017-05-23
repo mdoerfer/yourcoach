@@ -76,6 +76,19 @@ export class CoachTaskPage implements OnInit {
   }
 
   /**
+   * Change the task state
+   *
+   * @param task
+   * @param state
+   */
+  rateTaskAndMarkAsDone(task: any) {
+    this.taskService.updateTaskById(task._id, {
+      state: 'done',
+      rating: task.rating
+    });
+  }
+
+  /**
    * Open task page with tasks for student
    *
    * @param i
