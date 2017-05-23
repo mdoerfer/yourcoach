@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {IonicPage, NavParams, PopoverController} from 'ionic-angular';
+import {IonicPage, NavParams, PopoverController, ToastController} from 'ionic-angular';
 import {TaskPopoverPage} from "../task-popover/task-popover";
 import {TaskService} from "../../services/task.service";
 import {UserService} from "../../services/user.service";
@@ -21,7 +21,8 @@ export class StudentTaskPage implements OnInit {
   constructor(private navParams: NavParams,
               private popoverCtrl: PopoverController,
               private taskService: TaskService,
-              private userService: UserService) {
+              private userService: UserService,
+              private toastCtrl: ToastController) {
   }
 
   /**
@@ -58,18 +59,22 @@ export class StudentTaskPage implements OnInit {
           let newTask = task.val();
           newTask._id = taskId;
 
-          if(newTask.state == 'open') {
+          if (newTask.state == 'open') {
             this.openTasks.push(newTask);
           }
-          else if(newTask.state == 'grade') {
+          else if (newTask.state == 'grade') {
             this.gradeTasks.push(newTask);
           }
-          else if(newTask.state == 'done') {
+          else if (newTask.state == 'done') {
             this.doneTasks.push(newTask);
           }
         });
       }
     });
+  }
+
+  changeTaskState(task: any, state: string) {
+    this.taskService.changeTaskStateById(task._id, state);
   }
 
   /**
@@ -91,6 +96,20 @@ export class StudentTaskPage implements OnInit {
     popover.present({
       ev: myEvent
     });
+  }
+
+  /**
+   * Shows a short toast message
+   *
+   * @param msg
+   * @param duration
+   */
+  private showToast(msg: string, duration: number = 3000) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: duration
+    });
+    toast.present();
   }
 
 }

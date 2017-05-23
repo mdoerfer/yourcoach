@@ -57,7 +57,7 @@
                   <ion-icon name="text"></ion-icon>
                   <div>Chat</div>
                 </button>
-                <button ion-button icon-left clear small>
+                <button ion-button icon-left clear small (click)="changeTaskState(task, 'grade')">
                   <ion-icon name="checkmark-circle"></ion-icon>
                   <div>Erledigt</div>
                 </button>
