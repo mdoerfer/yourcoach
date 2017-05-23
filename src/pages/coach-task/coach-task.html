@@ -95,7 +95,7 @@
   </div>
 
   <ion-fab right bottom>
-    <button ion-fab color="secondary" [navPush]="createTaskPage" [navParams]="sid">
+    <button ion-fab color="secondary" (click)="goToCreateTask()">
       <ion-icon name="add"></ion-icon>
     </button>
   </ion-fab>

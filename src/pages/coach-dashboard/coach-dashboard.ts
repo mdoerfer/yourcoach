@@ -53,7 +53,6 @@ export class CoachDashboardPage implements OnInit{
     this.navCtrl.push(CoachTaskPage, {
       sid: sid
     });
-
   }
 
   /**

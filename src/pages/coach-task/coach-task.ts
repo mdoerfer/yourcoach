@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {IonicPage, NavParams, PopoverController} from 'ionic-angular';
+import {IonicPage, NavController, NavParams, PopoverController} from 'ionic-angular';
 import {CreateTaskPage} from "../create-task/create-task";
 import {TaskPopoverPage} from "../task-popover/task-popover";
 
@@ -8,10 +8,9 @@ import {TaskPopoverPage} from "../task-popover/task-popover";
   selector: 'page-coach-task',
   templateUrl: 'coach-task.html',
 })
-export class CoachTaskPage implements OnInit {
+export class CoachTaskPage {
   createTaskPage = CreateTaskPage;
   activeTab: string = "open";
-  sid: string;
 
   //Dummy data for tasks
   tasks: any[] = [
@@ -38,10 +37,18 @@ export class CoachTaskPage implements OnInit {
   ];
 
   constructor(private navParams: NavParams,
+              private navCtrl: NavController,
               private popoverCtrl: PopoverController) {}
 
-  ngOnInit() {
-    this.sid = this.navParams.get('sid');
+  /**
+   * Open task page with tasks for student
+   *
+   * @param i
+   */
+  goToCreateTask() {
+    this.navCtrl.push(CreateTaskPage, {
+      sid: this.navParams.get('sid')
+    });
   }
 
   toggle(task: any) {

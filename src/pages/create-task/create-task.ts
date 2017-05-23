@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {IonicPage, NavParams} from 'ionic-angular';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {TaskService} from "../../services/task.service";
+import {AuthService} from "../../services/auth.service";
 
 @IonicPage()
 @Component({
@@ -12,14 +13,13 @@ export class CreateTaskPage implements OnInit {
   taskForm: FormGroup;
   difficulties: string[];
   responses: string[];
-  sid: string;
 
   constructor(private navParams: NavParams,
+              private authService: AuthService,
               private taskService: TaskService) {
   }
 
   ngOnInit() {
-    this.sid = this.navParams.get('sid');
     this.initializeForm();
   }
 
@@ -50,8 +50,13 @@ export class CreateTaskPage implements OnInit {
   }
 
   onCreateTask() {
-    let task = this.taskForm.value;
-
-    this.taskService.createTask(task);
+    this.taskService.createTask({
+      from: this.authService.getActiveUser().uid,
+      to: this.navParams.get('sid'),
+      title: this.taskForm.get('title').value,
+      description: this.taskForm.get('description').value,
+      difficulty: this.taskForm.get('difficulty').value,
+      response: this.taskForm.get('response').value,
+    });
   }
 }
