@@ -50,10 +50,12 @@ export class StudentTaskPage implements OnInit {
    */
   private initializeTasks() {
     this.taskService.getAllTasksForMeFromCoach(this.cid).on('value', tasks => {
+      //Reset all arrays
       this.openTasks = [];
       this.gradeTasks = [];
       this.doneTasks = [];
 
+      //Add tasks to matching arrays, depending on their state
       for (let taskId in tasks.val()) {
         this.taskService.getTaskWithId(taskId).once('value', task => {
           let newTask = task.val();

@@ -76,7 +76,7 @@ export class CoachTaskPage implements OnInit {
   }
 
   /**
-   * Change the task state
+   * Change the task rating and mark it as done
    *
    * @param task
    * @param state
