@@ -105,18 +105,4 @@ export class StudentTaskPage implements OnInit {
     });
   }
 
-  /**
-   * Shows a short toast message
-   *
-   * @param msg
-   * @param duration
-   */
-  private showToast(msg: string, duration: number = 3000) {
-    let toast = this.toastCtrl.create({
-      message: msg,
-      duration: duration
-    });
-    toast.present();
-  }
-
 }
