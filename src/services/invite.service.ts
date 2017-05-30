@@ -4,6 +4,10 @@ import {AuthService} from "./auth.service";
 
 @Injectable()
 export class InviteService {
+  nodeName: string = '/invites/';
+  usersNodeName: string = '/users/';
+  pairingsNodeName: string = '/pairings/';
+
   constructor(private authService: AuthService) {
   }
 
@@ -15,7 +19,7 @@ export class InviteService {
   getInvites() {
     let uid = this.authService.getActiveUser().uid;
 
-    return firebase.database().ref('/invites/').orderByChild('student').equalTo(uid);
+    return firebase.database().ref(this.nodeName).orderByChild('student').equalTo(uid);
   }
 
   /**
@@ -24,7 +28,7 @@ export class InviteService {
    * @param iid
    */
   removeInviteById(iid: string) {
-    return firebase.database().ref('/invites/' + iid).remove();
+    return firebase.database().ref(this.nodeName + iid).remove();
   }
 
   /**
@@ -37,7 +41,7 @@ export class InviteService {
   acceptInviteById(iid: string, cid: string) {
     let uid = this.authService.getActiveUser().uid;
 
-    let promise = firebase.database().ref('/pairings/').push({
+    let promise = firebase.database().ref(this.pairingsNodeName).push({
       coach: cid,
       student: uid,
       coach_student: cid + '_' + uid,
@@ -63,17 +67,17 @@ export class InviteService {
     let uid = this.authService.getActiveUser().uid;
 
     //Find students
-    firebase.database().ref('/users').orderByChild('email').equalTo(email).once('child_added', snapshot => {
+    firebase.database().ref(this.usersNodeName).orderByChild('email').equalTo(email).once('child_added', snapshot => {
       //Student ID
       let sid = snapshot.key;
 
       //Check if student/coach is already paired
-      firebase.database().ref('/pairings/').orderByChild('coach_student').equalTo(uid + '_' + sid).once('value', snapshot => {
+      firebase.database().ref(this.pairingsNodeName).orderByChild('coach_student').equalTo(uid + '_' + sid).once('value', snapshot => {
         if(!snapshot.hasChild('created_at')) {
 
           //Add invite to invites node to sid, if not trying to invite myself
           if(sid != uid) {
-            return firebase.database().ref('/invites/').push({
+            return firebase.database().ref(this.nodeName).push({
               coach: uid,
               student: sid,
               coach_student: uid + '_' + sid,

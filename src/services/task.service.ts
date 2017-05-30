@@ -4,6 +4,8 @@ import firebase from 'firebase';
 
 @Injectable()
 export class TaskService {
+  nodeName: string = '/tasks/';
+
   constructor(private authService: AuthService) {
   }
 
@@ -14,7 +16,7 @@ export class TaskService {
    * @returns {firebase.database.ThenableReference}
    */
   createTask(task) {
-    return firebase.database().ref('/tasks/').push(task);
+    return firebase.database().ref(this.nodeName).push(task);
   }
 
   /**
@@ -26,7 +28,7 @@ export class TaskService {
   getAllTasksFromMeToStudent(sid: string) {
     let uid = this.authService.getActiveUser().uid;
 
-    return firebase.database().ref('/tasks/').orderByChild('from_to').equalTo(uid + '_' + sid);
+    return firebase.database().ref(this.nodeName).orderByChild('from_to').equalTo(uid + '_' + sid);
   }
 
   /**
@@ -38,7 +40,7 @@ export class TaskService {
   getAllTasksForMeFromCoach(cid: string) {
     let uid = this.authService.getActiveUser().uid;
 
-    return firebase.database().ref('/tasks/').orderByChild('from_to').equalTo(cid + '_' + uid);
+    return firebase.database().ref(this.nodeName).orderByChild('from_to').equalTo(cid + '_' + uid);
   }
 
   /**
@@ -48,7 +50,7 @@ export class TaskService {
    * @returns {firebase.database.Reference}
    */
   getTaskWithId(taskId: string) {
-    return firebase.database().ref('/tasks/').child(taskId);
+    return firebase.database().ref(this.nodeName).child(taskId);
   }
 
   /**
@@ -58,7 +60,7 @@ export class TaskService {
    * @returns {firebase.Promise<any>}
    */
   deleteTaskById(taskId: string) {
-    return firebase.database().ref('/tasks/').child(taskId).remove();
+    return firebase.database().ref(this.nodeName).child(taskId).remove();
   }
 
   /**
@@ -69,6 +71,6 @@ export class TaskService {
    * @returns {firebase.Promise<any>}
    */
   updateTaskById(taskId: string, updateObj: object) {
-    return firebase.database().ref('/tasks/').child(taskId).update(updateObj);
+    return firebase.database().ref(this.nodeName).child(taskId).update(updateObj);
   }
 }

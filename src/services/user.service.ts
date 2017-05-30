@@ -4,6 +4,8 @@ import {AuthService} from "./auth.service";
 
 @Injectable()
 export class UserService {
+  nodeName: string = '/users/';
+
   constructor(private authService: AuthService) {
   }
 
@@ -17,7 +19,7 @@ export class UserService {
   updateActiveUserRef(ref: object) {
     let uid = this.authService.getActiveUser().uid;
 
-    return firebase.database().ref('users/' + uid).update(ref);
+    return firebase.database().ref(this.nodeName + uid).update(ref);
   }
 
   /**
@@ -28,7 +30,7 @@ export class UserService {
   getActiveUserRef() {
     let uid = this.authService.getActiveUser().uid;
 
-    return firebase.database().ref('/users/' + uid);
+    return firebase.database().ref(this.nodeName + uid);
   }
 
   /**
@@ -37,7 +39,7 @@ export class UserService {
    * @param id
    * @returns {firebase.database.Reference}
    */
-  getUserRefById(id: string) {
-    return firebase.database().ref('/users/' + id);
+  getUserRefById(uid: string) {
+    return firebase.database().ref(this.nodeName + uid);
   }
 }

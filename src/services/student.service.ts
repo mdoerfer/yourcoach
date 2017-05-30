@@ -4,6 +4,8 @@ import {AuthService} from "./auth.service";
 
 @Injectable()
 export class StudentService {
+  nodeName: string = '/pairings/';
+
   constructor(private authService: AuthService) {
   }
 
@@ -15,7 +17,7 @@ export class StudentService {
   getStudents() {
     let uid = this.authService.getActiveUser().uid;
 
-    return firebase.database().ref('/pairings/').orderByChild('coach').equalTo(uid);
+    return firebase.database().ref(this.nodeName).orderByChild('coach').equalTo(uid);
   }
 
   /**
@@ -24,7 +26,7 @@ export class StudentService {
    * @param pid Pairing ID
    */
   deleteStudent(pid: string) {
-    firebase.database().ref('/pairings/' + pid).update({
+    firebase.database().ref(this.nodeName + pid).update({
       deleted: true
     });
   }
