@@ -23,7 +23,7 @@
     Du hast keine Studenten zur Zeit
   </p>
   <ion-list *ngIf="students.length > 0">
-    <ion-item *ngFor="let student of students; let i = index" (click)="goToTasks(i)">
+    <ion-item *ngFor="let student of students; let i = index" (click)="goToTasks(i)" (press)="openActionSheet(i)">
       <ion-avatar item-left>
         <img src="../../assets/images/dummy-avatar.png">
       </ion-avatar>
