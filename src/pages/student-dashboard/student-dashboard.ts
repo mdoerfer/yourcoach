@@ -31,23 +31,24 @@ export class StudentDashboardPage implements OnInit {
   /**
    * Accept invite
    *
-   * @param i
+   * @param i Index of the invite in the array
    */
   onAcceptInvite(i: number) {
+    let iid = this.pendingInvites[i].inviteId;
     let cid = this.pendingInvites[i]._id;
 
-    this.userService.acceptInviteById(cid);
+    this.userService.acceptInviteById(iid, cid);
   }
 
   /**
    * Decline invite
    *
-   * @param i
+   * @param i Index of the invite in the array
    */
   onDeclineInvite(i: number) {
-    let cid = this.pendingInvites[i]._id;
+    let iid = this.pendingInvites[i].inviteId;
 
-    this.userService.removeInviteById(cid);
+    this.userService.removeInviteById(iid);
   }
 
   /**
@@ -68,7 +69,7 @@ export class StudentDashboardPage implements OnInit {
    * @param i [The index of the coach in the coaches array]
    */
   openActionSheet(i: number) {
-    let cid = this.coaches[i]._id;
+    let pid = this.coaches[i].pairingId;
 
     let actionSheet = this.actionSheetCtrl.create({
       title: 'Was möchtest du tun?',
@@ -77,7 +78,7 @@ export class StudentDashboardPage implements OnInit {
           text: 'Löschen',
           role: 'destructive',
           handler: () => {
-            this.userService.deleteCoach(cid);
+            this.userService.deleteCoach(pid);
           }
         }, {
           text: 'Bearbeiten',
@@ -98,18 +99,19 @@ export class StudentDashboardPage implements OnInit {
    * If change occurs automatically reload array
    */
   private initializeCoaches() {
-    this.userService.getCoaches().on('value', coaches => {
-      let dbCoaches = coaches.val();
+    this.userService.getCoaches().on('value', pairings => {
+      let dbPairings = pairings.val();
       let coachesArr: any[] = [];
 
-      for (let coachId in dbCoaches) {
-        let coach = dbCoaches[coachId];
+      for (let pairingId in dbPairings) {
+        let pairing = dbPairings[pairingId];
 
-        this.userService.getUserRefById(coachId).once('value', user => {
+        this.userService.getUserRefById(pairing.coach).once('value', user => {
           let newCoach = user.val();
-          newCoach._id = coachId;
+          newCoach._id = pairing.coach;
+          newCoach.pairingId = pairingId;
 
-          if(!coach.deleted) {
+          if(!pairing.deleted) {
             coachesArr.push(newCoach);
           }
         })
@@ -129,13 +131,14 @@ export class StudentDashboardPage implements OnInit {
       let dbInvites = invites.val();
       let invitesArr: any[] = [];
 
-      for (let coachId in dbInvites) {
-        //let invite = dbInvites[coachId];
+      for (let inviteId in dbInvites) {
+        let invite = dbInvites[inviteId];
 
         //Identify coach and add to array
-        this.userService.getUserRefById(coachId).once('value', user => {
+        this.userService.getUserRefById(invite.coach).once('value', user => {
           let newCoach = user.val();
-          newCoach._id = coachId;
+          newCoach._id = invite.coach;
+          newCoach.inviteId = inviteId;
 
           invitesArr.push(newCoach);
         })

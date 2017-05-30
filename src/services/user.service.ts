@@ -49,22 +49,16 @@ export class UserService {
   getCoaches() {
     let uid = this.authService.getActiveUser().uid;
 
-    return firebase.database().ref('/users/' + uid + '/coaches');
+    return firebase.database().ref('/pairings/').orderByChild('student').equalTo(uid);
   }
 
   /**
    * Delete coach from student
    *
-   * @param id
+   * @param pid Pairing ID
    */
-  deleteCoach(id: string) {
-    let uid = this.authService.getActiveUser().uid;
-
-    firebase.database().ref('/users/' + uid + '/coaches/' + id).update({
-      deleted: true
-    });
-
-    firebase.database().ref('/users/' + id + '/students/' + uid).update({
+  deleteCoach(pid: string) {
+    firebase.database().ref('/pairings/' + pid).update({
       deleted: true
     });
   }
@@ -77,22 +71,16 @@ export class UserService {
   getStudents() {
     let uid = this.authService.getActiveUser().uid;
 
-    return firebase.database().ref('/users/' + uid + '/students');
+    return firebase.database().ref('/pairings/').orderByChild('coach').equalTo(uid);
   }
 
   /**
    * Delete student from coach
    *
-   * @param id
+   * @param pid Pairing ID
    */
-  deleteStudent(id: string) {
-    let uid = this.authService.getActiveUser().uid;
-
-    firebase.database().ref('/users/' + uid + '/students/' + id).update({
-      deleted: true
-    });
-
-    firebase.database().ref('/users/' + id + '/coaches/' + uid).update({
+  deleteStudent(pid: string) {
+    firebase.database().ref('/pairings/' + pid).update({
       deleted: true
     });
   }
@@ -100,47 +88,47 @@ export class UserService {
   /**
    * Get all invites from coaches
    *
-   * @returns {firebase.Promise<any>}
+   * @returns {firebase.database.Query}
    */
   getInvites() {
     let uid = this.authService.getActiveUser().uid;
 
-    return firebase.database().ref('/users/' + uid + '/invites');
+    return firebase.database().ref('/invites/').orderByChild('student').equalTo(uid);
   }
 
   /**
-   * Remove invite by coach id
+   * Remove invite by invite id
    *
-   * @param cid
+   * @param iid
    */
-  removeInviteById(cid: string) {
-    let uid = this.authService.getActiveUser().uid;
-
-    return firebase.database().ref('/users/' + uid + '/invites/' + cid).remove();
+  removeInviteById(iid: string) {
+    return firebase.database().ref('/invites/' + iid).remove();
   }
 
   /**
    * Accept invite by id
    *
-   * @param cid
+   * @param iid ID of the invite
+   * @param cid ID of the coach
+   * @returns {firebase.Promise<any>}
    */
-  acceptInviteById(cid: string) {
+  acceptInviteById(iid: string, cid: string) {
     let uid = this.authService.getActiveUser().uid;
 
-    //Add coach to student
-    firebase.database().ref('/users/' + uid + '/coaches/' + cid).set({
+    let promise = firebase.database().ref('/pairings/').push({
+      coach: cid,
+      student: uid,
+      coach_student: cid + '_' + uid,
       created_at: new Date().valueOf(),
+      updated_at: new Date().valueOf(),
       deleted: false
     });
 
-    //Add student to coach
-    firebase.database().ref('/users/' + cid + '/students/' + uid).set({
-      created_at: new Date().valueOf(),
-      deleted: false
+    promise.then(data => {
+      this.removeInviteById(iid);
     });
 
-    //Remove invite
-    this.removeInviteById(cid);
+    return promise;
   }
 
   /**
@@ -158,12 +146,15 @@ export class UserService {
       let sid = snapshot.key;
 
       //Check if student/coach is already paired
-      firebase.database().ref('/users/' + uid + '/students/' + sid).once('value', snapshot => {
+      firebase.database().ref('/pairings/').orderByChild('coach_student').equalTo(uid + '_' + sid).once('value', snapshot => {
         if(!snapshot.hasChild('created_at')) {
 
           //Add invite to invites node to sid, if not trying to invite myself
           if(sid != uid) {
-            return firebase.database().ref('/users/' + sid + '/invites/' + uid).update({
+            return firebase.database().ref('/invites/').push({
+              coach: uid,
+              student: sid,
+              coach_student: uid + '_' + sid,
               created_at: new Date().valueOf()
             });
           }

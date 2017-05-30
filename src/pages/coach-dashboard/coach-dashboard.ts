@@ -31,18 +31,19 @@ export class CoachDashboardPage implements OnInit {
    * If change occurs automatically reload array
    */
   private initializeStudents() {
-    this.userService.getStudents().on('value', students => {
-      let dbStudents = students.val();
+    this.userService.getStudents().on('value', pairings => {
+      let dbPairings = pairings.val();
       let studentsArr: any[] = [];
 
-      for (let studentId in dbStudents) {
-        let student = dbStudents[studentId];
+      for (let pairingId in dbPairings) {
+        let pairing = dbPairings[pairingId];
 
-        this.userService.getUserRefById(studentId).once('value', user => {
+        this.userService.getUserRefById(pairing.student).once('value', user => {
           let newStudent = user.val();
-          newStudent._id = studentId;
+          newStudent._id = pairing.student;
+          newStudent.pairingId = pairingId;
 
-          if(!student.deleted) {
+          if(!pairing.deleted) {
             studentsArr.push(newStudent);
           }
         })
@@ -71,7 +72,7 @@ export class CoachDashboardPage implements OnInit {
    * @param i [The index of the student in the students array]
    */
   openActionSheet(i: number) {
-    let sid = this.students[i]._id;
+    let pid = this.students[i].pairingId;
 
     let actionSheet = this.actionSheetCtrl.create({
       title: 'Was möchtest du tun?',
@@ -80,7 +81,7 @@ export class CoachDashboardPage implements OnInit {
           text: 'Löschen',
           role: 'destructive',
           handler: () => {
-            this.userService.deleteStudent(sid);
+            this.userService.deleteStudent(pid);
           }
         }, {
           text: 'Bearbeiten',
