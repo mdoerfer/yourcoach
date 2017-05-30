@@ -21,7 +21,7 @@
   </p>
 
   <ion-list *ngIf="coaches.length > 0">
-    <ion-item *ngFor="let coach of coaches; let i = index" (click)="goToTasks(i)">
+    <ion-item *ngFor="let coach of coaches; let i = index" (tap)="goToTasks(i)" (press)="openCoachAlert(i)">
       <ion-avatar item-left>
         <img src="../../assets/images/dummy-avatar.png">
       </ion-avatar>

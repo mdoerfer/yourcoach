@@ -53,6 +53,21 @@ export class UserService {
   }
 
   /**
+   * Delete coach from student
+   */
+  deleteCoach(id: string) {
+    let uid = this.authService.getActiveUser().uid;
+
+    firebase.database().ref('/users/' + uid + '/coaches/' + id).update({
+      deleted: true
+    });
+
+    firebase.database().ref('/users/' + id + '/students/' + uid).update({
+      deleted: true
+    });
+  }
+
+  /**
    * Get all students from coaches
    *
    * @returns {firebase.Promise<any>}
@@ -95,12 +110,14 @@ export class UserService {
 
     //Add coach to student
     firebase.database().ref('/users/' + uid + '/coaches/' + cid).set({
-      created_at: new Date().valueOf()
+      created_at: new Date().valueOf(),
+      deleted: false
     });
 
     //Add student to coach
     firebase.database().ref('/users/' + cid + '/students/' + uid).set({
-      created_at: new Date().valueOf()
+      created_at: new Date().valueOf(),
+      deleted: false
     });
 
     //Remove invite
