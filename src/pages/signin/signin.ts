@@ -4,7 +4,6 @@ import {SignupPage} from "../signup/signup";
 import {ForgotPasswordPage} from "../forgot-password/forgot-password";
 import {NgForm} from "@angular/forms";
 import {AuthService} from "../../services/auth.service";
-import {UserService} from "../../services/user.service";
 
 @IonicPage()
 @Component({
@@ -16,7 +15,6 @@ export class SigninPage {
   forgotPasswordPage = ForgotPasswordPage;
 
   constructor(private authService: AuthService,
-              private userService: UserService,
               private loadingCtrl: LoadingController,
               private toastCtrl: ToastController) {
   }

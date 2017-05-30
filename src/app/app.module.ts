@@ -29,6 +29,9 @@ import {StudentTaskPage} from "../pages/student-task/student-task";
 import {TaskPopoverPage} from "../pages/task-popover/task-popover";
 import {SettingsPage} from "../pages/settings/settings";
 import {NotificationPage} from "../pages/notification/notification";
+import {InviteService} from "../services/invite.service";
+import {StudentService} from "../services/student.service";
+import {CoachService} from "../services/coach.service";
 
 
 @NgModule({
@@ -76,7 +79,10 @@ import {NotificationPage} from "../pages/notification/notification";
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthService,
     UserService,
-    TaskService
+    TaskService,
+    InviteService,
+    StudentService,
+    CoachService
   ]
 })
 export class AppModule {

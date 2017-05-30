@@ -3,6 +3,8 @@ import {ActionSheetController, IonicPage, NavController, PopoverController} from
 import {UserService} from "../../services/user.service";
 import {StudentTaskPage} from "../student-task/student-task";
 import {DashboardPopoverPage} from "../dashboard-popover/dashboard-popover";
+import {InviteService} from "../../services/invite.service";
+import {CoachService} from "../../services/coach.service";
 
 
 @IonicPage()
@@ -15,6 +17,8 @@ export class StudentDashboardPage implements OnInit {
   private pendingInvites: any[] = [];
 
   constructor(private userService: UserService,
+              private inviteService: InviteService,
+              private coachService: CoachService,
               private navCtrl: NavController,
               private popoverCtrl: PopoverController,
               private actionSheetCtrl: ActionSheetController) {
@@ -37,7 +41,7 @@ export class StudentDashboardPage implements OnInit {
     let iid = this.pendingInvites[i].inviteId;
     let cid = this.pendingInvites[i]._id;
 
-    this.userService.acceptInviteById(iid, cid);
+    this.inviteService.acceptInviteById(iid, cid);
   }
 
   /**
@@ -48,7 +52,7 @@ export class StudentDashboardPage implements OnInit {
   onDeclineInvite(i: number) {
     let iid = this.pendingInvites[i].inviteId;
 
-    this.userService.removeInviteById(iid);
+    this.inviteService.removeInviteById(iid);
   }
 
   /**
@@ -78,7 +82,7 @@ export class StudentDashboardPage implements OnInit {
           text: 'Löschen',
           role: 'destructive',
           handler: () => {
-            this.userService.deleteCoach(pid);
+            this.coachService.deleteCoach(pid);
           }
         }, {
           text: 'Bearbeiten',
@@ -99,7 +103,7 @@ export class StudentDashboardPage implements OnInit {
    * If change occurs automatically reload array
    */
   private initializeCoaches() {
-    this.userService.getCoaches().on('value', pairings => {
+    this.coachService.getCoaches().on('value', pairings => {
       let dbPairings = pairings.val();
       let coachesArr: any[] = [];
 
@@ -127,7 +131,7 @@ export class StudentDashboardPage implements OnInit {
    */
   private initializePendingInvites() {
     //Get pending invites
-    this.userService.getInvites().on('value', invites => {
+    this.inviteService.getInvites().on('value', invites => {
       let dbInvites = invites.val();
       let invitesArr: any[] = [];
 

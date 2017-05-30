@@ -3,6 +3,8 @@ import {IonicPage, PopoverController, AlertController, NavController, ActionShee
 import {DashboardPopoverPage} from "../dashboard-popover/dashboard-popover";
 import {UserService} from "../../services/user.service";
 import {CoachTaskPage} from "../coach-task/coach-task";
+import {StudentService} from "../../services/student.service";
+import {InviteService} from "../../services/invite.service";
 
 @IonicPage()
 @Component({
@@ -15,6 +17,8 @@ export class CoachDashboardPage implements OnInit {
   constructor(private popoverCtrl: PopoverController,
               private alertCtrl: AlertController,
               private userService: UserService,
+              private studentService: StudentService,
+              private inviteService: InviteService,
               private navCtrl: NavController,
               private actionSheetCtrl: ActionSheetController) {
   }
@@ -31,7 +35,7 @@ export class CoachDashboardPage implements OnInit {
    * If change occurs automatically reload array
    */
   private initializeStudents() {
-    this.userService.getStudents().on('value', pairings => {
+    this.studentService.getStudents().on('value', pairings => {
       let dbPairings = pairings.val();
       let studentsArr: any[] = [];
 
@@ -81,7 +85,7 @@ export class CoachDashboardPage implements OnInit {
           text: 'Löschen',
           role: 'destructive',
           handler: () => {
-            this.userService.deleteStudent(pid);
+            this.studentService.deleteStudent(pid);
           }
         }, {
           text: 'Bearbeiten',
@@ -122,7 +126,7 @@ export class CoachDashboardPage implements OnInit {
         {
           text: 'Senden',
           handler: data => {
-            this.userService.sendInviteToStudent(data.email);
+            this.inviteService.sendInviteToStudent(data.email);
           }
         }
       ]
