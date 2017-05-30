@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {NavController, ViewController} from "ionic-angular";
 import {AuthService} from "../../services/auth.service";
 import {RoleChoicePage} from "../role-choice/role-choice";
+import {NotificationPage} from "../notification/notification";
 import {SettingsPage} from "../settings/settings";
 
 @Component({
@@ -25,7 +26,7 @@ export class DashboardPopoverPage {
   }
 
   goToNotifications() {
-    console.log('Benachrichtigungen clicked. View not created yet.');
+    this.navCtrl.push(NotificationPage);
     this.close();
   }
 

@@ -28,6 +28,7 @@ import {CreateTaskPage} from "../pages/create-task/create-task";
 import {StudentTaskPage} from "../pages/student-task/student-task";
 import {TaskPopoverPage} from "../pages/task-popover/task-popover";
 import {SettingsPage} from "../pages/settings/settings";
+import {NotificationPage} from "../pages/notification/notification";
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import {SettingsPage} from "../pages/settings/settings";
     CreateTaskPage,
     StudentTaskPage,
     TaskPopoverPage,
-    SettingsPage
+    SettingsPage,
+    NotificationPage
   ],
   imports: [
     BrowserModule,
@@ -65,7 +67,8 @@ import {SettingsPage} from "../pages/settings/settings";
     CreateTaskPage,
     StudentTaskPage,
     TaskPopoverPage,
-    SettingsPage
+    SettingsPage,
+    NotificationPage
   ],
   providers: [
     StatusBar,
