@@ -1,12 +1,44 @@
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>Settings</ion-title>
+  <ion-navbar color="primary">
+    <ion-title>Einstellungen</ion-title>
   </ion-navbar>
 
 </ion-header>
 
-
 <ion-content padding>
+  <ion-list>
+    <ion-list-header>
+      Profil
+    </ion-list-header>
+    <ion-item>
+      <ion-avatar item-left>
+        <img src="../../assets/images/dummy-avatar.png">
+      </ion-avatar>
+      <h2>Mae Pfeifer</h2>
+      <h3>20.08.1995</h3>
+      <p>This is my about me sentence</p>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="repeat" item-left></ion-icon>
+      Profil wechseln
+    </ion-item>
+    <br>
+    <ion-list-header>
+      Account
+    </ion-list-header>
+    <ion-item>
+      <ion-icon name="lock" item-left></ion-icon>
+      Passwort ändern
+    </ion-item>
+    <ion-item>
+      <ion-icon name="log-out" item-left></ion-icon>
+      Ausloggen
+    </ion-item>
+    <ion-item>
+      <ion-icon name="trash" item-left></ion-icon>
+      Account löschen
+    </ion-item>
+  </ion-list>
 
 </ion-content>
