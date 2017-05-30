@@ -54,6 +54,8 @@ export class UserService {
 
   /**
    * Delete coach from student
+   *
+   * @param id
    */
   deleteCoach(id: string) {
     let uid = this.authService.getActiveUser().uid;
@@ -76,6 +78,23 @@ export class UserService {
     let uid = this.authService.getActiveUser().uid;
 
     return firebase.database().ref('/users/' + uid + '/students');
+  }
+
+  /**
+   * Delete student from coach
+   *
+   * @param id
+   */
+  deleteStudent(id: string) {
+    let uid = this.authService.getActiveUser().uid;
+
+    firebase.database().ref('/users/' + uid + '/students/' + id).update({
+      deleted: true
+    });
+
+    firebase.database().ref('/users/' + id + '/coaches/' + uid).update({
+      deleted: true
+    });
   }
 
   /**
