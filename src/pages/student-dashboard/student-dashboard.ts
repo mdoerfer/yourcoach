@@ -62,7 +62,12 @@ export class StudentDashboardPage implements OnInit {
     });
   }
 
-  openCoachAlert(i: number) {
+  /**
+   * Open action sheet for editing or deleting a coach
+   *
+   * @param i [The index of the coach in the coaches array]
+   */
+  openActionSheet(i: number) {
     let cid = this.coaches[i]._id;
 
     let actionSheet = this.actionSheetCtrl.create({
