@@ -86,10 +86,7 @@ export class StudentDashboardPage implements OnInit {
           }
         }, {
           text: 'Abbrechen',
-          role: 'cancel',
-          handler: () => {
-            console.log('Abbrechen');
-          }
+          role: 'cancel'
         }
       ]
     });

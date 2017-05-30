@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {IonicPage, PopoverController, AlertController, NavController} from 'ionic-angular';
+import {IonicPage, PopoverController, AlertController, NavController, ActionSheetController} from 'ionic-angular';
 import {DashboardPopoverPage} from "../dashboard-popover/dashboard-popover";
 import {UserService} from "../../services/user.service";
 import {CoachTaskPage} from "../coach-task/coach-task";
@@ -9,17 +9,20 @@ import {CoachTaskPage} from "../coach-task/coach-task";
   selector: 'page-coach-dashboard',
   templateUrl: 'coach-dashboard.html',
 })
-export class CoachDashboardPage implements OnInit{
+export class CoachDashboardPage implements OnInit {
   private students: any[] = [];
+
   constructor(private popoverCtrl: PopoverController,
               private alertCtrl: AlertController,
-              private userService: UserService, private navCtrl: NavController) {
+              private userService: UserService,
+              private navCtrl: NavController,
+              private actionSheetCtrl: ActionSheetController) {
   }
 
   /**
    * Initialize component
    */
-  ngOnInit(){
+  ngOnInit() {
     this.initializeStudents();
   }
 
@@ -29,16 +32,23 @@ export class CoachDashboardPage implements OnInit{
    */
   private initializeStudents() {
     this.userService.getStudents().on('value', students => {
-      this.students = [];
+      let dbStudents = students.val();
+      let studentsArr: any[] = [];
 
-      for (let studentId in students.val()) {
+      for (let studentId in dbStudents) {
+        let student = dbStudents[studentId];
+
         this.userService.getUserRefById(studentId).once('value', user => {
           let newStudent = user.val();
           newStudent._id = studentId;
 
-          this.students.push(newStudent);
+          if(!student.deleted) {
+            studentsArr.push(newStudent);
+          }
         })
       }
+
+      this.students = studentsArr;
     });
   }
 
@@ -53,6 +63,37 @@ export class CoachDashboardPage implements OnInit{
     this.navCtrl.push(CoachTaskPage, {
       sid: sid
     });
+  }
+
+  /**
+   * Open action sheet for editing or deleting a student
+   *
+   * @param i [The index of the student in the students array]
+   */
+  openActionSheet(i: number) {
+    let sid = this.students[i]._id;
+
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'Was möchtest du tun?',
+      buttons: [
+        {
+          text: 'Löschen',
+          role: 'destructive',
+          handler: () => {
+            this.userService.deleteStudent(sid);
+          }
+        }, {
+          text: 'Bearbeiten',
+          handler: () => {
+            console.log('Student bearbeiten');
+          }
+        }, {
+          text: 'Abbrechen',
+          role: 'cancel'
+        }
+      ]
+    });
+    actionSheet.present();
   }
 
   /**
