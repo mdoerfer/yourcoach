@@ -82,12 +82,11 @@ export class StudentDashboardPage implements OnInit {
       buttons: [
         {
           text: 'Abbrechen',
-          handler: () => {
-            console.log('Disagree clicked');
-          }
+          role: 'cancel'
         },
         {
           text: 'Löschen',
+          role: 'destructive',
           handler: () => {
             this.coachService.deleteCoach(pid);
           }

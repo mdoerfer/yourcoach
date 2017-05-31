@@ -1,5 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {ActionSheetController, IonicPage, NavController, NavParams, PopoverController} from 'ionic-angular';
+import {
+  ActionSheetController, AlertController, IonicPage, NavController, NavParams,
+  PopoverController
+} from 'ionic-angular';
 import {CreateTaskPage} from "../create-task/create-task";
 import {TaskPopoverPage} from "../task-popover/task-popover";
 import {TaskService} from "../../services/task.service";
@@ -24,6 +27,7 @@ export class CoachTaskPage implements OnInit {
               private navCtrl: NavController,
               private popoverCtrl: PopoverController,
               private actionSheetCtrl: ActionSheetController,
+              private alertCtrl: AlertController,
               private taskService: TaskService,
               private userService: UserService) {
   }
@@ -63,13 +67,13 @@ export class CoachTaskPage implements OnInit {
           let newTask = task.val();
           newTask._id = taskId;
 
-          if(newTask.state == 'open') {
+          if (newTask.state == 'open') {
             openTasksArr.push(newTask);
           }
-          else if(newTask.state == 'grade') {
+          else if (newTask.state == 'grade') {
             gradeTasksArr.push(newTask);
           }
-          else if(newTask.state == 'done') {
+          else if (newTask.state == 'done') {
             doneTasksArr.push(newTask);
           }
         });
@@ -128,7 +132,7 @@ export class CoachTaskPage implements OnInit {
           text: 'Löschen',
           role: 'destructive',
           handler: () => {
-            console.log('Task löschen');
+            this.showConfirm(tid);
           }
         }, {
           text: 'Bearbeiten',
@@ -142,6 +146,33 @@ export class CoachTaskPage implements OnInit {
       ]
     });
     actionSheet.present();
+  }
+
+  /**
+   * Confirm task deletion
+   *
+   * @param tid Task ID
+   */
+
+  showConfirm(tid: string) {
+    let confirm = this.alertCtrl.create({
+      title: 'Task löschen',
+      message: 'Möchtest du den Task wirklich löschen?',
+      buttons: [
+        {
+          text: 'Abbrechen',
+          role: 'cancel'
+        },
+        {
+          text: 'Löschen',
+          role: 'destructive',
+          handler: () => {
+            this.taskService.deleteTaskById(tid);
+          }
+        }
+      ]
+    });
+    confirm.present();
   }
 
   /**
