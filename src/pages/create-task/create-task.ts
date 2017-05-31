@@ -75,7 +75,8 @@ export class CreateTaskPage implements OnInit {
       difficulty: this.difficulties[1],
       response: this.responses[0],
       responseInstructions: null,
-      state: 'open'
+      state: 'open',
+      rating: 0
     };
 
     //Prefill form with task data if we're in edit mode
@@ -89,6 +90,7 @@ export class CreateTaskPage implements OnInit {
         formData.response = task.response;
         formData.responseInstructions = task.responseInstructions;
         formData.state = task.state;
+        formData.rating = task.rating || 0;
       });
     }
 
@@ -99,7 +101,8 @@ export class CreateTaskPage implements OnInit {
       difficulty: new FormControl(formData.difficulty, Validators.required),
       response: new FormControl(formData.response, null),
       responseInstructions: new FormControl(formData.responseInstructions, null),
-      state: new FormControl(formData.state, null)
+      state: new FormControl(formData.state, null),
+      rating: new FormControl(formData.rating, null)
     });
   }
 
@@ -115,6 +118,7 @@ export class CreateTaskPage implements OnInit {
       response: this.taskForm.get('response').value,
       responseInstructions: this.taskForm.get('responseInstructions').value,
       state: this.taskForm.get('state').value,
+      rating: this.taskForm.get('rating').value,
       updated_at: new Date().valueOf()
     }).then(data => {
       this.showToast("Aufgabe wurde erfolgreich bearbeitet.");
@@ -138,6 +142,7 @@ export class CreateTaskPage implements OnInit {
       title: this.taskForm.get('title').value,
       description: this.taskForm.get('description').value,
       difficulty: this.taskForm.get('difficulty').value,
+      rating: 0,
       response: this.taskForm.get('response').value,
       responseInstructions: this.taskForm.get('responseInstructions').value,
       state: 'open',
