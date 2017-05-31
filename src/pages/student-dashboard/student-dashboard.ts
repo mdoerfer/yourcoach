@@ -5,7 +5,7 @@ import {StudentTaskPage} from "../student-task/student-task";
 import {DashboardPopoverPage} from "../dashboard-popover/dashboard-popover";
 import {InviteService} from "../../services/invite.service";
 import {CoachService} from "../../services/coach.service";
-import { AlertController } from 'ionic-angular';
+import {AlertController} from 'ionic-angular';
 
 
 @IonicPage()
@@ -77,6 +77,7 @@ export class StudentDashboardPage implements OnInit {
 
   showConfirm(pid: string) {
     let confirm = this.alertCtrl.create({
+      title: 'Coach löschen',
       message: 'Möchtest du den Coach wirklich löschen?',
       buttons: [
         {
@@ -114,11 +115,6 @@ export class StudentDashboardPage implements OnInit {
             this.showConfirm(pid);
           }
         }, {
-          text: 'Bearbeiten',
-          handler: () => {
-            console.log('Coach bearbeiten');
-          }
-        }, {
           text: 'Abbrechen',
           role: 'cancel'
         }
@@ -144,7 +140,7 @@ export class StudentDashboardPage implements OnInit {
           newCoach._id = pairing.coach;
           newCoach.pairingId = pairingId;
 
-          if(!pairing.deleted) {
+          if (!pairing.deleted) {
             coachesArr.push(newCoach);
           }
         })

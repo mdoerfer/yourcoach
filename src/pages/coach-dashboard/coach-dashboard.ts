@@ -47,7 +47,7 @@ export class CoachDashboardPage implements OnInit {
           newStudent._id = pairing.student;
           newStudent.pairingId = pairingId;
 
-          if(!pairing.deleted) {
+          if (!pairing.deleted) {
             studentsArr.push(newStudent);
           }
         })
@@ -71,6 +71,34 @@ export class CoachDashboardPage implements OnInit {
   }
 
   /**
+   * Open alert for backup
+   *
+   * @param i [The index of the student in the students array]
+   */
+
+  showConfirm(pid: string) {
+    let confirm = this.alertCtrl.create({
+      title: 'Schüler löschen',
+      message: 'Möchtest du den Schüler wirklich löschen?',
+      buttons: [
+        {
+          text: 'Abbrechen',
+          handler: () => {
+            console.log('Disagree clicked');
+          }
+        },
+        {
+          text: 'Löschen',
+          handler: () => {
+            this.studentService.deleteStudent(pid);
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+
+  /**
    * Open action sheet for editing or deleting a student
    *
    * @param i [The index of the student in the students array]
@@ -85,12 +113,7 @@ export class CoachDashboardPage implements OnInit {
           text: 'Löschen',
           role: 'destructive',
           handler: () => {
-            this.studentService.deleteStudent(pid);
-          }
-        }, {
-          text: 'Bearbeiten',
-          handler: () => {
-            console.log('Student bearbeiten');
+            this.showConfirm(pid);
           }
         }, {
           text: 'Abbrechen',
