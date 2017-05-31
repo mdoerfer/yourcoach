@@ -10,15 +10,20 @@ import {AuthService} from "../../services/auth.service";
   templateUrl: 'create-task.html',
 })
 export class CreateTaskPage implements OnInit {
+  mode: string;
+  tid: string;
   taskForm: FormGroup;
   difficulties: string[];
   responses: string[];
+  states: object[];
 
   constructor(private navParams: NavParams,
               private navCtrl: NavController,
               private authService: AuthService,
               private taskService: TaskService,
               private toastCtrl: ToastController) {
+    this.tid = this.navParams.get('tid') || null;
+    this.mode = this.navParams.get('mode') || 'create';
   }
 
   /**
@@ -49,14 +54,76 @@ export class CreateTaskPage implements OnInit {
       'Auswahlmöglichkeit...'
     ];
 
+    this.states = [
+      {
+        label: 'Offen',
+        value: 'open'
+      },
+      {
+        label: 'Zu bewerten',
+        value: 'grade'
+      },
+      {
+        label: 'Abgeschlossen',
+        value: 'done'
+      }
+    ];
+
+    let formData = {
+      title: null,
+      description: null,
+      difficulty: this.difficulties[1],
+      response: this.responses[0],
+      responseInstructions: null,
+      state: 'open'
+    };
+
+    //Prefill form with task data if we're in edit mode
+    if(this.tid !== null) {
+      this.taskService.getTaskWithId(this.tid).once('value', snapshot => {
+        let task = snapshot.val();
+
+        formData.title = task.title;
+        formData.description = task.description;
+        formData.difficulty = task.difficulty;
+        formData.response = task.response;
+        formData.responseInstructions = task.responseInstructions;
+        formData.state = task.state;
+      });
+    }
+
     //Create form
     this.taskForm = new FormGroup({
-      title: new FormControl(null, Validators.required),
-      description: new FormControl(null, Validators.required),
-      difficulty: new FormControl(this.difficulties[1], Validators.required),
-      response: new FormControl(this.responses[0], null),
-      responseInstructions: new FormControl(null, null)
+      title: new FormControl(formData.title, Validators.required),
+      description: new FormControl(formData.description, Validators.required),
+      difficulty: new FormControl(formData.difficulty, Validators.required),
+      response: new FormControl(formData.response, null),
+      responseInstructions: new FormControl(formData.responseInstructions, null),
+      state: new FormControl(formData.state, null)
     });
+  }
+
+  /**
+   * Edit task
+   * and update it in the database
+   */
+  onEditTask() {
+    this.taskService.updateTaskById(this.tid, {
+      title: this.taskForm.get('title').value,
+      description: this.taskForm.get('description').value,
+      difficulty: this.taskForm.get('difficulty').value,
+      response: this.taskForm.get('response').value,
+      responseInstructions: this.taskForm.get('responseInstructions').value,
+      state: this.taskForm.get('state').value,
+      updated_at: new Date().valueOf()
+    }).then(data => {
+      this.showToast("Aufgabe wurde erfolgreich bearbeitet.");
+
+      this.navCtrl.pop();
+    })
+      .catch(error => {
+        this.showToast(error.message);
+      });
   }
 
   /**
@@ -84,7 +151,16 @@ export class CreateTaskPage implements OnInit {
       })
       .catch(error => {
         this.showToast(error.message);
-      })
+      });
+  }
+
+  submitForm() {
+    if(this.mode === 'edit') {
+      this.onEditTask();
+    }
+    else {
+      this.onCreateTask();
+    }
   }
 
   /**

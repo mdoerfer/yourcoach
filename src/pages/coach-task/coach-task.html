@@ -30,9 +30,9 @@
       <div *ngIf="openTasks.length == 0">Es liegen keine offenen Aufgaben für diesen Studenten vor</div>
 
       <div *ngIf="openTasks.length > 0">
-        <ion-card *ngFor="let task of openTasks; let i = index">
+        <ion-card *ngFor="let task of openTasks; let i = index" (press)="openActionSheet(task._id)">
           <div>
-            <ion-item (click)="toggle(task)">
+            <ion-item (tap)="toggle(task)">
               <h2>{{task.title}}</h2>
               <ion-note item-right>{{task.created_at | date}}</ion-note>
               <ion-badge item-right *ngIf="task.difficulty=='Schwer'" color="badgehard">{{task.difficulty}}</ion-badge>
@@ -68,9 +68,9 @@
       <div *ngIf="gradeTasks.length == 0">Es liegen keine zu bewertenden Aufgaben für diesen Studenten vor</div>
 
       <div *ngIf="gradeTasks.length > 0">
-        <ion-card *ngFor="let task of gradeTasks; let i = index;">
+        <ion-card *ngFor="let task of gradeTasks; let i = index;" (press)="openActionSheet(task._id)">
           <div>
-            <ion-item (click)="toggle(task)">
+            <ion-item (tap)="toggle(task)">
               <h2>{{task.title}}</h2>
               <ion-note item-right>{{task.created_at | date}}</ion-note>
               <ion-badge item-right *ngIf="task.difficulty=='Schwer'" color="badgehard">{{task.difficulty}}</ion-badge>
@@ -109,9 +109,9 @@
       <div *ngIf="doneTasks.length == 0">Es liegen keine erledigten Aufgaben für diesen Studenten vor</div>
 
       <div *ngIf="doneTasks.length > 0">
-        <ion-card *ngFor="let task of doneTasks; let i = index;">
+        <ion-card *ngFor="let task of doneTasks; let i = index;" (press)="openActionSheet(task._id)">
           <div>
-            <ion-item (click)="toggle(task)">
+            <ion-item (tap)="toggle(task)">
               <h2>{{task.title}}</h2>
               <ion-note item-right>{{task.created_at | date}}</ion-note>
               <ion-badge item-right *ngIf="task.difficulty=='Schwer'" color="badgehard">{{task.difficulty}}</ion-badge>

@@ -1,7 +1,10 @@
 <ion-header>
 
   <ion-navbar color="primary">
-    <ion-title>Erstellen</ion-title>
+    <ion-title>
+      <span *ngIf="mode === 'edit'">Aufgabe bearbeiten</span>
+      <span *ngIf="mode === 'create'">Neue Aufgabe</span>
+    </ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -9,7 +12,7 @@
 
 <ion-content padding>
 
-  <form [formGroup]="taskForm" (ngSubmit)="onCreateTask()">
+  <form [formGroup]="taskForm" (ngSubmit)="submitForm()">
     <ion-item>
       <ion-label floating>Titel</ion-label>
       <ion-input
@@ -57,12 +60,25 @@
       </ion-input>
     </ion-item>
 
+    <div *ngIf="mode === 'edit'">
+      <ion-item>
+        <ion-label>Status</ion-label>
+        <ion-select formControlName="state">
+          <ion-option
+            *ngFor="let state of states"
+            [value]="state.value">{{ state.label }}
+          </ion-option>
+        </ion-select>
+      </ion-item>
+    </div>
+
     <button
       ion-button
       type="submit"
       block
       [disabled]="!taskForm.valid">
-      Aufgabe senden
+      <span *ngIf="mode === 'edit'">Speichern</span>
+      <span *ngIf="mode === 'create'">Neue Aufgabe</span>
     </button>
 
   </form>

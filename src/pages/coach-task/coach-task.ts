@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {IonicPage, NavController, NavParams, PopoverController} from 'ionic-angular';
+import {ActionSheetController, IonicPage, NavController, NavParams, PopoverController} from 'ionic-angular';
 import {CreateTaskPage} from "../create-task/create-task";
 import {TaskPopoverPage} from "../task-popover/task-popover";
 import {TaskService} from "../../services/task.service";
@@ -23,6 +23,7 @@ export class CoachTaskPage implements OnInit {
   constructor(private navParams: NavParams,
               private navCtrl: NavController,
               private popoverCtrl: PopoverController,
+              private actionSheetCtrl: ActionSheetController,
               private taskService: TaskService,
               private userService: UserService) {
   }
@@ -52,26 +53,31 @@ export class CoachTaskPage implements OnInit {
    */
   private initializeTasks() {
     this.taskService.getAllTasksFromMeToStudent(this.sid).on('value', tasks => {
-      this.openTasks = [];
-      this.gradeTasks = [];
-      this.doneTasks = [];
+      let dbTasks = tasks.val();
+      let openTasksArr = [];
+      let gradeTasksArr = [];
+      let doneTasksArr = [];
 
-      for (let taskId in tasks.val()) {
+      for (let taskId in dbTasks) {
         this.taskService.getTaskWithId(taskId).once('value', task => {
           let newTask = task.val();
           newTask._id = taskId;
 
           if(newTask.state == 'open') {
-            this.openTasks.push(newTask);
+            openTasksArr.push(newTask);
           }
           else if(newTask.state == 'grade') {
-            this.gradeTasks.push(newTask);
+            gradeTasksArr.push(newTask);
           }
           else if(newTask.state == 'done') {
-            this.doneTasks.push(newTask);
+            doneTasksArr.push(newTask);
           }
         });
       }
+
+      this.openTasks = openTasksArr;
+      this.gradeTasks = gradeTasksArr;
+      this.doneTasks = doneTasksArr;
     });
   }
 
@@ -89,14 +95,53 @@ export class CoachTaskPage implements OnInit {
   }
 
   /**
-   * Open task page with tasks for student
-   *
-   * @param i
+   * Open create task page
    */
   goToCreateTask() {
     this.navCtrl.push(CreateTaskPage, {
       sid: this.sid
     });
+  }
+
+  /**
+   * Open edit task page for given task id
+   *
+   * @param tid Task ID
+   */
+  goToEditTask(tid) {
+    this.navCtrl.push(CreateTaskPage, {
+      mode: 'edit',
+      tid: tid
+    });
+  }
+
+  /**
+   * Open action sheet
+   *
+   * @param tid Task ID
+   */
+  openActionSheet(tid) {
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'Was möchtest du tun?',
+      buttons: [
+        {
+          text: 'Löschen',
+          role: 'destructive',
+          handler: () => {
+            console.log('Task löschen');
+          }
+        }, {
+          text: 'Bearbeiten',
+          handler: () => {
+            this.goToEditTask(tid);
+          }
+        }, {
+          text: 'Abbrechen',
+          role: 'cancel'
+        }
+      ]
+    });
+    actionSheet.present();
   }
 
   /**
