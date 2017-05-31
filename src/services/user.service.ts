@@ -42,4 +42,6 @@ export class UserService {
   getUserRefById(uid: string) {
     return firebase.database().ref(this.nodeName + uid);
   }
+
 }
+

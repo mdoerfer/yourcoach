@@ -39,6 +39,7 @@ export class SignupPage {
     let email = form.value.email;
     let password = form.value.password;
     let name = form.value.name;
+    let deleted = false;
 
     /**
      * Sign user up
@@ -51,6 +52,7 @@ export class SignupPage {
         this.userService.updateActiveUserRef({
           name: name,
           email: email,
+          deleted: deleted,
           created_at: new Date().valueOf(),
           updated_at: new Date().valueOf()
         })
