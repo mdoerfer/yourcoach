@@ -14,6 +14,8 @@ import {AlertController} from 'ionic-angular';
   templateUrl: 'student-dashboard.html',
 })
 export class StudentDashboardPage implements OnInit {
+  private searchIsActive: boolean = false;
+  private searchQuery: string = '';
   private coaches: any[] = [];
   private pendingInvites: any[] = [];
 
@@ -32,6 +34,21 @@ export class StudentDashboardPage implements OnInit {
   ngOnInit() {
     this.initializePendingInvites();
     this.initializeCoaches();
+  }
+
+  /**
+   * Toggle search
+   */
+  toggleSearch() {
+    this.searchIsActive = !this.searchIsActive;
+  }
+
+  search() {
+    let matches = this.coaches.filter((coach) => {
+      return coach.name.toLowerCase().indexOf(this.searchQuery.toLowerCase()) > -1;
+    });
+
+    console.log(matches);
   }
 
   /**

@@ -12,6 +12,8 @@ import {InviteService} from "../../services/invite.service";
   templateUrl: 'coach-dashboard.html',
 })
 export class CoachDashboardPage implements OnInit {
+  private searchIsActive: boolean = false;
+  private searchQuery: string = '';
   private students: any[] = [];
 
   constructor(private popoverCtrl: PopoverController,
@@ -28,6 +30,21 @@ export class CoachDashboardPage implements OnInit {
    */
   ngOnInit() {
     this.initializeStudents();
+  }
+
+  /**
+   * Toggle search
+   */
+  toggleSearch() {
+    this.searchIsActive = !this.searchIsActive;
+  }
+
+  search() {
+    let matches = this.students.filter((student) => {
+      return student.name.toLowerCase().indexOf(this.searchQuery.toLowerCase()) > -1;
+    });
+
+    console.log(matches);
   }
 
   /**

@@ -1,9 +1,9 @@
 <ion-header>
 
-  <ion-toolbar color="primary">
+  <ion-toolbar color="primary" *ngIf="!searchIsActive">
     <ion-title>Meine Studenten</ion-title>
     <ion-buttons start>
-      <button ion-button icon-only>
+      <button ion-button icon-only (click)="toggleSearch()">
         <ion-icon name="search"></ion-icon>
       </button>
     </ion-buttons>
@@ -12,6 +12,14 @@
         <ion-icon name="more"></ion-icon>
       </button>
     </ion-buttons>
+  </ion-toolbar>
+
+  <ion-toolbar color="primary" *ngIf="searchIsActive">
+    <ion-searchbar
+      [(ngModel)]="searchQuery"
+      showCancelButton="true"
+      (ionInput)="search()"
+      (ionCancel)="toggleSearch()"></ion-searchbar>
   </ion-toolbar>
 
 </ion-header>
