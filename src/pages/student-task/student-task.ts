@@ -3,6 +3,7 @@ import {IonicPage, ModalController, NavParams, PopoverController, ToastControlle
 import {TaskPopoverPage} from "../task-popover/task-popover";
 import {TaskService} from "../../services/task.service";
 import {UserService} from "../../services/user.service";
+import {StudentTaskTextModalPage} from "../student-task-text-modal/student-task-text-modal";
 
 @IonicPage()
 @Component({
@@ -127,7 +128,8 @@ export class StudentTaskPage implements OnInit {
   }
 
   showModalText(task: any){
-    console.log("Rückmeldung Text ja")
+    let contactModal = this.modalCtrl.create(StudentTaskTextModalPage, {task: task} );
+    contactModal.present();
   }
 
 }
