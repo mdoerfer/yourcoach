@@ -5,6 +5,7 @@ import {StudentTaskPage} from "../student-task/student-task";
 import {DashboardPopoverPage} from "../dashboard-popover/dashboard-popover";
 import {InviteService} from "../../services/invite.service";
 import {CoachService} from "../../services/coach.service";
+import { AlertController } from 'ionic-angular';
 
 
 @IonicPage()
@@ -21,7 +22,8 @@ export class StudentDashboardPage implements OnInit {
               private coachService: CoachService,
               private navCtrl: NavController,
               private popoverCtrl: PopoverController,
-              private actionSheetCtrl: ActionSheetController) {
+              private actionSheetCtrl: ActionSheetController,
+              public alertCtrl: AlertController) {
   }
 
   /**
@@ -68,6 +70,33 @@ export class StudentDashboardPage implements OnInit {
   }
 
   /**
+   * Open alert for backup
+   *
+   * @param i [The index of the coach in the coaches array]
+   */
+
+  showConfirm(pid: string) {
+    let confirm = this.alertCtrl.create({
+      message: 'Möchtest du den Coach wirklich löschen?',
+      buttons: [
+        {
+          text: 'Abbrechen',
+          handler: () => {
+            console.log('Disagree clicked');
+          }
+        },
+        {
+          text: 'Löschen',
+          handler: () => {
+            this.coachService.deleteCoach(pid);
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+
+  /**
    * Open action sheet for editing or deleting a coach
    *
    * @param i [The index of the coach in the coaches array]
@@ -82,7 +111,7 @@ export class StudentDashboardPage implements OnInit {
           text: 'Löschen',
           role: 'destructive',
           handler: () => {
-            this.coachService.deleteCoach(pid);
+            this.showConfirm(pid);
           }
         }, {
           text: 'Bearbeiten',
