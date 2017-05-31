@@ -11,6 +11,15 @@ import {SigninPage} from "../pages/signin/signin";
 import {AuthService} from "../services/auth.service";
 import {UserService} from "../services/user.service";
 
+export const firebaseConfig = {
+  apiKey: "AIzaSyBpt2x5kZIDvSBs1M7uxKpwuRllO3_LjXQ",
+  authDomain: "yourcoach-dc0ca.firebaseapp.com",
+  databaseURL: "https://yourcoach-dc0ca.firebaseio.com",
+  projectId: "yourcoach-dc0ca",
+  storageBucket: "yourcoach-dc0ca.appspot.com",
+  messagingSenderId: "600282368434"
+};
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -21,14 +30,7 @@ export class MyApp {
     /**
      * Initialize Firebase
      */
-    firebase.initializeApp({
-      apiKey: "AIzaSyBpt2x5kZIDvSBs1M7uxKpwuRllO3_LjXQ",
-      authDomain: "yourcoach-dc0ca.firebaseapp.com",
-      databaseURL: "https://yourcoach-dc0ca.firebaseio.com",
-      projectId: "yourcoach-dc0ca",
-      storageBucket: "yourcoach-dc0ca.appspot.com",
-      messagingSenderId: "600282368434"
-    });
+    firebase.initializeApp(firebaseConfig);
 
     /**
      * Call platform ready events
