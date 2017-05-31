@@ -57,7 +57,7 @@
                   <ion-icon name="text"></ion-icon>
                   <div>Chat</div>
                 </button>
-                <button ion-button icon-left clear small (click)="markTaskAsGradeable(task)">
+                <button ion-button icon-left clear small (click)="checkIfResponseWanted(task)">
                   <ion-icon name="checkmark-circle"></ion-icon>
                   <div>Erledigt</div>
                 </button>
@@ -67,6 +67,8 @@
         </ion-card>
       </div>
     </div>
+
+<!-- --------------------------------------------------------------------------------- -->
 
     <div *ngSwitchCase="'grade'">
       <div *ngIf="gradeTasks.length == 0">Du wartest auf keine Bewertungen</div>
@@ -122,6 +124,8 @@
         </ion-card>
       </div>
     </div>
+
+    <!-- --------------------------------------------------------------------------------- -->
 
     <div *ngSwitchCase="'done'">
       <div *ngIf="doneTasks.length == 0">Es liegen keine erledigten Aufgaben für diesen Studenten vor</div>

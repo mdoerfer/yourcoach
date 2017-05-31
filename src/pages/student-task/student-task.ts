@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {IonicPage, NavParams, PopoverController, ToastController} from 'ionic-angular';
+import {IonicPage, ModalController, NavParams, PopoverController, ToastController} from 'ionic-angular';
 import {TaskPopoverPage} from "../task-popover/task-popover";
 import {TaskService} from "../../services/task.service";
 import {UserService} from "../../services/user.service";
@@ -22,6 +22,7 @@ export class StudentTaskPage implements OnInit {
               private popoverCtrl: PopoverController,
               private taskService: TaskService,
               private userService: UserService,
+              public modalCtrl: ModalController,
               private toastCtrl: ToastController) {
   }
 
@@ -105,6 +106,28 @@ export class StudentTaskPage implements OnInit {
     popover.present({
       ev: myEvent
     });
+  }
+
+  /**
+   * Check if task needs a response
+   *
+   * @param task
+   */
+  checkIfResponseWanted(task: any) {
+    switch(task.response) {
+      case "Keine":
+        this.markTaskAsGradeable(task);
+        break;
+      case "Text":
+        this.showModalText(task);
+        break;
+      default:
+        this.markTaskAsGradeable(task);
+    }
+  }
+
+  showModalText(task: any){
+    console.log("Rückmeldung Text ja")
   }
 
 }

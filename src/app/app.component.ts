@@ -9,6 +9,7 @@ import {RoleChoicePage} from "../pages/role-choice/role-choice";
 import {SigninPage} from "../pages/signin/signin";
 
 import {AuthService} from "../services/auth.service";
+import {UserService} from "../services/user.service";
 
 @Component({
   templateUrl: 'app.html'
@@ -16,7 +17,7 @@ import {AuthService} from "../services/auth.service";
 export class MyApp {
   rootPage: any = SignupPage;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private authService: AuthService) {
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private authService: AuthService, private userService: UserService) {
     /**
      * Initialize Firebase
      */
