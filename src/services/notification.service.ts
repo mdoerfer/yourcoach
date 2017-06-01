@@ -47,6 +47,11 @@ export class NotificationService {
           notifications.push(notification);
         }
 
+        //Sort notifications
+        notifications.sort((n1, n2) => {
+          return n2.getCreatedAt() - n1.getCreatedAt();
+        });
+
         //Update state
         this.notifications = notifications;
         this.events.publish('notifications:changed', this.notifications);
