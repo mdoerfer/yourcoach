@@ -127,9 +127,20 @@ export class StudentTaskPage implements OnInit {
     }
   }
 
+  /**
+   * Shows modal for text response
+   *
+   * @param task
+   */
   showModalText(task: any){
-    let contactModal = this.modalCtrl.create(StudentTaskTextModalPage, {task: task} );
-    contactModal.present();
+    let textModal = this.modalCtrl.create(StudentTaskTextModalPage, {task: task} );
+    textModal.present();
+    textModal.onDidDismiss(data => {
+      if(data) {
+
+      }
+    });
+
   }
 
 }

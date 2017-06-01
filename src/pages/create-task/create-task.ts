@@ -159,6 +159,9 @@ export class CreateTaskPage implements OnInit {
       });
   }
 
+  /**
+   * checks if task is created or edited
+   */
   submitForm() {
     if(this.mode === 'edit') {
       this.onEditTask();
