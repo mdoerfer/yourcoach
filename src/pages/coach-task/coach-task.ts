@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {
-  ActionSheetController, AlertController, IonicPage, NavController, NavParams,
+  ActionSheetController, AlertController, Events, IonicPage, NavController, NavParams,
   PopoverController
 } from 'ionic-angular';
 import {CreateTaskPage} from "../create-task/create-task";
@@ -19,9 +19,10 @@ export class CoachTaskPage implements OnInit {
   sid: string;
   user: object;
 
-  openTasks: any[] = [];
-  gradeTasks: any[] = [];
-  doneTasks: any[] = [];
+  assignments: any[] = [];
+  openAssignments: any[] = [];
+  gradeAssignments: any[] = [];
+  doneAssignments: any[] = [];
 
   constructor(private navParams: NavParams,
               private navCtrl: NavController,
@@ -29,7 +30,8 @@ export class CoachTaskPage implements OnInit {
               private actionSheetCtrl: ActionSheetController,
               private alertCtrl: AlertController,
               private taskService: TaskService,
-              private userService: UserService) {
+              private userService: UserService,
+              private events: Events) {
   }
 
   /**
@@ -38,63 +40,61 @@ export class CoachTaskPage implements OnInit {
   ngOnInit() {
     this.sid = this.navParams.get('sid');
 
-    this.initializeStudent();
-    this.initializeTasks();
+    this.loadStudent();
+
+    this.loadAssignments();
+    this.subscribeAssignments();
   }
 
   /**
    * Load the currently active student data
    */
-  private initializeStudent() {
+  private loadStudent() {
     this.userService.getUserRefById(this.sid).once('value', user => {
       this.user = user.val();
     });
   }
 
   /**
-   * Read students from database and watch for changes
-   * If change occurs automatically reload array
+   * Load initial tasks
    */
-  private initializeTasks() {
-    this.taskService.getAllTasksFromMeToStudent(this.sid).on('value', tasks => {
-      let dbTasks = tasks.val();
-      let openTasksArr = [];
-      let gradeTasksArr = [];
-      let doneTasksArr = [];
+  private loadAssignments() {
+    this.assignments = this.taskService.getAssignments(this.sid);
 
-      for (let taskId in dbTasks) {
-        this.taskService.getTaskWithId(taskId).once('value', task => {
-          let newTask = task.val();
-          newTask._id = taskId;
+    this.openAssignments = this.getAssignmentsByState('open');
+    this.gradeAssignments = this.getAssignmentsByState('grade');
+    this.doneAssignments = this.getAssignmentsByState('done');
+  }
 
-          if (newTask.state == 'open') {
-            openTasksArr.push(newTask);
-          }
-          else if (newTask.state == 'grade') {
-            gradeTasksArr.push(newTask);
-          }
-          else if (newTask.state == 'done') {
-            doneTasksArr.push(newTask);
-          }
-        });
-      }
+  /**
+   * Subscribe to tasks and listen for changes
+   */
+  private subscribeAssignments() {
+    this.events.subscribe('tasks:assignments-changed', () => {
+      this.loadAssignments();
+    });
+  }
 
-      this.openTasks = openTasksArr;
-      this.gradeTasks = gradeTasksArr;
-      this.doneTasks = doneTasksArr;
+  /**
+   * Get tasks by state
+   */
+  getAssignmentsByState(state: string) {
+    return this.assignments.filter((assignment) => {
+      return assignment.state === state;
     });
   }
 
   /**
    * Change the task rating and mark it as done
    *
-   * @param task
+   * @param assignment
    * @param state
    */
-  rateTaskAndMarkAsDone(task: any) {
-    this.taskService.updateTaskById(task._id, {
+  rateAssignmentAndMarkAsDone(assignment: any) {
+    console.log(assignment);
+    this.taskService.updateTaskById(assignment._id, {
       state: 'done',
-      rating: task.rating
+      rating: assignment.rating
     });
   }
 

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {IonicPage, ModalController, NavParams, PopoverController, ToastController} from 'ionic-angular';
+import {Events, IonicPage, ModalController, NavParams, PopoverController, ToastController} from 'ionic-angular';
 import {TaskPopoverPage} from "../task-popover/task-popover";
 import {TaskService} from "../../services/task.service";
 import {UserService} from "../../services/user.service";
@@ -15,6 +15,7 @@ export class StudentTaskPage implements OnInit {
   cid: string;
   user: object;
 
+  tasks: any[] = [];
   openTasks: any[] = [];
   gradeTasks: any[] = [];
   doneTasks: any[] = [];
@@ -24,7 +25,8 @@ export class StudentTaskPage implements OnInit {
               private taskService: TaskService,
               private userService: UserService,
               public modalCtrl: ModalController,
-              private toastCtrl: ToastController) {
+              private toastCtrl: ToastController,
+              private events: Events) {
   }
 
   /**
@@ -33,47 +35,47 @@ export class StudentTaskPage implements OnInit {
   ngOnInit() {
     this.cid = this.navParams.get('cid');
 
-    this.initializeCoach();
-    this.initializeTasks();
+    this.loadCoach();
+
+    this.loadTasks();
+    this.subscribeTasks();
   }
 
   /**
    * Load the currently active coach data
    */
-  private initializeCoach() {
+  private loadCoach() {
     this.userService.getUserRefById(this.cid).once('value', user => {
       this.user = user.val();
     });
   }
 
   /**
-   * Read coaches from database and watch for changes
-   * If change occurs automatically reload array
+   * Load initial tasks
    */
-  private initializeTasks() {
-    this.taskService.getAllTasksForMeFromCoach(this.cid).on('value', tasks => {
-      //Reset all arrays
-      this.openTasks = [];
-      this.gradeTasks = [];
-      this.doneTasks = [];
+  private loadTasks() {
+    this.tasks = this.taskService.getTasks(this.cid);
 
-      //Add tasks to matching arrays, depending on their state
-      for (let taskId in tasks.val()) {
-        this.taskService.getTaskWithId(taskId).once('value', task => {
-          let newTask = task.val();
-          newTask._id = taskId;
+    this.openTasks = this.getTasksByState('open');
+    this.gradeTasks = this.getTasksByState('grade');
+    this.doneTasks = this.getTasksByState('done');
+  }
 
-          if (newTask.state == 'open') {
-            this.openTasks.push(newTask);
-          }
-          else if (newTask.state == 'grade') {
-            this.gradeTasks.push(newTask);
-          }
-          else if (newTask.state == 'done') {
-            this.doneTasks.push(newTask);
-          }
-        });
-      }
+  /**
+   * Subscribe to tasks and listen for changes
+   */
+  private subscribeTasks() {
+    this.events.subscribe('tasks:tasks-changed', () => {
+      this.loadTasks();
+    });
+  }
+
+  /**
+   * Get tasks by state
+   */
+  getTasksByState(state: string) {
+    return this.tasks.filter((task) => {
+      return task.state === state;
     });
   }
 
@@ -115,7 +117,7 @@ export class StudentTaskPage implements OnInit {
    * @param task
    */
   checkIfResponseWanted(task: any) {
-    switch(task.response) {
+    switch (task.response) {
       case "Keine":
         this.markTaskAsGradeable(task);
         break;
@@ -132,11 +134,11 @@ export class StudentTaskPage implements OnInit {
    *
    * @param task
    */
-  showModalText(task: any){
-    let textModal = this.modalCtrl.create(StudentTaskTextModalPage, {task: task} );
+  showModalText(task: any) {
+    let textModal = this.modalCtrl.create(StudentTaskTextModalPage, {task: task});
     textModal.present();
     textModal.onDidDismiss(data => {
-      if(data) {
+      if (data) {
 
       }
     });
