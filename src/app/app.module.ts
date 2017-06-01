@@ -8,7 +8,7 @@ import {StatusBar} from '@ionic-native/status-bar';
 import {MyApp} from './app.component';
 
 //Modules
-import { Ionic2RatingModule } from 'ionic2-rating';
+import {Ionic2RatingModule} from 'ionic2-rating';
 
 //Services
 import {AuthService} from "../services/auth.service";
@@ -33,6 +33,7 @@ import {InviteService} from "../services/invite.service";
 import {StudentService} from "../services/student.service";
 import {CoachService} from "../services/coach.service";
 import {StudentTaskTextModalPage} from "../pages/student-task-text-modal/student-task-text-modal";
+import {NotificationService} from "../services/notification.service";
 
 
 @NgModule({
@@ -85,7 +86,8 @@ import {StudentTaskTextModalPage} from "../pages/student-task-text-modal/student
     TaskService,
     InviteService,
     StudentService,
-    CoachService
+    CoachService,
+    NotificationService
   ]
 })
 export class AppModule {

@@ -8,60 +8,13 @@
 
 
 <ion-content padding>
-  <ion-list>
-    <ion-item>
-      <ion-icon name="checkmark-circle" item-left></ion-icon>
-      <h2>Du hast einen neuen Task</h2>
-      <p>(STUDENTEN) 10 Situps am Tag</p>
-      <ion-note item-right>1T</ion-note>
-    </ion-item>
-    <ion-item>
-      <ion-icon name="star" item-left></ion-icon>
-      <h2>Dein Task wurde bewertet</h2>
-      <p>(STUDENTEN) 3 Sterne für 10 Situps</p>
-      <ion-note item-right>1T</ion-note>
-    </ion-item>
-    <ion-item>
-      <ion-icon name="checkmark-circle" item-left></ion-icon>
-      <h2>Ein Task wurde erledigt</h2>
-      <p>(COACH) Felix hat einen Task erledigt</p>
-      <ion-note item-right>1T</ion-note>
-    </ion-item>
-    <ion-item>
-      <ion-icon name="star" item-left></ion-icon>
-      <h2>Bitte Task bewerten</h2>
-      <p>(COACH) 10 Situps von Felix bewerten</p>
-      <ion-note item-right>1T</ion-note>
-    </ion-item>
-    <ion-item>
-      <ion-icon name="chatboxes" item-left></ion-icon>
-      <h2>Du hast eine neue Nachricht</h2>
-      <p>(BEIDE) Hi, du wegen des Trainings morgen. Lass uns das verschieben</p>
-      <ion-note item-right>1T</ion-note>
-    </ion-item>
-    <ion-item>
-      <ion-icon name="alarm" item-left></ion-icon>
-      <h2>Du hast eine Erinnerung</h2>
-      <p>(STUDENTEN) Heute muss der Task erledigt werden</p>
-      <ion-note item-right>1T</ion-note>
-    </ion-item>
-    <ion-item>
-      <ion-icon name="mail" item-left></ion-icon>
-      <h2>Du hast eine Einladung</h2>
-      <p>(STUDENTEN) Dirk hat dir eine Einladung geschickt</p>
-      <ion-note item-right>1T</ion-note>
-    </ion-item>
-    <ion-item>
-      <ion-icon name="mail-open" item-left></ion-icon>
-      <h2>Einladung wurde akzeptiert</h2>
-      <p>(COACH) Felix hat deine Einladung akzeptiert</p>
-      <ion-note item-right>1T</ion-note>
-    </ion-item>
-    <ion-item>
-      <ion-icon name="alert" item-left></ion-icon>
-      <h2>Einladung wurde abgelehnt</h2>
-      <p>(Coach) Felix hat deine Einladung abgelehnt</p>
-      <ion-note item-right>1T</ion-note>
+  <div *ngIf="notifications.length == 0"></div>
+  <ion-list *ngIf="notifications.length > 0">
+    <ion-item *ngFor="let notification of notifications; let i = index;">
+      <ion-icon [name]="notification.getInfo().icon" item-left></ion-icon>
+      <h2>{{ notification.getInfo().title }}</h2>
+      <p>{{ notification.getDescription() }}</p>
+      <ion-note item-right>{{ notification.getDaysSinceCreation() }}</ion-note>
     </ion-item>
   </ion-list>
 </ion-content>

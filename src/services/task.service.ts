@@ -2,6 +2,8 @@ import {AuthService} from "./auth.service";
 import {Injectable} from "@angular/core";
 import firebase from 'firebase';
 import {Events} from "ionic-angular";
+import {NotificationService} from "./notification.service";
+import {Notification} from "../models/notification.model";
 
 @Injectable()
 export class TaskService {
@@ -11,7 +13,8 @@ export class TaskService {
   assignments: any[] = []; //Tasks from me to student
 
   constructor(private authService: AuthService,
-              private events: Events) {
+              private events: Events,
+              private notificationService: NotificationService) {
     this.observeAssignments();
     this.observeTasks();
   }
@@ -112,6 +115,11 @@ export class TaskService {
         this.events.publish('tasks:create-success', {
           message: 'Die Aufgabe wurde erstellt.'
         });
+
+        this.notificationService.createNotification(new Notification()
+          .setType('task:new')
+          .setDescription('(TASK) ' + task.title)
+          .setTo(task.to));
       }, error => {
         this.events.publish('tasks:create-failed', {
           message: error.message
