@@ -10,7 +10,9 @@
     <ion-buttons end>
       <button id="notification-button" ion-button icon-only clear (click)="goToNotifications()">
         <ion-icon name="notifications">
-          <ion-badge id="notifications-badge" color="danger" *ngIf="notifications.length > 0">{{ notifications.length }}</ion-badge>
+          <ion-badge id="notifications-badge" color="danger" *ngIf="notifications.length > 0">{{ notifications.length
+            }}
+          </ion-badge>
         </ion-icon>
       </button>
       <button ion-button icon-only (click)="presentPopover($event)">
@@ -29,7 +31,7 @@
 
 </ion-header>
 
-<ion-content padding>
+<ion-content padding (click)="checkSearch()">
   <ion-list-header>Deine Coaches</ion-list-header>
   <p padding *ngIf="coaches.length == 0">
     Du hast noch keine Coaches
@@ -58,7 +60,8 @@
           <ion-avatar item-left>
             <img src="../../assets/images/dummy-avatar.png">
           </ion-avatar>
-      <h3>Eine Coaching Anfrage von {{coach.name}}</h3>
+          <h3>Eine Coaching Anfrage von<br>
+            {{coach.name}}</h3>
         </ion-item>
         <ion-item>
           <button ion-button outline (click)="onDeclineInvite(i)">
