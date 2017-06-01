@@ -1,23 +1,61 @@
 import firebase from 'firebase';
 import {Injectable} from "@angular/core";
 import {AuthService} from "./auth.service";
+import {Events} from "ionic-angular";
+import {UserService} from "./user.service";
 
 @Injectable()
 export class CoachService {
   nodeName: string = '/pairings/';
 
-  constructor(private authService: AuthService) {
+  coaches: any[] = [];
+
+  constructor(private authService: AuthService,
+              private userService: UserService,
+              private events: Events) {
+    this.observeCoaches();
   }
 
   /**
-   * Get all coaches from student
-   *
-   * @returns {firebase.Promise<any>}
+   * Get coaches
    */
   getCoaches() {
+    return this.coaches.slice();
+  }
+
+  /**
+   * Observe all coaches from student
+   */
+  observeCoaches() {
     let uid = this.authService.getActiveUser().uid;
 
-    return firebase.database().ref(this.nodeName).orderByChild('student').equalTo(uid);
+    let query = firebase.database()
+      .ref(this.nodeName)
+      .orderByChild('student')
+      .equalTo(uid);
+
+    query.on('value', snapshot => {
+      let dbPairings = snapshot.val();
+      let coaches: any[] = [];
+
+      for (let pairingId in dbPairings) {
+        let pairing = dbPairings[pairingId];
+
+        this.userService.getUserRefById(pairing.coach).once('value', user => {
+          let newCoach = user.val();
+          newCoach._id = pairing.coach;
+          newCoach.pairingId = pairingId;
+
+          if (!pairing.deleted) {
+            coaches.push(newCoach);
+          }
+        })
+      }
+
+      //Update state
+      this.coaches = coaches;
+      this.events.publish('coaches:changed', this.coaches);
+    });
   }
 
   /**

@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {ActionSheetController, Events, IonicPage, NavController, PopoverController} from 'ionic-angular';
-import {UserService} from "../../services/user.service";
 import {StudentTaskPage} from "../student-task/student-task";
 import {DashboardPopoverPage} from "../dashboard-popover/dashboard-popover";
 import {InviteService} from "../../services/invite.service";
@@ -19,8 +18,7 @@ export class StudentDashboardPage implements OnInit {
   private coaches: any[] = [];
   private pendingInvites: any[] = [];
 
-  constructor(private userService: UserService,
-              private inviteService: InviteService,
+  constructor(private inviteService: InviteService,
               private coachService: CoachService,
               private navCtrl: NavController,
               private popoverCtrl: PopoverController,
@@ -36,35 +34,25 @@ export class StudentDashboardPage implements OnInit {
     this.loadInvites();
     this.subscribeInvites();
 
-
-    this.initializeCoaches();
+    this.loadCoaches();
+    this.subscribeCoaches();
   }
 
 
   /**
-   * Read coaches from database and watch for changes
-   * If change occurs automatically reload array
+   * Load initial coaches from service
    */
-  private initializeCoaches() {
-    this.coachService.getCoaches().on('value', pairings => {
-      let dbPairings = pairings.val();
-      let coachesArr: any[] = [];
+  private loadCoaches() {
+    this.coaches = this.coachService.getCoaches();
+  }
 
-      for (let pairingId in dbPairings) {
-        let pairing = dbPairings[pairingId];
-
-        this.userService.getUserRefById(pairing.coach).once('value', user => {
-          let newCoach = user.val();
-          newCoach._id = pairing.coach;
-          newCoach.pairingId = pairingId;
-
-          if (!pairing.deleted) {
-            coachesArr.push(newCoach);
-          }
-        })
-      }
-
-      this.coaches = coachesArr;
+  /**
+   * Subscribe to coaches and listen for changes
+   */
+  private subscribeCoaches() {
+    //Listen for changes
+    this.events.subscribe('coaches:changed', coaches => {
+      this.coaches = coaches;
     })
   }
 
