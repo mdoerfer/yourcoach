@@ -25,11 +25,6 @@ export class DashboardPopoverPage {
     this.close();
   }
 
-  goToNotifications() {
-    this.navCtrl.push(NotificationPage);
-    this.close();
-  }
-
   goToSettings() {
     this.navCtrl.push(SettingsPage);
     this.close();

@@ -8,9 +8,9 @@
       </button>
     </ion-buttons>
     <ion-buttons end>
-      <button id="notification-button" ion-button icon-only clear>
+      <button id="notification-button" ion-button icon-only clear (click)="goToNotifications()">
         <ion-icon name="notifications">
-          <ion-badge id="notifications-badge" color="danger">5</ion-badge>
+          <ion-badge id="notifications-badge" color="danger" *ngIf="notifications.length > 0">{{ notifications.length }}</ion-badge>
         </ion-icon>
       </button>
       <button ion-button icon-only (click)="presentPopover($event)">

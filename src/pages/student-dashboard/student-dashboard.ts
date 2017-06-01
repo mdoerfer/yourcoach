@@ -5,6 +5,9 @@ import {DashboardPopoverPage} from "../dashboard-popover/dashboard-popover";
 import {InviteService} from "../../services/invite.service";
 import {CoachService} from "../../services/coach.service";
 import {AlertController} from 'ionic-angular';
+import {NotificationService} from "../../services/notification.service";
+import {Notification} from "../../models/notification.model";
+import {NotificationPage} from "../notification/notification";
 
 
 @IonicPage()
@@ -17,6 +20,7 @@ export class StudentDashboardPage implements OnInit {
   private searchQuery: string = '';
   private coaches: any[] = [];
   private pendingInvites: any[] = [];
+  private notifications: Notification[] = [];
 
   constructor(private inviteService: InviteService,
               private coachService: CoachService,
@@ -24,7 +28,8 @@ export class StudentDashboardPage implements OnInit {
               private popoverCtrl: PopoverController,
               private actionSheetCtrl: ActionSheetController,
               public alertCtrl: AlertController,
-              private events: Events) {
+              private events: Events,
+              private notificationService: NotificationService) {
   }
 
   /**
@@ -36,6 +41,9 @@ export class StudentDashboardPage implements OnInit {
 
     this.loadCoaches();
     this.subscribeCoaches();
+
+    this.loadUnreadNotifications();
+    this.subscribeUnreadNotifications();
   }
 
 
@@ -75,6 +83,22 @@ export class StudentDashboardPage implements OnInit {
   }
 
   /**
+   * Load initial notifications
+   */
+  private loadUnreadNotifications() {
+    this.notifications = this.notificationService.getUnreadNotifications();
+  }
+
+  /**
+   * Subscribe to notifications and listen for changes
+   */
+  private subscribeUnreadNotifications() {
+    this.events.subscribe('notifications:changed', () => {
+      this.loadUnreadNotifications();
+    })
+  }
+
+  /**
    * Accept invite
    *
    * @param i Index of the invite in the array
@@ -108,6 +132,13 @@ export class StudentDashboardPage implements OnInit {
     this.navCtrl.push(StudentTaskPage, {
       cid: cid
     });
+  }
+
+  /**
+   * Open notifications page
+   */
+  goToNotifications() {
+    this.navCtrl.push(NotificationPage);
   }
 
   /**
