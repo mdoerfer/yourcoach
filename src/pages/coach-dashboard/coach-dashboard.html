@@ -30,7 +30,7 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding (click)="checkSearch()">
   <ion-list-header>Deine Studenten</ion-list-header>
   <p padding *ngIf="students.length == 0">
     Du hast keine Studenten zur Zeit

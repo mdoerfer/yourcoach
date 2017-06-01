@@ -84,6 +84,8 @@ export class CoachDashboardPage implements OnInit {
    * @param i
    */
   goToTasks(i: number) {
+    if(this.searchIsActive) return;
+
     let sid = this.students[i]._id;
 
     this.navCtrl.push(CoachTaskPage, {
@@ -104,6 +106,8 @@ export class CoachDashboardPage implements OnInit {
    * @param i [The index of the student in the students array]
    */
   openActionSheet(i: number) {
+    if(this.searchIsActive) return;
+
     let pid = this.students[i].pairingId;
 
     let actionSheet = this.actionSheetCtrl.create({
@@ -155,6 +159,8 @@ export class CoachDashboardPage implements OnInit {
    * Show student invite prompt
    */
   showPrompt() {
+    if(this.searchIsActive) return;
+
     let prompt = this.alertCtrl.create({
       title: 'Student einladen',
       message: "Anfrage senden, um Schüler hinzuzufügen",
@@ -200,14 +206,34 @@ export class CoachDashboardPage implements OnInit {
    * Toggle search
    */
   toggleSearch() {
-    this.searchIsActive = !this.searchIsActive;
+    if(this.searchIsActive) {
+      this.searchIsActive = false;
+      this.loadStudents();
+    }
+    else {
+      this.searchIsActive = true;
+    }
   }
 
-  search() {
-    let matches = this.students.filter((student) => {
-      return student.name.toLowerCase().indexOf(this.searchQuery.toLowerCase()) > -1;
-    });
+  /**
+   * Close search if it is active
+   */
+  checkSearch() {
+    if(this.searchIsActive) {
+      this.toggleSearch();
+    }
+  }
 
-    console.log(matches);
+  /**
+   * Filter students
+   */
+  search() {
+    this.loadStudents();
+
+    if (this.searchQuery && this.searchQuery.trim() != '') {
+      this.students = this.students.filter((student) => {
+        return student.name.toLowerCase().indexOf(this.searchQuery.toLowerCase()) > -1;
+      });
+    }
   }
 }
