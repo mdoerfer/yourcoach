@@ -87,7 +87,29 @@ export class Notification {
   }
 
   getDaysSinceCreation() {
-    return '0T';
+    let created_at = new Date(this.created_at);
+    let now = new Date();
+
+    let type = null;
+    let diff = null;
+
+    let timeDiff = Math.abs(now.getTime() - created_at.getTime());
+    let diffHours = timeDiff / (1000 * 3600);
+    let diffDays = timeDiff / (1000 * 3600 * 24);
+
+    if(diffHours < 24) {
+      type = 'Std.';
+      diff = Math.ceil(diffHours);
+    }
+    else if(diffHours >= 24) {
+      type = 'T.';
+      diff = Math.ceil(diffDays);
+    }
+
+    return {
+      type: type,
+      diff: diff
+    };
   }
 
   getInfo() {

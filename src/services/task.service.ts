@@ -118,7 +118,7 @@ export class TaskService {
 
         this.notificationService.createNotification(new Notification()
           .setType('task:new')
-          .setDescription('(TASK) ' + task.title)
+          .setDescription(task.title)
           .setTo(task.to));
       }, error => {
         this.events.publish('tasks:create-failed', {

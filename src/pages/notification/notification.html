@@ -10,11 +10,13 @@
 <ion-content padding>
   <div *ngIf="notifications.length == 0"></div>
   <ion-list *ngIf="notifications.length > 0">
-    <ion-item *ngFor="let notification of notifications; let i = index;">
+    <ion-item *ngFor="let notification of notifications; let i = index;" (click)="goToTargetPage(notification)">
       <ion-icon [name]="notification.getInfo().icon" item-left></ion-icon>
       <h2>{{ notification.getInfo().title }}</h2>
-      <p>{{ notification.getDescription() }}</p>
-      <ion-note item-right>{{ notification.getDaysSinceCreation() }}</ion-note>
+      <p>
+        <ion-badge *ngIf="!notification.getRead()">NEW</ion-badge> {{ notification.getDescription() }}
+      </p>
+      <ion-note item-right>{{ notification.getDaysSinceCreation().diff }} {{ notification.getDaysSinceCreation().type }}</ion-note>
     </ion-item>
   </ion-list>
 </ion-content>
