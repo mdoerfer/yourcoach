@@ -1,12 +1,14 @@
 import firebase from 'firebase';
 import {Injectable} from "@angular/core";
 import {AuthService} from "./auth.service";
+import {Events} from "ionic-angular";
 
 @Injectable()
 export class UserService {
   nodeName: string = '/users/';
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService,
+              private events: Events) {
   }
 
   /**
@@ -41,6 +43,25 @@ export class UserService {
    */
   getUserRefById(uid: string) {
     return firebase.database().ref(this.nodeName + uid);
+  }
+
+  /**
+   * Delete user
+   */
+  deleteUser() {
+    this.updateActiveUserRef({
+      deleted: "true"
+    })
+      .then(data => {
+        this.events.publish('user:delete-success', {
+          message: 'Nutzer wurde erfolgreich gelöscht.'
+        });
+      })
+      .catch(error => {
+        this.events.publish('user:delete-failed', {
+          message: error.message
+        });
+      });
   }
 
 }

@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import {IonicPage, ModalController} from 'ionic-angular';
+import {Component} from '@angular/core';
+import {Events, IonicPage, ModalController} from 'ionic-angular';
 import {UserService} from "../../services/user.service";
 import {AlertController} from 'ionic-angular';
 import {AuthService} from "../../services/auth.service";
@@ -18,27 +18,24 @@ export class SettingsPage {
               private authService: AuthService,
               private navCtrl: NavController,
               public alertCtrl: AlertController,
-              public modalCtrl: ModalController) {
+              public modalCtrl: ModalController,
+              private events: Events) {
   }
 
 
   /**
    * Shows modal for edit profile
-   *
-   * @param
    */
   showModalEditProfile() {
-   let editProfileModal = this.modalCtrl.create(EditProfileModalPage);
+    let editProfileModal = this.modalCtrl.create(EditProfileModalPage);
     editProfileModal.present();
 
-
-
+    //TODO: Implement onDidDismiss()
   }
 
   /**
-   * Open alert for backup
+   * Confirm deletion
    */
-
   showConfirm() {
     let confirm = this.alertCtrl.create({
       title: 'Account löschen',
@@ -62,34 +59,33 @@ export class SettingsPage {
   }
 
   /**
-   * Sets the users currently active role in the database and opens the related dashboard
-   * Shows an error toast if role choice wasn't successful
-   *
-   * @param role
+   * Soft-deletes a user
    */
   deleteUser() {
-    this.userService.updateActiveUserRef({
-      deleted: "true"
-    })
-      .then(data => {
-        this.authService.signout();
-        this.navCtrl.pop();
-      })
-      .catch(error => {
-        console.log("nicht gelöscht");
-        //this.showToast('Es gab einen Fehler beim Löschen. Bitte versuche es erneut.');
-      });
-  }
+    this.userService.deleteUser();
 
-  signOut() {
-    this.authService.signout();
-    this.navCtrl.pop();
+    this.events.subscribe('user:delete-success', (payload) => {
+      console.log(payload.message);
+      this.signOut();
+    });
+    
+    this.events.subscribe('user:delete-failed', (payload) => {
+      console.log(payload.message);
+    })
   }
 
   /**
-   *
+   * Sign a user out
    */
-  goToRoleChoice(){
+  signOut() {
+    this.navCtrl.pop();
+    this.authService.signout();
+  }
+
+  /**
+   *  Open role choice page
+   */
+  goToRoleChoice() {
     this.navCtrl.push(RoleChoicePage);
   }
 
