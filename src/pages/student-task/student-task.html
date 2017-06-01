@@ -58,11 +58,11 @@
               </ion-grid>
             </ion-item>
 
-            <ion-card-content *ngIf="task.open">
+            <ion-card-content *ngIf="task.open" text-wrap>
               <p>{{task.description}}</p>
             </ion-card-content>
 
-            <ion-item *ngIf="task.open">
+            <ion-item *ngIf="task.open" text-wrap>
               <h2>Rückmeldung</h2>
               <p>{{task.responseType}}</p>
               <p *ngIf="task.responseInstructions">{{task.responseInstructions}}</p>
@@ -119,14 +119,15 @@
               </ion-grid>
             </ion-item>
 
-            <ion-card-content *ngIf="task.open">
+            <ion-card-content *ngIf="task.open" text-wrap>
               <p>{{task.description}}</p>
             </ion-card-content>
 
-            <ion-item *ngIf="task.open">
+            <ion-item *ngIf="task.open" text-wrap>
               <h2>Rückmeldung</h2>
               <p>{{task.responseType}}</p>
               <p *ngIf="task.responseInstructions">{{task.responseInstructions}}</p>
+              <p>{{task.response}}</p>
             </ion-item>
 
             <ion-row>
@@ -176,14 +177,15 @@
               </ion-grid>
             </ion-item>
 
-            <ion-card-content *ngIf="task.open">
+            <ion-card-content *ngIf="task.open" text-wrap>
               <p>{{task.description}}</p>
             </ion-card-content>
 
-            <ion-item *ngIf="task.open">
+            <ion-item *ngIf="task.open" text-wrap>
               <h2>Rückmeldung</h2>
               <p>{{task.responseType}}</p>
               <p *ngIf="task.responseInstructions">{{task.responseInstructions}}</p>
+              <p>{{task.response}}</p>
             </ion-item>
 
             <ion-row>

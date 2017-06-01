@@ -55,11 +55,11 @@
               </ion-grid>
             </ion-item>
 
-            <ion-card-content *ngIf="assignment.open">
+            <ion-card-content *ngIf="assignment.open" text-wrap>
               <p>{{assignment.description}}</p>
             </ion-card-content>
 
-            <ion-item *ngIf="assignment.open">
+            <ion-item *ngIf="assignment.open" text-wrap>
               <h2>Rückmeldung</h2>
               <p>{{assignment.responseType}}</p>
               <p *ngIf="assignment.responseInstructions">{{assignment.responseInstructions}}</p>
@@ -107,14 +107,15 @@
               </ion-grid>
             </ion-item>
 
-            <ion-card-content *ngIf="assignment.open">
+            <ion-card-content *ngIf="assignment.open" text-wrap>
               <p>{{assignment.description}}</p>
             </ion-card-content>
 
-            <ion-item *ngIf="assignment.open">
+            <ion-item *ngIf="assignment.open" text-wrap>
               <h2>Rückmeldung</h2>
               <p>{{assignment.responseType}}</p>
               <p *ngIf="assignment.responseInstructions">{{assignment.responseInstructions}}</p>
+              <p>{{assignment.response}}</p>
             </ion-item>
 
             <ion-row>
@@ -163,14 +164,15 @@
               </ion-grid>
             </ion-item>
 
-            <ion-card-content *ngIf="assignment.open">
+            <ion-card-content *ngIf="assignment.open" text-wrap>
               <p>{{assignment.description}}</p>
             </ion-card-content>
 
-            <ion-item *ngIf="assignment.open">
+            <ion-item *ngIf="assignment.open" text-wrap>
               <h2>Rückmeldung</h2>
               <p>{{assignment.responseType}}</p>
               <p *ngIf="assignment.responseInstructions">{{assignment.responseInstructions}}</p>
+              <p>{{assignment.response}}</p>
             </ion-item>
 
             <ion-row>
