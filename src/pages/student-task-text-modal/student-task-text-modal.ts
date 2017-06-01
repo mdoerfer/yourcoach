@@ -1,32 +1,59 @@
-import {Component} from '@angular/core';
-import {NavController, NavParams, ViewController} from "ionic-angular";
-import {AuthService} from "../../services/auth.service";
-import {NgForm} from "@angular/forms";
-import {StudentTaskPage} from "../student-task/student-task";
-import {TaskService} from "../../services/task.service";
+import {Component, OnInit} from '@angular/core';
+import {NavParams, ViewController} from "ionic-angular";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'page-student-task-text-modal',
   templateUrl: 'student-task-text-modal.html',
 })
-export class StudentTaskTextModalPage {
+export class StudentTaskTextModalPage implements OnInit{
 
   task: any;
+  responseForm: FormGroup;
 
   constructor(public viewCtrl: ViewController,
-              private authService: AuthService,
-              private navCtrl: NavController,
-              private navParams: NavParams,
-              private taskService: TaskService) {
+              private navParams: NavParams) {
 
     this.task = this.navParams.get('task');
 
   }
 
-  closeModal(){
+  /**
+   * Initialize the page
+   */
+  ngOnInit() {
+    this.initializeForm();
+  }
 
-    //this.viewCtrl.dismiss();
-    this.navCtrl.pop();
+  /**
+   * Initialize the form
+   */
+  private initializeForm() {
+
+    let formData = {
+      response: null,
+    };
+
+    //Create form
+    this.responseForm = new FormGroup({
+      response: new FormControl(formData.response, Validators.required),
+    });
+  }
+
+
+  /**
+   * Closes text modal
+   */
+  dismissModal(){
+    this.viewCtrl.dismiss();
+
+  }
+
+  /**
+   * Closes text modal with data
+   */
+  submitForm(){
+    this.viewCtrl.dismiss(this.responseForm.get('response').value);
   }
 
 
