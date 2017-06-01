@@ -22,11 +22,21 @@
     </ion-item>
 
     <ion-item>
+      <ion-label floating>Geburtsdatum</ion-label>
+      <ion-input
+        type="date"
+        block
+        formControlName="dateOfBirth">
+      </ion-input>
+    </ion-item>
+
+
+    <ion-item>
       <ion-label floating>About Me</ion-label>
       <ion-input
         type="text"
         block
-        formControlName="description">
+        formControlName="aboutMe">
       </ion-input>
     </ion-item>
 
@@ -40,6 +50,13 @@
     </button>
 
   </form>
+
+
+  <button color="danger" (click)="dismissModal()"
+          ion-button
+          block>
+    <span>Abbrechen</span>
+  </button>
 </ion-content>
 
 
