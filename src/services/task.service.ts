@@ -186,4 +186,54 @@ export class TaskService {
         });
       });
   }
+
+  markTaskAsGradeable(task: any) {
+    this.updateTaskById(task._id, {
+      state: 'grade'
+    }).then(data => {
+      this.events.publish('tasks:done-success', {
+        message: 'Die Aufgabe wurde erledigt.'
+      });
+
+      this.notificationService.createNotification(new Notification()
+        .setType('task:done')
+        .setDescription(task.title)
+        .setTo(task.from)
+        .setAdditionalInfo({
+          sid: task.to
+        }));
+    }, error => {
+      this.events.publish('tasks:done-failed', {
+        message: error.message
+      });
+    });
+  }
+
+  /**
+   * Rate assignment and mark it as done
+   *
+   * @param assignment
+   */
+  rateAssignmentAndMarkAsDone(assignment: any) {
+    this.updateTaskById(assignment._id, {
+      state: 'done',
+      rating: assignment.rating
+    }).then(data => {
+      this.events.publish('tasks:grade-success', {
+        message: 'Die Aufgabe wurde bewertet.'
+      });
+
+      this.notificationService.createNotification(new Notification()
+        .setType('task:graded')
+        .setDescription(assignment.title)
+        .setTo(assignment.to)
+        .setAdditionalInfo({
+          cid: assignment.from
+        }));
+    }, error => {
+      this.events.publish('tasks:grade-failed', {
+        message: error.message
+      });
+    });
+  }
 }

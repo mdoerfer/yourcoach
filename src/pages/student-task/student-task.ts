@@ -14,6 +14,7 @@ export class StudentTaskPage implements OnInit {
   activeTab: string = "open";
   cid: string;
   user: object;
+  tab: string;
 
   tasks: any[] = [];
   openTasks: any[] = [];
@@ -34,6 +35,11 @@ export class StudentTaskPage implements OnInit {
    */
   ngOnInit() {
     this.cid = this.navParams.get('cid');
+    this.tab = this.navParams.get('tab') || null;
+
+    if(this.tab) {
+      this.activeTab = this.tab;
+    }
 
     this.loadCoach();
 
@@ -85,9 +91,7 @@ export class StudentTaskPage implements OnInit {
    * @param task
    */
   markTaskAsGradeable(task: any) {
-    this.taskService.updateTaskById(task._id, {
-      state: 'grade'
-    });
+    this.taskService.markTaskAsGradeable(task);
   }
 
   /**

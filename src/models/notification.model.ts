@@ -139,10 +139,6 @@ export class Notification {
         title = 'Ein Task wurde erledigt';
         icon = 'checkmark-circle';
         break;
-      case 'task:grade':
-        title = 'Bitte Task bewerten';
-        icon = 'star';
-        break;
       case 'chat:new-message':
         title = 'Du hast eine neue Nachricht';
         icon = 'chatboxes';

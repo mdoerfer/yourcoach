@@ -56,17 +56,21 @@ export class NotificationPage implements OnInit {
     switch(notification.getType()) {
       case 'task:new':
         this.navCtrl.push(StudentTaskPage, {
-          cid: notification.getAdditionalInfo('cid')
+          cid: notification.getAdditionalInfo('cid'),
+          tab: 'open'
         });
         break;
       case 'task:graded':
-        this.navCtrl.push(StudentTaskPage);
+        this.navCtrl.push(StudentTaskPage, {
+          cid: notification.getAdditionalInfo('cid'),
+          tab: 'done'
+        });
         break;
       case 'task:done':
-        this.navCtrl.push(CoachTaskPage);
-        break;
-      case 'task:grade':
-        this.navCtrl.push(CoachTaskPage);
+        this.navCtrl.push(CoachTaskPage, {
+          sid: notification.getAdditionalInfo('sid'),
+          tab: 'grade'
+        });
         break;
       case 'chat:new-message':
         console.log('Go to chat page');

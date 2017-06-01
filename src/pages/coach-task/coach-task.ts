@@ -18,6 +18,7 @@ export class CoachTaskPage implements OnInit {
   activeTab: string = "open";
   sid: string;
   user: object;
+  tab: string;
 
   assignments: any[] = [];
   openAssignments: any[] = [];
@@ -39,6 +40,11 @@ export class CoachTaskPage implements OnInit {
    */
   ngOnInit() {
     this.sid = this.navParams.get('sid');
+    this.tab = this.navParams.get('tab') || null;
+
+    if(this.tab) {
+      this.activeTab = this.tab;
+    }
 
     this.loadStudent();
 
@@ -91,11 +97,7 @@ export class CoachTaskPage implements OnInit {
    * @param state
    */
   rateAssignmentAndMarkAsDone(assignment: any) {
-    console.log(assignment);
-    this.taskService.updateTaskById(assignment._id, {
-      state: 'done',
-      rating: assignment.rating
-    });
+    this.taskService.rateAssignmentAndMarkAsDone(assignment);
   }
 
   /**
