@@ -1,7 +1,45 @@
 <ion-header>
 
   <ion-navbar color="primary">
-    <ion-title>Modal</ion-title>
+    <ion-title>
+      <span>Profil Bearbeiten</span>
+    </ion-title>
   </ion-navbar>
 
 </ion-header>
+
+
+<ion-content padding>
+
+  <form [formGroup]="profileForm" (ngSubmit)="submitForm()">
+    <ion-item>
+      <ion-label floating>Name</ion-label>
+      <ion-input
+        type="text"
+        block
+        formControlName="name">
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>About Me</ion-label>
+      <ion-input
+        type="text"
+        block
+        formControlName="description">
+      </ion-input>
+    </ion-item>
+
+
+    <button
+      ion-button
+      type="submit"
+      block
+      [disabled]="!profileForm.valid">
+      <span>Speichern</span>
+    </button>
+
+  </form>
+</ion-content>
+
+
