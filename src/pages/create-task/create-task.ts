@@ -73,7 +73,7 @@ export class CreateTaskPage implements OnInit {
       title: null,
       description: null,
       difficulty: this.difficulties[1],
-      response: this.responses[0],
+      responseType: this.responses[0],
       responseInstructions: null,
       state: 'open',
       rating: 0
@@ -87,7 +87,7 @@ export class CreateTaskPage implements OnInit {
         formData.title = task.title;
         formData.description = task.description;
         formData.difficulty = task.difficulty;
-        formData.response = task.response;
+        formData.responseType = task.responseType;
         formData.responseInstructions = task.responseInstructions;
         formData.state = task.state;
         formData.rating = task.rating || 0;
@@ -99,7 +99,7 @@ export class CreateTaskPage implements OnInit {
       title: new FormControl(formData.title, Validators.required),
       description: new FormControl(formData.description, Validators.required),
       difficulty: new FormControl(formData.difficulty, Validators.required),
-      response: new FormControl(formData.response, null),
+      responseType: new FormControl(formData.responseType, null),
       responseInstructions: new FormControl(formData.responseInstructions, null),
       state: new FormControl(formData.state, null),
       rating: new FormControl(formData.rating, null)
@@ -115,7 +115,7 @@ export class CreateTaskPage implements OnInit {
       title: this.taskForm.get('title').value,
       description: this.taskForm.get('description').value,
       difficulty: this.taskForm.get('difficulty').value,
-      response: this.taskForm.get('response').value,
+      responseType: this.taskForm.get('responseType').value,
       responseInstructions: this.taskForm.get('responseInstructions').value,
       state: this.taskForm.get('state').value,
       rating: this.taskForm.get('rating').value,
@@ -143,7 +143,7 @@ export class CreateTaskPage implements OnInit {
       description: this.taskForm.get('description').value,
       difficulty: this.taskForm.get('difficulty').value,
       rating: 0,
-      response: this.taskForm.get('response').value,
+      responseType: this.taskForm.get('responseType').value,
       responseInstructions: this.taskForm.get('responseInstructions').value,
       state: 'open',
       created_at: new Date().valueOf(),

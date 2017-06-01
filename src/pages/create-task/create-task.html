@@ -43,7 +43,7 @@
 
     <ion-item>
       <ion-label>Rückmeldung</ion-label>
-      <ion-select formControlName="response">
+      <ion-select formControlName="responseType">
         <ion-option
           *ngFor="let response of responses"
           [value]="response">{{ response }}
@@ -51,7 +51,7 @@
       </ion-select>
     </ion-item>
 
-    <ion-item *ngIf="taskForm.get('response').value != 'Keine'">
+    <ion-item *ngIf="taskForm.get('responseType').value != 'Keine'">
       <ion-label floating>Was soll der Schüler rückmelden?</ion-label>
       <ion-input
         type="text"
