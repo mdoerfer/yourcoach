@@ -17,7 +17,6 @@ export class TaskPopoverPage {
               private navParams: NavParams) {
 
     this.user = this.navParams.get('user');
-    console.log(this.user);
   }
 
   goToProfile() {

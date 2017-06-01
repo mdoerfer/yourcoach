@@ -23,6 +23,15 @@ export class NotificationService {
   }
 
   /**
+   * Get unread notifications
+   */
+  getUnreadNotifications() {
+    return this.notifications.filter((notification) => {
+      return notification.getRead() === false;
+    })
+  }
+
+  /**
    * Observe notifications
    */
   observeNotifications() {
@@ -46,6 +55,12 @@ export class NotificationService {
 
           notifications.push(notification);
         }
+
+        //Sort notifications
+        notifications.sort((n1, n2) => {
+          //Newest notification first
+          return n2.getCreatedAt() - n1.getCreatedAt();
+        });
 
         //Update state
         this.notifications = notifications;

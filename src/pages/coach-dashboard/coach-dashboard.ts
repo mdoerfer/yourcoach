@@ -8,6 +8,9 @@ import {UserService} from "../../services/user.service";
 import {CoachTaskPage} from "../coach-task/coach-task";
 import {StudentService} from "../../services/student.service";
 import {InviteService} from "../../services/invite.service";
+import {NotificationService} from "../../services/notification.service";
+import {Notification} from "../../models/notification.model";
+import {NotificationPage} from "../notification/notification";
 
 @IonicPage()
 @Component({
@@ -18,6 +21,7 @@ export class CoachDashboardPage implements OnInit {
   private searchIsActive: boolean = false;
   private searchQuery: string = '';
   private students: any[] = [];
+  private notifications: Notification[] = [];
 
   constructor(private popoverCtrl: PopoverController,
               private alertCtrl: AlertController,
@@ -26,7 +30,8 @@ export class CoachDashboardPage implements OnInit {
               private inviteService: InviteService,
               private navCtrl: NavController,
               private actionSheetCtrl: ActionSheetController,
-              private events: Events) {
+              private events: Events,
+              private notificationService: NotificationService) {
   }
 
   /**
@@ -35,6 +40,9 @@ export class CoachDashboardPage implements OnInit {
   ngOnInit() {
     this.loadStudents();
     this.subscribeStudents();
+
+    this.loadUnreadNotifications();
+    this.subscribeUnreadNotifications();
   }
 
   /**
@@ -55,6 +63,22 @@ export class CoachDashboardPage implements OnInit {
   }
 
   /**
+   * Load initial notifications
+   */
+  private loadUnreadNotifications() {
+    this.notifications = this.notificationService.getUnreadNotifications();
+  }
+
+  /**
+   * Subscribe to notifications and listen for changes
+   */
+  private subscribeUnreadNotifications() {
+    this.events.subscribe('notifications:changed', () => {
+      this.loadUnreadNotifications();
+    })
+  }
+
+  /**
    * Open task page with tasks for student
    *
    * @param i
@@ -65,6 +89,13 @@ export class CoachDashboardPage implements OnInit {
     this.navCtrl.push(CoachTaskPage, {
       sid: sid
     });
+  }
+
+  /**
+   * Open notifications page
+   */
+  goToNotifications() {
+    this.navCtrl.push(NotificationPage);
   }
 
   /**
