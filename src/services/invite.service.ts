@@ -26,7 +26,7 @@ export class InviteService {
   }
 
   /**
-   *
+   * Observe all coaches from student
    */
   observeInvites() {
     let uid = this.authService.getActiveUser().uid;
@@ -86,9 +86,17 @@ export class InviteService {
         deleted: false
       });
 
-    promise.then(data => {
-      this.removeInviteById(iid);
-    });
+    promise
+      .then(data => {
+        this.removeInviteById(iid);
+        this.events.publish('invites:accept-success', {
+          message: 'Einladung angenommen.'
+        });
+      }, error => {
+        this.events.publish('invites:accept-failed', {
+          message: error.message
+        });
+      });
 
     return promise;
   }
@@ -130,6 +138,15 @@ export class InviteService {
                   });
               }
             }
+          })
+          .then(data => {
+            this.events.publish('invites:send-success', {
+              message: 'Die Einladung wurde erfolgreich verschickt'
+            });
+          }, error => {
+            this.events.publish('invites:send-failed', {
+              message: error.message
+            });
           });
       });
   }

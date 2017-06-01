@@ -66,6 +66,14 @@ export class CoachService {
   deleteCoach(pid: string) {
     firebase.database().ref(this.nodeName + pid).update({
       deleted: true
+    }).then(data => {
+      this.events.publish('coaches:delete-success', {
+        message: 'Coach wurde gelöscht'
+      });
+    }, error => {
+      this.events.publish('coaches:delete-failed', {
+        message: error.message
+      });
     });
   }
 }

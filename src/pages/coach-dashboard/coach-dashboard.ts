@@ -1,5 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {IonicPage, PopoverController, AlertController, NavController, ActionSheetController} from 'ionic-angular';
+import {
+  IonicPage, PopoverController, AlertController, NavController, ActionSheetController,
+  Events
+} from 'ionic-angular';
 import {DashboardPopoverPage} from "../dashboard-popover/dashboard-popover";
 import {UserService} from "../../services/user.service";
 import {CoachTaskPage} from "../coach-task/coach-task";
@@ -22,56 +25,33 @@ export class CoachDashboardPage implements OnInit {
               private studentService: StudentService,
               private inviteService: InviteService,
               private navCtrl: NavController,
-              private actionSheetCtrl: ActionSheetController) {
+              private actionSheetCtrl: ActionSheetController,
+              private events: Events) {
   }
 
   /**
    * Initialize component
    */
   ngOnInit() {
-    this.initializeStudents();
+    this.loadStudents();
+    this.subscribeStudents();
   }
 
   /**
-   * Toggle search
+   * Load initial students from service
    */
-  toggleSearch() {
-    this.searchIsActive = !this.searchIsActive;
-  }
-
-  search() {
-    let matches = this.students.filter((student) => {
-      return student.name.toLowerCase().indexOf(this.searchQuery.toLowerCase()) > -1;
-    });
-
-    console.log(matches);
+  private loadStudents() {
+    this.students = this.studentService.getStudents();
   }
 
   /**
-   * Read students from database and watch for changes
-   * If change occurs automatically reload array
+   * Subscribe to students and listen for changes
    */
-  private initializeStudents() {
-    this.studentService.getStudents().on('value', pairings => {
-      let dbPairings = pairings.val();
-      let studentsArr: any[] = [];
-
-      for (let pairingId in dbPairings) {
-        let pairing = dbPairings[pairingId];
-
-        this.userService.getUserRefById(pairing.student).once('value', user => {
-          let newStudent = user.val();
-          newStudent._id = pairing.student;
-          newStudent.pairingId = pairingId;
-
-          if (!pairing.deleted) {
-            studentsArr.push(newStudent);
-          }
-        })
-      }
-
-      this.students = studentsArr;
-    });
+  private subscribeStudents() {
+    //Listen for changes
+    this.events.subscribe('students:changed', students => {
+      this.students = students;
+    })
   }
 
   /**
@@ -85,34 +65,6 @@ export class CoachDashboardPage implements OnInit {
     this.navCtrl.push(CoachTaskPage, {
       sid: sid
     });
-  }
-
-  /**
-   * Open alert for backup
-   *
-   * @param i [The index of the student in the students array]
-   */
-
-  showConfirm(pid: string) {
-    let confirm = this.alertCtrl.create({
-      title: 'Schüler löschen',
-      message: 'Möchtest du den Schüler wirklich löschen?',
-      buttons: [
-        {
-          text: 'Abbrechen',
-          handler: () => {
-            console.log('Disagree clicked');
-          }
-        },
-        {
-          text: 'Löschen',
-          handler: () => {
-            this.studentService.deleteStudent(pid);
-          }
-        }
-      ]
-    });
-    confirm.present();
   }
 
   /**
@@ -139,6 +91,33 @@ export class CoachDashboardPage implements OnInit {
       ]
     });
     actionSheet.present();
+  }
+
+  /**
+   * Open alert for backup
+   *
+   * @param i [The index of the student in the students array]
+   */
+  showConfirm(pid: string) {
+    let confirm = this.alertCtrl.create({
+      title: 'Schüler löschen',
+      message: 'Möchtest du den Schüler wirklich löschen?',
+      buttons: [
+        {
+          text: 'Abbrechen',
+          handler: () => {
+            console.log('Disagree clicked');
+          }
+        },
+        {
+          text: 'Löschen',
+          handler: () => {
+            this.studentService.deleteStudent(pid);
+          }
+        }
+      ]
+    });
+    confirm.present();
   }
 
   /**
@@ -184,5 +163,20 @@ export class CoachDashboardPage implements OnInit {
     popover.present({
       ev: myEvent
     });
+  }
+
+  /**
+   * Toggle search
+   */
+  toggleSearch() {
+    this.searchIsActive = !this.searchIsActive;
+  }
+
+  search() {
+    let matches = this.students.filter((student) => {
+      return student.name.toLowerCase().indexOf(this.searchQuery.toLowerCase()) > -1;
+    });
+
+    console.log(matches);
   }
 }
