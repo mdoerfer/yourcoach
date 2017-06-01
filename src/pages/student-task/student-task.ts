@@ -117,7 +117,7 @@ export class StudentTaskPage implements OnInit {
    * @param task
    */
   checkIfResponseWanted(task: any) {
-    switch (task.response) {
+    switch (task.responseType) {
       case "Keine":
         this.markTaskAsGradeable(task);
         break;
@@ -139,10 +139,34 @@ export class StudentTaskPage implements OnInit {
     textModal.present();
     textModal.onDidDismiss(data => {
       if (data) {
+        this.taskService.updateTaskById(task._id, {
+          response: data
+        })
+          .then(data => {
+          this.showToast("Rückmeldung wurde versendet.");
+          this.markTaskAsGradeable(task);
+        })
+          .catch(error => {
+            this.showToast(error.message);
+          });
 
       }
     });
 
+  }
+
+  /**
+   * Shows a short toast message
+   *
+   * @param msg
+   * @param duration
+   */
+  private showToast(msg: string, duration: number = 3000) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: duration
+    });
+    toast.present();
   }
 
 }
