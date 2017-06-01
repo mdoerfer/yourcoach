@@ -1,15 +1,13 @@
-import {Component} from '@angular/core';
-import {Platform} from 'ionic-angular';
+import {Component, ViewChild} from '@angular/core';
+import {Events, NavController, Platform} from 'ionic-angular';
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
-import firebase from 'firebase';
 
 import {SignupPage} from "../pages/signup/signup";
 import {RoleChoicePage} from "../pages/role-choice/role-choice";
 import {SigninPage} from "../pages/signin/signin";
 
-import {AuthService} from "../services/auth.service";
-import {UserService} from "../services/user.service";
+import * as firebase from "firebase/app";
 
 export const firebaseConfig = {
   apiKey: "AIzaSyBpt2x5kZIDvSBs1M7uxKpwuRllO3_LjXQ",
@@ -25,8 +23,12 @@ export const firebaseConfig = {
 })
 export class MyApp {
   rootPage: any = SignupPage;
+  @ViewChild('nav') nav : NavController;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private authService: AuthService, private userService: UserService) {
+  constructor(platform: Platform,
+              statusBar: StatusBar,
+              splashScreen: SplashScreen,
+              private events: Events) {
     /**
      * Initialize Firebase
      */
@@ -40,19 +42,9 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
 
-      this.onAuthStateChanged();
-      this.setRootPage();
+      this.loadRootPage();
 
       splashScreen.hide();
-    });
-  }
-
-  /**
-   * Change root page on authentication state change
-   */
-  private onAuthStateChanged() {
-    firebase.auth().onAuthStateChanged(user => {
-      this.setRootPage();
     });
   }
 
@@ -60,21 +52,26 @@ export class MyApp {
    * Set the right root page depending on the authentication
    * state of the user
    */
-  private setRootPage() {
-    let user = this.authService.getActiveUser();
-
-    //If user is logged in and verified
-    if(user && user.emailVerified) {
+  private loadRootPage() {
+    this.events.subscribe('user:logged-in-and-verified', payload => {
       this.rootPage = RoleChoicePage;
-    }
-    //If user is logged in but not verified
-    else if(user && !user.emailVerified) {
+      this.nav.pop();
+    });
+
+    this.events.subscribe('user:logged-in-unverified', payload => {
       this.rootPage = SigninPage;
-    }
-    //If user is null
-    else {
+      this.nav.pop();
+    });
+
+    this.events.subscribe('user:logged-in-but-deleted', payload => {
+      this.rootPage = SigninPage;
+      this.nav.pop();
+    });
+
+    this.events.subscribe('user:not-logged-in', () => {
       this.rootPage = SignupPage;
-    }
+      this.nav.pop();
+    });
   }
 }
 

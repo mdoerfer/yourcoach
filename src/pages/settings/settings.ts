@@ -68,7 +68,7 @@ export class SettingsPage {
       console.log(payload.message);
       this.signOut();
     });
-    
+
     this.events.subscribe('user:delete-failed', (payload) => {
       console.log(payload.message);
     })
