@@ -38,7 +38,7 @@ export class UserService {
   /**
    * Returns the corresponding user
    *
-   * @param id
+   * @param uid
    * @returns {firebase.database.Reference}
    */
   getUserRefById(uid: string) {
@@ -54,15 +54,13 @@ export class UserService {
     })
       .then(data => {
         this.events.publish('user:delete-success', {
-          message: 'Nutzer wurde erfolgreich gelöscht.'
+          message: 'Nutzer erfolgreich gelöscht',
         });
-      })
-      .catch(error => {
+      }, error => {
         this.events.publish('user:delete-failed', {
           message: error.message
         });
       });
   }
-
 }
 

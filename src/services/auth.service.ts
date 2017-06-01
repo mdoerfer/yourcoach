@@ -1,6 +1,13 @@
 import firebase from 'firebase';
+import {Injectable} from "@angular/core";
+import {Events} from "ionic-angular";
 
+@Injectable()
 export class AuthService {
+
+  constructor(private events: Events) {
+
+  }
 
   /**
    * Sign a user up
@@ -10,7 +17,18 @@ export class AuthService {
    * @returns {firebase.Promise<any>}
    */
   signup(email: string, password: string) {
-    return firebase.auth().createUserWithEmailAndPassword(email, password);
+    return firebase.auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(data => {
+        this.events.publish('auth:signup-success', {
+          message: 'Registrierung erfolgreich',
+          user: this.getActiveUser()
+        });
+      }, error => {
+        this.events.publish('auth:signup-failed', {
+          message: error.message
+        });
+      });
   }
 
   /**
@@ -21,9 +39,17 @@ export class AuthService {
    * @returns {firebase.Promise<any>}
    */
   signin(email: string, password: string) {
-    return firebase.auth().signInWithEmailAndPassword(email, password)
+    return firebase.auth()
+      .signInWithEmailAndPassword(email, password)
       .then(data => {
-        // get user -> user & user veriffied
+        this.events.publish('auth:signin-success', {
+          message: 'Login erfolgreich',
+          user: this.getActiveUser()
+        });
+      }, error => {
+        this.events.publish('auth:signin-failed', {
+          message: error.message
+        });
       });
   }
 
@@ -33,7 +59,18 @@ export class AuthService {
    * @returns {firebase.Promise<any>}
    */
   signout() {
-    return firebase.auth().signOut();
+    return firebase.auth()
+      .signOut()
+      .then(data => {
+        this.events.publish('auth:signout-success', {
+          message: 'Logout erfolgreich',
+          user: this.getActiveUser()
+        });
+      }, error => {
+        this.events.publish('auth:signout-failed', {
+          message: error.message
+        });
+      });
   }
 
   /**
@@ -43,7 +80,18 @@ export class AuthService {
    * @returns {firebase.Promise<any>}
    */
   resetPassword(email: string) {
-    return firebase.auth().sendPasswordResetEmail(email);
+    return firebase.auth()
+      .sendPasswordResetEmail(email)
+      .then(data => {
+        this.events.publish('auth:reset-password-success', {
+          message: 'Passwort erfolgreich zurückgesetzt',
+          user: this.getActiveUser()
+        });
+      }, error => {
+        this.events.publish('auth:reset-password-failed', {
+          message: error.message
+        });
+      });
   }
 
   /**
