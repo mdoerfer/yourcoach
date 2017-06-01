@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActionSheetController, IonicPage, NavController, PopoverController} from 'ionic-angular';
+import {ActionSheetController, Events, IonicPage, NavController, PopoverController} from 'ionic-angular';
 import {UserService} from "../../services/user.service";
 import {StudentTaskPage} from "../student-task/student-task";
 import {DashboardPopoverPage} from "../dashboard-popover/dashboard-popover";
@@ -25,30 +25,65 @@ export class StudentDashboardPage implements OnInit {
               private navCtrl: NavController,
               private popoverCtrl: PopoverController,
               private actionSheetCtrl: ActionSheetController,
-              public alertCtrl: AlertController) {
+              public alertCtrl: AlertController,
+              private events: Events) {
   }
 
   /**
    * Initialize component
    */
   ngOnInit() {
-    this.initializePendingInvites();
+    this.loadInvites();
+    this.subscribeInvites();
+
+
     this.initializeCoaches();
   }
 
+
   /**
-   * Toggle search
+   * Read coaches from database and watch for changes
+   * If change occurs automatically reload array
    */
-  toggleSearch() {
-    this.searchIsActive = !this.searchIsActive;
+  private initializeCoaches() {
+    this.coachService.getCoaches().on('value', pairings => {
+      let dbPairings = pairings.val();
+      let coachesArr: any[] = [];
+
+      for (let pairingId in dbPairings) {
+        let pairing = dbPairings[pairingId];
+
+        this.userService.getUserRefById(pairing.coach).once('value', user => {
+          let newCoach = user.val();
+          newCoach._id = pairing.coach;
+          newCoach.pairingId = pairingId;
+
+          if (!pairing.deleted) {
+            coachesArr.push(newCoach);
+          }
+        })
+      }
+
+      this.coaches = coachesArr;
+    })
   }
 
-  search() {
-    let matches = this.coaches.filter((coach) => {
-      return coach.name.toLowerCase().indexOf(this.searchQuery.toLowerCase()) > -1;
-    });
+  /**
+   * Load initial invites from service
+   */
+  private loadInvites() {
+    this.pendingInvites = this.inviteService.getInvites();
+  }
 
-    console.log(matches);
+
+  /**
+   * Subscribe to invites and listen for changes
+   */
+  private subscribeInvites() {
+    //Listen for changes
+    this.events.subscribe('invites:changed', invites => {
+      this.pendingInvites = invites;
+    })
   }
 
   /**
@@ -87,6 +122,32 @@ export class StudentDashboardPage implements OnInit {
   }
 
   /**
+   * Open action sheet for editing or deleting a coach
+   *
+   * @param i [The index of the coach in the coaches array]
+   */
+  openActionSheet(i: number) {
+    let pid = this.coaches[i].pairingId;
+
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'Was möchtest du tun?',
+      buttons: [
+        {
+          text: 'Löschen',
+          role: 'destructive',
+          handler: () => {
+            this.showConfirm(pid);
+          }
+        }, {
+          text: 'Abbrechen',
+          role: 'cancel'
+        }
+      ]
+    });
+    actionSheet.present();
+  }
+
+  /**
    * Open alert for backup
    *
    * @param i [The index of the coach in the coaches array]
@@ -114,86 +175,6 @@ export class StudentDashboardPage implements OnInit {
   }
 
   /**
-   * Open action sheet for editing or deleting a coach
-   *
-   * @param i [The index of the coach in the coaches array]
-   */
-  openActionSheet(i: number) {
-    let pid = this.coaches[i].pairingId;
-
-    let actionSheet = this.actionSheetCtrl.create({
-      title: 'Was möchtest du tun?',
-      buttons: [
-        {
-          text: 'Löschen',
-          role: 'destructive',
-          handler: () => {
-            this.showConfirm(pid);
-          }
-        }, {
-          text: 'Abbrechen',
-          role: 'cancel'
-        }
-      ]
-    });
-    actionSheet.present();
-  }
-
-  /**
-   * Read coaches from database and watch for changes
-   * If change occurs automatically reload array
-   */
-  private initializeCoaches() {
-    this.coachService.getCoaches().on('value', pairings => {
-      let dbPairings = pairings.val();
-      let coachesArr: any[] = [];
-
-      for (let pairingId in dbPairings) {
-        let pairing = dbPairings[pairingId];
-
-        this.userService.getUserRefById(pairing.coach).once('value', user => {
-          let newCoach = user.val();
-          newCoach._id = pairing.coach;
-          newCoach.pairingId = pairingId;
-
-          if (!pairing.deleted) {
-            coachesArr.push(newCoach);
-          }
-        })
-      }
-
-      this.coaches = coachesArr;
-    })
-  }
-
-  /**
-   * Get pending invites and the related coaches
-   * Automatically update on changes to the database
-   */
-  private initializePendingInvites() {
-    //Get pending invites
-    this.inviteService.getInvites().on('value', invites => {
-      let dbInvites = invites.val();
-      let invitesArr: any[] = [];
-
-      for (let inviteId in dbInvites) {
-        let invite = dbInvites[inviteId];
-
-        //Identify coach and add to array
-        this.userService.getUserRefById(invite.coach).once('value', user => {
-          let newCoach = user.val();
-          newCoach._id = invite.coach;
-          newCoach.inviteId = inviteId;
-
-          invitesArr.push(newCoach);
-        })
-      }
-
-      this.pendingInvites = invitesArr;
-    });
-  }
-
-  /**
    * Present popover at event location
    *
    * @param myEvent
@@ -203,5 +184,20 @@ export class StudentDashboardPage implements OnInit {
     popover.present({
       ev: myEvent
     });
+  }
+
+  /**
+   * Toggle search
+   */
+  toggleSearch() {
+    this.searchIsActive = !this.searchIsActive;
+  }
+
+  search() {
+    let matches = this.coaches.filter((coach) => {
+      return coach.name.toLowerCase().indexOf(this.searchQuery.toLowerCase()) > -1;
+    });
+
+    console.log(matches);
   }
 }
