@@ -87,9 +87,7 @@ export class Notification {
   }
 
   getDaysSinceCreation() {
-    let now = new Date().valueOf();
-
-    return now - this.created_at;
+    return '0T';
   }
 
   getInfo() {

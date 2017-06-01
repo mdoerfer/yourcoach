@@ -37,16 +37,14 @@ export class NotificationService {
         let notifications = [];
 
         for (let notificationId in dbNotifications) {
-          if(dbNotifications.hasOwnProperty(notificationId)) {
-            let dbNotification = dbNotifications[notificationId];
-            let notification = new Notification();
+          let dbNotification = dbNotifications[notificationId];
+          let notification = new Notification();
 
-            notification
-              .load(dbNotification)
-              .setId(notificationId);
+          notification
+            .load(dbNotification)
+            .setId(notificationId);
 
-            notifications.push(notification);
-          }
+          notifications.push(notification);
         }
 
         //Update state
