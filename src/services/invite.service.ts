@@ -3,6 +3,8 @@ import {Injectable} from "@angular/core";
 import {AuthService} from "./auth.service";
 import {UserService} from "./user.service";
 import {Events} from "ionic-angular";
+import {NotificationService} from "./notification.service";
+import {Notification} from "../models/notification.model";
 
 @Injectable()
 export class InviteService {
@@ -14,7 +16,8 @@ export class InviteService {
 
   constructor(private authService: AuthService,
               private userService: UserService,
-              private events: Events) {
+              private events: Events,
+              private notificationService: NotificationService) {
     this.observeInvites();
   }
 
@@ -62,7 +65,45 @@ export class InviteService {
    * @param iid
    */
   removeInviteById(iid: string) {
-    return firebase.database().ref(this.nodeName + iid).remove();
+    return firebase.database()
+      .ref(this.nodeName + iid)
+      .remove()
+      .then(data => {
+        this.events.publish('invites:remove-success', {
+          message: 'Die Einladung wurde entfernt'
+        });
+      }, error => {
+        this.events.publish('invites:remove-failed', {
+          message: error.message
+        });
+      });
+  }
+
+  /**
+   * Decline invite by id
+   *
+   * @param iid ID of the invite
+   * @param cid ID of the coach
+   * @returns {firebase.Promise<any>}
+   */
+  declineInviteById(iid: string, cid: string) {
+    return firebase.database()
+      .ref(this.nodeName + iid)
+      .remove()
+      .then(data => {
+        this.events.publish('invites:decline-success', {
+          message: 'Die Einladung wurde abgelehnt'
+        });
+
+        this.notificationService.createNotification(new Notification()
+          .setType('invite:decline')
+          .setDescription('Klicke hier um sie anzusehen.')
+          .setTo(cid));
+      }, error => {
+        this.events.publish('invites:decline-failed', {
+          message: error.message
+        });
+      });
   }
 
   /**
@@ -89,9 +130,15 @@ export class InviteService {
     promise
       .then(data => {
         this.removeInviteById(iid);
+
         this.events.publish('invites:accept-success', {
           message: 'Einladung angenommen.'
         });
+
+        this.notificationService.createNotification(new Notification()
+          .setType('invite:accept')
+          .setDescription('Deine Einladung wurde angenommen.')
+          .setTo(cid));
       }, error => {
         this.events.publish('invites:accept-failed', {
           message: error.message
@@ -143,6 +190,14 @@ export class InviteService {
             this.events.publish('invites:send-success', {
               message: 'Die Einladung wurde erfolgreich verschickt'
             });
+
+            console.log(data);
+            console.log(data.val());
+
+            this.notificationService.createNotification(new Notification()
+              .setType('invite:new')
+              .setDescription('Klicke hier um sie anzusehen.')
+              .setTo(sid));
           }, error => {
             this.events.publish('invites:send-failed', {
               message: error.message
