@@ -1,24 +1,15 @@
-<ion-header>
-
-  <ion-navbar color="primary">
-    <ion-title>Einloggen</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
 <ion-content padding>
   <ion-grid>
     <ion-row>
       <ion-col text-center>
-        <img src="../assets/images/logo.png" alt="Logo">
+        <img class="marginTop10" src="../assets/images/logo.png" alt="Logo">
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
         <form #f="ngForm" (ngSubmit)="onSignin(f)">
           <ion-list>
-            <ion-item>
+            <ion-item class="hideBorder">
               <ion-label floating>E-Mail</ion-label>
               <ion-input
                 type="email"
