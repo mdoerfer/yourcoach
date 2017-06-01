@@ -15,11 +15,6 @@ export class DashboardPopoverPage {
               private navCtrl: NavController) {
   }
 
-  goToRoleChoice() {
-    this.navCtrl.push(RoleChoicePage);
-    this.close();
-  }
-
   goToTaskTemplates() {
     console.log('Task Templates clicked. View not created yet.');
     this.close();
@@ -27,11 +22,6 @@ export class DashboardPopoverPage {
 
   goToSettings() {
     this.navCtrl.push(SettingsPage);
-    this.close();
-  }
-
-  signOut() {
-    this.authService.signout();
     this.close();
   }
 
