@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-toolbar color="primary" *ngIf="!searchIsActive">
-    <ion-title>Meine Studenten</ion-title>
+    <ion-title>Meine Schüler</ion-title>
     <ion-buttons start>
       <button ion-button icon-only (click)="toggleSearch()">
         <ion-icon name="search"></ion-icon>
@@ -31,7 +31,7 @@
 
 
 <ion-content padding (click)="checkSearch()">
-  <ion-list-header>Deine Studenten</ion-list-header>
+  <ion-list-header>Meine Schüler</ion-list-header>
   <p padding *ngIf="students.length == 0">
     Du hast keine Studenten zur Zeit
   </p>
