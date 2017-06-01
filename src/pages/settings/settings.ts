@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage } from 'ionic-angular';
+import {IonicPage, ModalController} from 'ionic-angular';
 import {UserService} from "../../services/user.service";
 import {AlertController} from 'ionic-angular';
 import {AuthService} from "../../services/auth.service";
 import {NavController} from "ionic-angular";
-import {SignupPage} from "../signup/signup";
-import {root} from "rxjs/util/root";
 import {RoleChoicePage} from "../role-choice/role-choice";
+import {EditProfileModalPage} from "../edit-profile-modal/edit-profile-modal";
 
 @IonicPage()
 @Component({
@@ -18,7 +17,22 @@ export class SettingsPage {
   constructor(private userService: UserService,
               private authService: AuthService,
               private navCtrl: NavController,
-              public alertCtrl: AlertController) {
+              public alertCtrl: AlertController,
+              public modalCtrl: ModalController) {
+  }
+
+
+  /**
+   * Shows modal for edit profile
+   *
+   * @param
+   */
+  showModalEditProfile() {
+   let editProfileModal = this.modalCtrl.create(EditProfileModalPage);
+    editProfileModal.present();
+
+
+
   }
 
   /**
