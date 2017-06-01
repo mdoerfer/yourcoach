@@ -1,19 +1,27 @@
 import {Component} from '@angular/core';
-import {NavController, ViewController} from "ionic-angular";
+import {NavController, NavParams, ViewController} from "ionic-angular";
 import {AuthService} from "../../services/auth.service";
+import {ProfilePage} from "../profile/profile";
 
 @Component({
   selector: 'page-task-popover',
   templateUrl: 'task-popover.html',
 })
 export class TaskPopoverPage {
+
+  user: any;
+
   constructor(public viewCtrl: ViewController,
               private authService: AuthService,
-              private navCtrl: NavController) {
+              private navCtrl: NavController,
+              private navParams: NavParams) {
+
+    this.user = this.navParams.get('user');
+    console.log(this.user);
   }
 
   goToProfile() {
-    console.log('Profile clicked. View not created yet.');
+    this.navCtrl.push(ProfilePage, {user: this.user});
     this.close();
   }
 

@@ -34,6 +34,7 @@ import {StudentService} from "../services/student.service";
 import {CoachService} from "../services/coach.service";
 import {StudentTaskTextModalPage} from "../pages/student-task-text-modal/student-task-text-modal";
 import {NotificationService} from "../services/notification.service";
+import {ProfilePage} from "../pages/profile/profile";
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import {NotificationService} from "../services/notification.service";
     TaskPopoverPage,
     SettingsPage,
     NotificationPage,
-    StudentTaskTextModalPage
+    StudentTaskTextModalPage,
+    ProfilePage
   ],
   imports: [
     BrowserModule,
@@ -75,7 +77,8 @@ import {NotificationService} from "../services/notification.service";
     TaskPopoverPage,
     SettingsPage,
     NotificationPage,
-    StudentTaskTextModalPage
+    StudentTaskTextModalPage,
+    ProfilePage
   ],
   providers: [
     StatusBar,
