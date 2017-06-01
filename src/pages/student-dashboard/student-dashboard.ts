@@ -93,8 +93,9 @@ export class StudentDashboardPage implements OnInit {
    */
   onDeclineInvite(i: number) {
     let iid = this.pendingInvites[i].inviteId;
+    let cid = this.pendingInvites[i]._id;
 
-    this.inviteService.removeInviteById(iid);
+    this.inviteService.declineInviteById(iid, cid);
   }
 
   /**
