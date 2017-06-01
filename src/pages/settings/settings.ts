@@ -135,4 +135,45 @@ export class SettingsPage {
     toast.present();
   }
 
+
+  /**
+   * Show change password Prompt
+   */
+  showPrompt() {
+
+    let prompt = this.alertCtrl.create({
+      title: 'Passwort ändern',
+      message: "Ändere dein Passwort",
+      inputs: [
+        {
+          type: 'text',
+          name: 'password',
+        },
+      ],
+      buttons: [
+        {
+          text: 'Abbrechen',
+          role: 'cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Senden',
+          handler: data => {
+
+            let user = this.authService.getActiveUser();
+            user.updatePassword(data.password).then(function() {
+              //this.showToast("Passwort wurde geändert");
+            }, function(error) {
+              //this.showToast(error.message);
+            });
+
+          }
+        }
+      ]
+    });
+    prompt.present();
+  }
+
 }
