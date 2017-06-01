@@ -4,6 +4,7 @@ export class Notification {
   private description: string;
   private read: boolean;
   private type: string;
+  private additional_info: object;
   private created_at: number;
   private updated_at: number;
 
@@ -66,6 +67,15 @@ export class Notification {
 
   getType() {
     return this.type;
+  }
+
+  setAdditionalInfo(data: object) {
+    this.additional_info = data;
+    return this;
+  }
+
+  getAdditionalInfo(key: string) {
+    return this.additional_info[key];
   }
 
   setCreatedAt(data: number) {
@@ -145,11 +155,11 @@ export class Notification {
         title = 'Du hast eine Einladung';
         icon = 'mail';
         break;
-      case 'task:accept':
+      case 'invite:accept':
         title = 'Einladung wurde akzeptiert';
         icon = 'mail-open';
         break;
-      case 'task:decline':
+      case 'invite:decline':
         title = 'Einladung wurde abgelehnt';
         icon = 'alert';
         break;
