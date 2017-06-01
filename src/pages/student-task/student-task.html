@@ -33,12 +33,29 @@
         <ion-card *ngFor="let task of openTasks; let i = index">
           <div>
             <ion-item (click)="toggle(task)">
-              <h2>{{task.title}}</h2>
-              <ion-note item-right>{{task.created_at | date}}</ion-note>
-              <ion-badge item-right *ngIf="task.difficulty=='Schwer'" color="badgehard" class="difficulty">{{task.difficulty}}</ion-badge>
-              <ion-badge item-right *ngIf="task.difficulty=='Mittel'" color="badgemedium" class="difficulty">{{task.difficulty}}
-              </ion-badge>
-              <ion-badge item-right *ngIf="task.difficulty=='Einfach'" color="badgeeasy" class="difficulty">{{task.difficulty}}</ion-badge>
+              <ion-grid>
+                <ion-row>
+                  <ion-col>
+                    <h2>{{task.title}}</h2>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-note>{{task.created_at | date}}</ion-note>
+                  </ion-col>
+                  <ion-col text-right>
+                    <ion-badge item-right *ngIf="task.difficulty=='Schwer'" color="badgehard" class="difficulty">
+                      {{task.difficulty}}
+                    </ion-badge>
+                    <ion-badge item-right *ngIf="task.difficulty=='Mittel'" color="badgemedium" class="difficulty">
+                      {{task.difficulty}}
+                    </ion-badge>
+                    <ion-badge item-right *ngIf="task.difficulty=='Einfach'" color="badgeeasy" class="difficulty">
+                      {{task.difficulty}}
+                    </ion-badge>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
             </ion-item>
 
             <ion-card-content *ngIf="task.open">
@@ -134,12 +151,29 @@
         <ion-card *ngFor="let task of doneTasks; let i = index;">
           <div>
             <ion-item (click)="toggle(task)">
-              <h2>{{task.title}}</h2>
-              <ion-note item-right>{{task.created_at | date}}</ion-note>
-              <ion-badge item-right *ngIf="task.difficulty=='Schwer'" color="badgehard" class="difficulty">{{task.difficulty}}</ion-badge>
-              <ion-badge item-right *ngIf="task.difficulty=='Mittel'" color="badgemedium" class="difficulty">{{task.difficulty}}
-              </ion-badge>
-              <ion-badge item-right *ngIf="task.difficulty=='Einfach'" color="badgeeasy" class="difficulty">{{task.difficulty}}</ion-badge>
+              <ion-grid>
+                <ion-row>
+                  <ion-col>
+                    <h2>{{task.title}}</h2>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-note>{{task.created_at | date}}</ion-note>
+                  </ion-col>
+                  <ion-col text-right>
+                    <ion-badge item-right *ngIf="task.difficulty=='Schwer'" color="badgehard" class="difficulty">
+                      {{task.difficulty}}
+                    </ion-badge>
+                    <ion-badge item-right *ngIf="task.difficulty=='Mittel'" color="badgemedium" class="difficulty">
+                      {{task.difficulty}}
+                    </ion-badge>
+                    <ion-badge item-right *ngIf="task.difficulty=='Einfach'" color="badgeeasy" class="difficulty">
+                      {{task.difficulty}}
+                    </ion-badge>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
             </ion-item>
 
             <ion-card-content *ngIf="task.open">

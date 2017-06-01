@@ -85,12 +85,26 @@
         <ion-card *ngFor="let assignment of gradeAssignments; let i = index;" (press)="openActionSheet(assignment._id)">
           <div>
             <ion-item (tap)="toggle(assignment)">
-              <h2>{{assignment.title}}</h2>
-              <ion-note item-right>{{assignment.created_at | date}}</ion-note>
-              <ion-badge item-right *ngIf="assignment.difficulty=='Schwer'" color="badgehard">{{assignment.difficulty}}</ion-badge>
-              <ion-badge item-right *ngIf="assignment.difficulty=='Mittel'" color="badgemedium">{{assignment.difficulty}}
-              </ion-badge>
-              <ion-badge item-right *ngIf="assignment.difficulty=='Einfach'" color="badgeeasy">{{assignment.difficulty}}</ion-badge>
+              <ion-grid>
+                <ion-row>
+                  <ion-col>
+                    <h2>{{assignment.title}}</h2>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-note item-left>{{assignment.created_at | date}}</ion-note>
+                  </ion-col>
+                  <ion-col text-right>
+                    <ion-badge item-right *ngIf="assignment.difficulty=='Schwer'" color="badgehard" class="difficulty">{{assignment.difficulty}}
+                    </ion-badge>
+                    <ion-badge item-right *ngIf="assignment.difficulty=='Mittel'" color="badgemedium" class="difficulty">{{assignment.difficulty}}
+                    </ion-badge>
+                    <ion-badge item-right *ngIf="assignment.difficulty=='Einfach'" color="badgeeasy" class="difficulty">{{assignment.difficulty}}
+                    </ion-badge>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
             </ion-item>
 
             <ion-card-content *ngIf="assignment.open">
@@ -127,12 +141,26 @@
         <ion-card *ngFor="let assignment of doneAssignments; let i = index;" (press)="openActionSheet(assignment._id)">
           <div>
             <ion-item (tap)="toggle(assignment)">
-              <h2>{{assignment.title}}</h2>
-              <ion-note item-right>{{assignment.created_at | date}}</ion-note>
-              <ion-badge item-right *ngIf="assignment.difficulty=='Schwer'" color="badgehard">{{assignment.difficulty}}</ion-badge>
-              <ion-badge item-right *ngIf="assignment.difficulty=='Mittel'" color="badgemedium">{{assignment.difficulty}}
-              </ion-badge>
-              <ion-badge item-right *ngIf="assignment.difficulty=='Einfach'" color="badgeeasy">{{assignment.difficulty}}</ion-badge>
+              <ion-grid>
+                <ion-row>
+                  <ion-col>
+                    <h2>{{assignment.title}}</h2>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-note item-left>{{assignment.created_at | date}}</ion-note>
+                  </ion-col>
+                  <ion-col text-right>
+                    <ion-badge item-right *ngIf="assignment.difficulty=='Schwer'" color="badgehard" class="difficulty">{{assignment.difficulty}}
+                    </ion-badge>
+                    <ion-badge item-right *ngIf="assignment.difficulty=='Mittel'" color="badgemedium" class="difficulty">{{assignment.difficulty}}
+                    </ion-badge>
+                    <ion-badge item-right *ngIf="assignment.difficulty=='Einfach'" color="badgeeasy" class="difficulty">{{assignment.difficulty}}
+                    </ion-badge>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
             </ion-item>
 
             <ion-card-content *ngIf="assignment.open">
