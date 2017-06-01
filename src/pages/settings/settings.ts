@@ -6,6 +6,7 @@ import {AuthService} from "../../services/auth.service";
 import {NavController} from "ionic-angular";
 import {SignupPage} from "../signup/signup";
 import {root} from "rxjs/util/root";
+import {RoleChoicePage} from "../role-choice/role-choice";
 
 @IonicPage()
 @Component({
@@ -69,6 +70,13 @@ export class SettingsPage {
   signOut() {
     this.authService.signout();
     this.navCtrl.pop();
+  }
+
+  /**
+   *
+   */
+  goToRoleChoice(){
+    this.navCtrl.push(RoleChoicePage);
   }
 
 }
