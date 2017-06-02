@@ -147,8 +147,15 @@ export class SettingsPage {
       inputs: [
         {
           type: 'text',
-          name: 'password',
+          name: 'oldpassword',
+          placeholder: "Altes Paswort"
         },
+        {
+          type: 'text',
+          name: 'newpassword',
+          placeholder: "Neues Passwort"
+
+        }
       ],
       buttons: [
         {
@@ -162,18 +169,36 @@ export class SettingsPage {
           text: 'Senden',
           handler: data => {
 
-            let user = this.authService.getActiveUser();
-            user.updatePassword(data.password).then(function() {
-              //this.showToast("Passwort wurde geändert");
-            }, function(error) {
-              //this.showToast(error.message);
-            });
+            this.changePassword(data)
+
+
 
           }
         }
       ]
     });
     prompt.present();
+  }
+
+  changePassword(data){
+    if(!data.oldpassword.length || !data.newpassword.length) {
+      this.showToast('Bitte fülle alle Felder aus.');
+      return;
+    }
+
+    this.authService.signin(this.user.email, data.oldpassword)
+      .then(() => {
+        let user = this.authService.getActiveUser();
+
+        user.updatePassword(data.newpassword)
+          .then(data => {
+            this.showToast("Passwort wurde geändert");
+          }, error => {
+            this.showToast(error.message);
+          });
+      }, error => {
+        this.showToast(error.message);
+      });
   }
 
 }
