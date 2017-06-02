@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {IonicPage, LoadingController, ToastController} from 'ionic-angular';
+import {Events, IonicPage, LoadingController, ToastController} from 'ionic-angular';
 import {SignupPage} from "../signup/signup";
 import {ForgotPasswordPage} from "../forgot-password/forgot-password";
 import {NgForm} from "@angular/forms";
@@ -11,12 +11,33 @@ import {AuthService} from "../../services/auth.service";
   templateUrl: 'signin.html',
 })
 export class SigninPage {
+  loader;
   signupPage = SignupPage;
   forgotPasswordPage = ForgotPasswordPage;
 
   constructor(private authService: AuthService,
               private loadingCtrl: LoadingController,
-              private toastCtrl: ToastController) {
+              private toastCtrl: ToastController,
+              private events: Events) {
+    this.createLoader();
+    this.subscribeSignin();
+  }
+
+  /**
+   * Instantiate loader
+   */
+  createLoader() {
+    this.loader = this.loadingCtrl.create({
+      content: "Du wirst eingeloggt..."
+    });
+  }
+
+  /**
+   * Dismiss loader
+   */
+  dismissLoader() {
+    this.loader.dismiss();
+    this.createLoader();
   }
 
   /**
@@ -25,41 +46,36 @@ export class SigninPage {
    * @param form
    */
   onSignin(form: NgForm) {
-    /**
-     * Create loader
-     */
-    let loader = this.loadingCtrl.create({
-      content: "Du wirst eingeloggt..."
+    this.loader.present().then(() => {
+      /**
+       * Get form values
+       */
+      let email = form.value.email;
+      let password = form.value.password;
+
+      /**
+       * Sign user in
+       */
+      this.authService.signin(email, password);
     });
-    loader.present();
 
-    /**
-     * Get form values
-     */
-    let email = form.value.email;
-    let password = form.value.password;
+  }
 
-    /**
-     * Sign user in
-     */
-    this.authService.signin(email, password)
-      .then(data => {
-        loader.dismiss();
+  subscribeSignin() {
+    this.events.subscribe('auth:signin-verified', payload => {
+      this.dismissLoader();
+      this.showToast(payload.message);
+    });
 
-        let user = this.authService.getActiveUser();
+    this.events.subscribe('auth:signin-unverified', payload => {
+      this.dismissLoader();
+      this.showToast(payload.message);
+    });
 
-        if(user.emailVerified) {
-          this.showToast('Erfolgreich eingeloggt');
-        }
-        else {
-          this.showToast('Ihr Konto ist noch nicht aktiviert. Bitte überprüfen Sie Ihr E-Mail Postfach.')
-        }
-      })
-      .catch(error => {
-        loader.dismiss();
-
-        this.showToast(error.message);
-      })
+    this.events.subscribe('auth:signin-failed', payload => {
+      this.dismissLoader();
+      this.showToast(payload.message);
+    });
   }
 
   /**

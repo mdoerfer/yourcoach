@@ -42,12 +42,54 @@ export class AuthService {
     return firebase.auth()
       .signInWithEmailAndPassword(email, password)
       .then(data => {
-        this.events.publish('auth:signin-success', {
-          message: 'Login erfolgreich',
-          user: this.getActiveUser()
-        });
+        let user = this.getActiveUser();
+
+        if (user.emailVerified) {
+          this.events.publish('auth:signin-verified', {
+            message: 'Login erfolgreich',
+            user: this.getActiveUser()
+          });
+        }
+        else {
+          this.events.publish('auth:signin-unverified', {
+            message: 'Ihr Konto ist noch nicht aktiviert. Bitte überprüfen Sie Ihr E-Mail Postfach.',
+            user: this.getActiveUser()
+          });
+        }
       }, error => {
         this.events.publish('auth:signin-failed', {
+          message: error.message
+        });
+      });
+  }
+
+  /**
+   * Change user password
+   */
+  changePassword(oldPass: string, newPass: string) {
+    if(!oldPass.length || !newPass.length) {
+      this.events.publish('auth:change-password-failed', {
+        message: 'Bitte fülle alle Felder aus.'
+      });
+    }
+
+    let user = this.getActiveUser();
+
+    return firebase.auth()
+      .signInWithEmailAndPassword(user.email, oldPass)
+      .then(data => {
+        user.updatePassword(newPass)
+          .then(data => {
+            this.events.publish('auth:change-password-success', {
+              message: 'Passwort erfolgreich geändert'
+            });
+          }, error => {
+            this.events.publish('auth:change-password-failed', {
+              message: error.message
+            });
+          });
+      }, error => {
+        this.events.publish('auth:change-password-failed', {
           message: error.message
         });
       });

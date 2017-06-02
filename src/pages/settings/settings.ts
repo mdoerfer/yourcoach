@@ -24,12 +24,15 @@ export class SettingsPage {
               public toastCtrl: ToastController,
               private events: Events) {
 
+    this.subscribeDeleteUser();
+    this.subscribePasswordChange();
     this.initializeUser();
   }
 
-
-  initializeUser(){
-
+  /**
+   * Get user info
+   */
+  initializeUser() {
     this.userService.getActiveUserRef().once('value',
       snapshot => {
         this.user = snapshot.val();
@@ -49,8 +52,6 @@ export class SettingsPage {
           name: data.get('name').value,
           aboutMe: data.get('aboutMe').value,
           dateOfBirth: data.get('dateOfBirth').value,
-
-
         })
           .then(data => {
             this.showToast("Profil wurde gespeichert");
@@ -82,7 +83,7 @@ export class SettingsPage {
         {
           text: 'Löschen',
           handler: () => {
-            this.deleteUser();
+            this.userService.deleteUser();
           }
         }
       ]
@@ -91,11 +92,9 @@ export class SettingsPage {
   }
 
   /**
-   * Soft-deletes a user
+   * Subscribe to user deletion
    */
-  deleteUser() {
-    this.userService.deleteUser();
-
+  subscribeDeleteUser() {
     this.events.subscribe('user:delete-success', (payload) => {
       console.log(payload.message);
       this.signOut();
@@ -140,19 +139,18 @@ export class SettingsPage {
    * Show change password Prompt
    */
   showPrompt() {
-
     let prompt = this.alertCtrl.create({
       title: 'Passwort ändern',
       message: "Ändere dein Passwort",
       inputs: [
         {
-          type: 'text',
-          name: 'oldpassword',
+          type: 'password',
+          name: 'oldPass',
           placeholder: "Altes Paswort"
         },
         {
-          type: 'text',
-          name: 'newpassword',
+          type: 'password',
+          name: 'newPass',
           placeholder: "Neues Passwort"
 
         }
@@ -168,11 +166,7 @@ export class SettingsPage {
         {
           text: 'Senden',
           handler: data => {
-
-            this.changePassword(data)
-
-
-
+            this.authService.changePassword(data.oldPass, data.newPass);
           }
         }
       ]
@@ -180,25 +174,17 @@ export class SettingsPage {
     prompt.present();
   }
 
-  changePassword(data){
-    if(!data.oldpassword.length || !data.newpassword.length) {
-      this.showToast('Bitte fülle alle Felder aus.');
-      return;
-    }
+  /**
+   * Subscribe to password change
+   */
+  subscribePasswordChange() {
+    this.events.subscribe('auth:change-password-success', payload => {
+      this.showToast(payload.message);
+    });
 
-    this.authService.signin(this.user.email, data.oldpassword)
-      .then(() => {
-        let user = this.authService.getActiveUser();
-
-        user.updatePassword(data.newpassword)
-          .then(data => {
-            this.showToast("Passwort wurde geändert");
-          }, error => {
-            this.showToast(error.message);
-          });
-      }, error => {
-        this.showToast(error.message);
-      });
+    this.events.subscribe('auth:change-password-failed', payload => {
+      this.showToast(payload.message);
+    });
   }
 
 }
