@@ -14,11 +14,15 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class StatisticsPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  doneTasks: any;
+
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams) {
+
+    this.doneTasks = this.navParams.get('doneTasks');
+    console.log(this.doneTasks);
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad StatisticsPage');
-  }
+
 
 }

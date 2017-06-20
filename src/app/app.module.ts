@@ -41,6 +41,7 @@ import {ProfilePage} from "../pages/profile/profile";
 import {EditProfileModalPage} from "../pages/edit-profile-modal/edit-profile-modal";
 import {TaskTemplatesPage} from "../pages/task-templates/task-templates";
 import {CoachSendTaskModalPage} from "../pages/coach-send-task-modal/coach-send-task-modal";
+import {StatisticsPage} from "../pages/statistics/statistics";
 
 
 @NgModule({
@@ -63,7 +64,8 @@ import {CoachSendTaskModalPage} from "../pages/coach-send-task-modal/coach-send-
     ProfilePage,
     EditProfileModalPage,
     TaskTemplatesPage,
-    CoachSendTaskModalPage
+    CoachSendTaskModalPage,
+    StatisticsPage
   ],
   imports: [
     BrowserModule,
@@ -90,7 +92,8 @@ import {CoachSendTaskModalPage} from "../pages/coach-send-task-modal/coach-send-
     ProfilePage,
     EditProfileModalPage,
     TaskTemplatesPage,
-    CoachSendTaskModalPage
+    CoachSendTaskModalPage,
+    StatisticsPage
   ],
   providers: [
     StatusBar,

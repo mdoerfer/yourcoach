@@ -193,7 +193,8 @@ export class CoachTaskPage implements OnInit {
    */
   presentPopover(myEvent) {
     let popover = this.popoverCtrl.create(TaskPopoverPage, {
-      user: this.user
+      user: this.user,
+      doneTasks: this.doneAssignments
     });
     popover.present({
       ev: myEvent
