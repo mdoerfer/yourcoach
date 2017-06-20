@@ -1,16 +1,10 @@
 import firebase from 'firebase';
 import {Injectable} from "@angular/core";
-import {Platform} from 'ionic-angular';
 import {File} from '@ionic-native/file';
-import {AuthService} from "./auth.service";
-import {TaskService} from "./task.service";
 
 @Injectable()
 export class FileService {
-  constructor(private platform: Platform,
-              private file: File,
-              private authService: AuthService) {
-  }
+  constructor(private file: File) {}
 
   /**
    * Upload file to storage
@@ -18,9 +12,6 @@ export class FileService {
    * @param _filePath
    */
   uploadFileToStorage(_filePath, taskId) {
-    //User ID
-    let uid = this.authService.getActiveUser().uid;
-
     //Resolve filesystem url
     this.file.resolveLocalFilesystemUrl(_filePath)
       .then(_fileEntry => {
