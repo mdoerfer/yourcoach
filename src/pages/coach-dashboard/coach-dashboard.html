@@ -38,7 +38,7 @@
   <ion-list *ngIf="students.length > 0">
     <ion-item *ngFor="let student of students; let i = index" (click)="goToTasks(i)" (press)="openActionSheet(i)">
       <ion-avatar item-left>
-        <img src="../../assets/images/dummy-avatar.png">
+        <img src="assets/images/dummy-avatar.png">
       </ion-avatar>
       <h2>{{student.name}}</h2>
 

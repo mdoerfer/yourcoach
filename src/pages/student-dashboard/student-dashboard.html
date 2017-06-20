@@ -40,7 +40,7 @@
   <ion-list *ngIf="coaches.length > 0">
     <ion-item *ngFor="let coach of coaches; let i = index" (tap)="goToTasks(i)" (press)="openActionSheet(i)">
       <ion-avatar item-left>
-        <img src="../../assets/images/dummy-avatar.png">
+        <img src="assets/images/dummy-avatar.png">
       </ion-avatar>
       <h2>{{coach.name}}</h2>
       <!--TODO: Show open tasks-->
@@ -58,7 +58,7 @@
       <ion-card>
         <ion-item>
           <ion-avatar item-left>
-            <img src="../../assets/images/dummy-avatar.png">
+            <img src="assets/images/dummy-avatar.png">
           </ion-avatar>
           <h3>Eine Coaching Anfrage von<br>
             {{coach.name}}</h3>
