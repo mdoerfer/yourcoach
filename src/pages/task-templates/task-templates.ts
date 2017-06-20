@@ -162,7 +162,9 @@ export class TaskTemplatesPage implements OnInit {
       if (data) {
         let task = this.draftAssignments[i];
 
-        this.taskService.createTask({
+        let newTaskID = this.taskService.getNewTaskID();
+
+        this.taskService.createTask(newTaskID, {
           from: this.authService.getActiveUser().uid,
           to: data._id,
           from_to: this.authService.getActiveUser().uid + '_' + data._id,
