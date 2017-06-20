@@ -1,7 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {ActionSheetController, Events, IonicPage, NavController, AlertController, NavParams} from 'ionic-angular';
+import {
+  ActionSheetController, Events, IonicPage, NavController, AlertController, NavParams,
+  ModalController
+} from 'ionic-angular';
 import {TaskService} from "../../services/task.service";
 import {CreateTaskPage} from "../create-task/create-task";
+import {CoachSendTaskModalPage} from "../coach-send-task-modal/coach-send-task-modal";
+import {StudentTaskTextModalPage} from "../student-task-text-modal/student-task-text-modal";
 
 @IonicPage()
 @Component({
@@ -17,6 +22,7 @@ export class TaskTemplatesPage implements OnInit {
               private taskService: TaskService,
               private actionSheetCtrl: ActionSheetController,
               private alertCtrl: AlertController,
+              public modalCtrl: ModalController,
               private events: Events) {
 
   }
@@ -130,6 +136,11 @@ export class TaskTemplatesPage implements OnInit {
       ]
     });
     confirm.present();
+  }
+
+  showModal(){
+    let sendModal = this.modalCtrl.create(CoachSendTaskModalPage);
+    sendModal.present();
   }
 
 }

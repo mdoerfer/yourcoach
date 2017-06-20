@@ -38,6 +38,7 @@ import {NotificationService} from "../services/notification.service";
 import {ProfilePage} from "../pages/profile/profile";
 import {EditProfileModalPage} from "../pages/edit-profile-modal/edit-profile-modal";
 import {TaskTemplatesPage} from "../pages/task-templates/task-templates";
+import {CoachSendTaskModalPage} from "../pages/coach-send-task-modal/coach-send-task-modal";
 
 
 @NgModule({
@@ -59,7 +60,8 @@ import {TaskTemplatesPage} from "../pages/task-templates/task-templates";
     StudentTaskTextModalPage,
     ProfilePage,
     EditProfileModalPage,
-    TaskTemplatesPage
+    TaskTemplatesPage,
+    CoachSendTaskModalPage
   ],
   imports: [
     BrowserModule,
@@ -85,7 +87,8 @@ import {TaskTemplatesPage} from "../pages/task-templates/task-templates";
     StudentTaskTextModalPage,
     ProfilePage,
     EditProfileModalPage,
-    TaskTemplatesPage
+    TaskTemplatesPage,
+    CoachSendTaskModalPage
   ],
   providers: [
     StatusBar,
