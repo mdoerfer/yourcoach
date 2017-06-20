@@ -4,6 +4,7 @@ import {AuthService} from "../../services/auth.service";
 import {RoleChoicePage} from "../role-choice/role-choice";
 import {NotificationPage} from "../notification/notification";
 import {SettingsPage} from "../settings/settings";
+import {TaskTemplatesPage} from "../task-templates/task-templates";
 
 @Component({
   selector: 'page-dashboard-popover',
@@ -16,7 +17,7 @@ export class DashboardPopoverPage {
   }
 
   goToTaskTemplates() {
-    console.log('Task Templates clicked. View not created yet.');
+    this.navCtrl.push(TaskTemplatesPage);
     this.close();
   }
 

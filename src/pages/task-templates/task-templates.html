@@ -9,4 +9,60 @@
 
 <ion-content padding>
 
+  <div *ngIf="draftAssignments.length == 0">Du hast noch keine Task Templates angelegt.</div>
+
+  <div *ngIf="draftAssignments.length > 0">
+    <ion-card *ngFor="let assignment of draftAssignments; let i = index" (press)="openActionSheet(assignment._id)">
+      <div>
+        <ion-item (tap)="toggle(assignment)">
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <h2>{{assignment.title}}</h2>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-note item-left>{{assignment.created_at | date}}</ion-note>
+              </ion-col>
+              <ion-col text-right>
+                <ion-badge item-right *ngIf="assignment.difficulty=='Schwer'" color="badgehard" class="difficulty">{{assignment.difficulty}}
+                </ion-badge>
+                <ion-badge item-right *ngIf="assignment.difficulty=='Mittel'" color="badgemedium" class="difficulty">{{assignment.difficulty}}
+                </ion-badge>
+                <ion-badge item-right *ngIf="assignment.difficulty=='Einfach'" color="badgeeasy" class="difficulty">{{assignment.difficulty}}
+                </ion-badge>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+
+        <ion-card-content *ngIf="assignment.open" text-wrap>
+          <p>{{assignment.description}}</p>
+        </ion-card-content>
+
+        <ion-item *ngIf="assignment.open" text-wrap>
+          <h2>Rückmeldung</h2>
+          <p>{{assignment.responseType}}</p>
+          <p *ngIf="assignment.responseInstructions">{{assignment.responseInstructions}}</p>
+        </ion-item>
+
+        <ion-row *ngIf="assignment.open">
+          <ion-col text-right>
+            <button ion-button icon-left clear small>
+              <ion-icon name="send"></ion-icon>
+              <div>Senden</div>
+            </button>
+          </ion-col>
+        </ion-row>
+      </div>
+    </ion-card>
+  </div>
+
+  <ion-fab right bottom>
+    <button ion-fab color="secondary" (click)="goToCreateDraftTask()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
+
 </ion-content>

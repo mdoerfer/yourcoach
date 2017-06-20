@@ -86,7 +86,6 @@ export class CreateTaskPage implements OnInit {
       responseInstructions: null,
       state: 'open',
       rating: 0,
-      draft: false
     };
 
     //Prefill form with task data if we're in edit mode
@@ -101,7 +100,6 @@ export class CreateTaskPage implements OnInit {
         formData.responseInstructions = task.responseInstructions;
         formData.state = task.state;
         formData.rating = task.rating || 0;
-        formData.draft = task.draft;
       });
     }
 
@@ -114,7 +112,6 @@ export class CreateTaskPage implements OnInit {
       responseInstructions: new FormControl(formData.responseInstructions, null),
       state: new FormControl(formData.state, null),
       rating: new FormControl(formData.rating, null),
-      draft: new FormControl(formData.draft, null)
     });
   }
 
@@ -152,12 +149,39 @@ export class CreateTaskPage implements OnInit {
       state: this.taskForm.get('state').value,
       rating: this.taskForm.get('rating').value,
       updated_at: new Date().valueOf(),
-      draft: this.taskForm.get('draft').value
     }).then(data => {
       this.showToast("Aufgabe wurde erfolgreich bearbeitet.");
 
       this.navCtrl.pop();
     })
+      .catch(error => {
+        this.showToast(error.message);
+      });
+  }
+
+  /**
+   * Create a new draft task
+   * and save it in the datababase
+   */
+  onDraftTask(){
+    this.taskService.createTask({
+      from: this.authService.getActiveUser().uid,
+      to: null,
+      from_to: null,
+      title: this.taskForm.get('title').value,
+      description: this.taskForm.get('description').value,
+      difficulty: this.taskForm.get('difficulty').value,
+      responseType: this.taskForm.get('responseType').value,
+      responseInstructions: this.taskForm.get('responseInstructions').value,
+      created_at: new Date().valueOf(),
+      updated_at: new Date().valueOf(),
+      draft: true,
+    })
+      .then(data => {
+        this.showToast("Aufgabe wurde erfolgreich erstellt.");
+
+        this.navCtrl.pop();
+      })
       .catch(error => {
         this.showToast(error.message);
       });
@@ -181,7 +205,7 @@ export class CreateTaskPage implements OnInit {
       state: 'open',
       created_at: new Date().valueOf(),
       updated_at: new Date().valueOf(),
-      draft: this.taskForm.get('draft').value
+      draft: false,
     })
       .then(data => {
         this.showToast("Aufgabe wurde erfolgreich gesendet.");
@@ -197,12 +221,17 @@ export class CreateTaskPage implements OnInit {
    * checks if task is created or edited
    */
   submitForm() {
-    if(this.mode === 'edit') {
-      this.onEditTask();
+    switch(this.mode) {
+      case 'edit':
+        this.onEditTask();
+        break;
+      case 'draft':
+        this.onDraftTask();
+        break;
+      default:
+        this.onCreateTask();
     }
-    else {
-      this.onCreateTask();
-    }
+
   }
 
   /**

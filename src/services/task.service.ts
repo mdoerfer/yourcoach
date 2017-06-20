@@ -31,6 +31,12 @@ export class TaskService {
     });
   }
 
+  getDrafts() {
+    return this.assignments.filter((assignment) => {
+      return assignment.draft === true;
+    });
+  }
+
   /**
    * Observe all tasks that were created by me
    */

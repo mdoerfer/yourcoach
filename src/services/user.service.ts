@@ -36,6 +36,15 @@ export class UserService {
   }
 
   /**
+   * Returns the active user id
+   *
+   * @returns {string}
+   */
+  getActiveUserId(){
+    return this.authService.getActiveUser().uid;
+  }
+
+  /**
    * Returns the corresponding user
    *
    * @param uid
