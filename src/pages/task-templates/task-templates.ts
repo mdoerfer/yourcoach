@@ -181,6 +181,7 @@ export class TaskTemplatesPage implements OnInit {
           attachments: {
             images: task.attachments.images || {},
             videos: task.attachments.videos || {},
+            voice: task.attachments.voice || {},
           }
         })
           .then(data => {

@@ -54,6 +54,19 @@
         </ion-item>
       </ion-list>
 
+      <ion-list>
+        <ion-item *ngFor="let newVideo of newAttachments.videos; let i = index" >
+          <video [src]="newVideo"></video>
+        </ion-item>
+      </ion-list>
+      <ion-list>
+        <ion-item *ngFor="let newVoice of newAttachments.voice; let i = index" >
+          <audio controls>
+            <source [src]="newVoice">
+          </audio>
+        </ion-item>
+      </ion-list>
+
       <ion-item-divider color="primary">
         <ion-icon name="cog" item-left></ion-icon>
         Einstellungen

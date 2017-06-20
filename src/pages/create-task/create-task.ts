@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
+import {ActionSheetController, IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {TaskService} from "../../services/task.service";
 import {AuthService} from "../../services/auth.service";
-import {Camera,CameraOptions} from '@ionic-native/camera';
+import {Camera, CameraOptions} from '@ionic-native/camera';
+import {MediaCapture, MediaFile, CaptureError, CaptureImageOptions} from '@ionic-native/media-capture';
 import {FileService} from "../../services/file.service";
 
 @IonicPage()
@@ -20,9 +21,16 @@ export class CreateTaskPage implements OnInit {
   responses: string[];
   states: object[];
 
+  existingAttachments = {
+    images: [],
+    videos: [],
+    voice: []
+  };
+
   newAttachments = {
     images: [],
-    videos: []
+    videos: [],
+    voice: []
   };
 
   constructor(private navParams: NavParams,
@@ -31,7 +39,9 @@ export class CreateTaskPage implements OnInit {
               private taskService: TaskService,
               private toastCtrl: ToastController,
               private camera: Camera,
-              private fileService: FileService) {
+              private mediaCapture: MediaCapture,
+              private fileService: FileService,
+              private actionSheetCtrl: ActionSheetController) {
     this.tid = this.navParams.get('tid') || null;
     this.mode = this.navParams.get('mode') || 'create';
 
@@ -98,7 +108,7 @@ export class CreateTaskPage implements OnInit {
     };
 
     //Prefill form with task data if we're in edit mode
-    if(this.tid !== null) {
+    if (this.tid !== null) {
       this.taskService.getTaskWithId(this.tid).once('value', snapshot => {
         let task = snapshot.val();
 
@@ -130,21 +140,82 @@ export class CreateTaskPage implements OnInit {
    * Add attachment
    */
   addAttachment() {
-    //TODO: Action-sheet with video/picture/voice-msg
-
-    this.addPicture();
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'Anhang hochladen/erstellen',
+      buttons: [
+        {
+          text: 'Bild',
+          handler: () => {
+            this.addPicture();
+          }
+        },{
+          text: 'Video',
+          handler: () => {
+            this.addVideo();
+          }
+        },{
+          text: 'Sprachnachricht',
+          handler: () => {
+            this.addVoice();
+          }
+        }, {
+          text: 'Abbrechen',
+          role: 'cancel',
+        }
+      ]
+    });
+    actionSheet.present();
   }
 
   /**
    * Add picture
    */
   addPicture() {
-    this.camera.getPicture(this.cameraOptions).then((_imagePath) => {
-      this.newAttachments.images.push(_imagePath);
-    }, (err) => {
-      // Handle error
-      console.log(err.message);
-    });
+    this.mediaCapture.captureImage()
+      .then(
+        (data: MediaFile[]) => {
+          for (var i = 0; i < data.length; i++) {
+            alert(data[i].name);
+            this.newAttachments.images.push(data[i].fullPath);
+          }
+        }, (err: CaptureError) => {
+          console.error(err)
+        }
+      );
+  }
+
+  /**
+   * Add video
+   */
+  addVideo() {
+    this.mediaCapture.captureVideo()
+      .then(
+        (data: MediaFile[]) => {
+          for (var i = 0; i < data.length; i++) {
+            alert(data[i].name);
+            this.newAttachments.videos.push(data[i].fullPath);
+          }
+        }, (err: CaptureError) => {
+          console.error(err)
+        }
+      );
+  }
+
+  /**
+   * Add video
+   */
+  addVoice() {
+    this.mediaCapture.captureAudio()
+      .then(
+        (data: MediaFile[]) => {
+          for (var i = 0; i < data.length; i++) {
+            alert(data[i].name);
+            this.newAttachments.voice.push(data[i].fullPath);
+          }
+        }, (err: CaptureError) => {
+          console.error(err)
+        }
+      );
   }
 
   /**
@@ -162,9 +233,21 @@ export class CreateTaskPage implements OnInit {
       rating: this.taskForm.get('rating').value,
       updated_at: new Date().valueOf(),
     }).then(data => {
+      //TODO: Remove attachments
+
       //Upload new images
-      for(let i = 0; i < this.newAttachments.images.length; i++) {
-        this.fileService.uploadFileToStorage(this.newAttachments.images[i], this.tid);
+      for (let i = 0; i < this.newAttachments.images.length; i++) {
+        this.fileService.uploadFileToStorage(this.newAttachments.images[i], this.tid, 'image');
+      }
+
+      //Upload new videos
+      for (let i = 0; i < this.newAttachments.videos.length; i++) {
+        this.fileService.uploadFileToStorage(this.newAttachments.videos[i], this.tid, 'video');
+      }
+
+      //Upload new voice records
+      for (let i = 0; i < this.newAttachments.voice.length; i++) {
+        this.fileService.uploadFileToStorage(this.newAttachments.voice[i], this.tid, 'voice');
       }
 
       this.showToast("Aufgabe wurde erfolgreich bearbeitet.");
@@ -180,7 +263,7 @@ export class CreateTaskPage implements OnInit {
    * Create a new draft task
    * and save it in the datababase
    */
-  onDraftTask(){
+  onDraftTask() {
     let newTaskID = this.taskService.getNewTaskID();
 
     this.taskService.createTask(newTaskID, {
@@ -197,13 +280,24 @@ export class CreateTaskPage implements OnInit {
       draft: true,
       attachments: {
         images: {},
-        videos: {}
+        videos: {},
+        voice: {}
       }
     })
       .then(data => {
         //Upload new images
-        for(let i = 0; i < this.newAttachments.images.length; i++) {
-          this.fileService.uploadFileToStorage(this.newAttachments.images[i], newTaskID);
+        for (let i = 0; i < this.newAttachments.images.length; i++) {
+          this.fileService.uploadFileToStorage(this.newAttachments.images[i], newTaskID, 'image');
+        }
+
+        //Upload new videos
+        for (let i = 0; i < this.newAttachments.videos.length; i++) {
+          this.fileService.uploadFileToStorage(this.newAttachments.videos[i], newTaskID, 'video');
+        }
+
+        //Upload new voice records
+        for (let i = 0; i < this.newAttachments.voice.length; i++) {
+          this.fileService.uploadFileToStorage(this.newAttachments.voice[i], newTaskID, 'voice');
         }
 
         this.showToast("Aufgabe wurde erfolgreich erstellt.");
@@ -238,13 +332,24 @@ export class CreateTaskPage implements OnInit {
       draft: false,
       attachments: {
         images: {},
-        videos: {}
+        videos: {},
+        voice: {}
       }
     })
       .then(data => {
         //Upload new images
-        for(let i = 0; i < this.newAttachments.images.length; i++) {
-            this.fileService.uploadFileToStorage(this.newAttachments.images[i], newTaskID);
+        for (let i = 0; i < this.newAttachments.images.length; i++) {
+          this.fileService.uploadFileToStorage(this.newAttachments.images[i], newTaskID, 'image');
+        }
+
+        //Upload new videos
+        for (let i = 0; i < this.newAttachments.videos.length; i++) {
+          this.fileService.uploadFileToStorage(this.newAttachments.videos[i], newTaskID, 'video');
+        }
+
+        //Upload new voice records
+        for (let i = 0; i < this.newAttachments.voice.length; i++) {
+          this.fileService.uploadFileToStorage(this.newAttachments.voice[i], newTaskID, 'voice');
         }
 
         this.showToast("Aufgabe wurde erfolgreich gesendet.");
@@ -260,7 +365,7 @@ export class CreateTaskPage implements OnInit {
    * checks if task is created or edited
    */
   submitForm() {
-    switch(this.mode) {
+    switch (this.mode) {
       case 'edit':
         this.onEditTask();
         break;

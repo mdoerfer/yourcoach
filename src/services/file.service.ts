@@ -4,14 +4,15 @@ import {File} from '@ionic-native/file';
 
 @Injectable()
 export class FileService {
-  constructor(private file: File) {}
+  constructor(private file: File) {
+  }
 
   /**
    * Upload file to storage
    *
    * @param _filePath
    */
-  uploadFileToStorage(_filePath, taskId) {
+  uploadFileToStorage(_filePath, taskId, uploadType) {
     //Resolve filesystem url
     this.file.resolveLocalFilesystemUrl(_filePath)
       .then(_fileEntry => {
@@ -22,10 +23,29 @@ export class FileService {
 
         this.file.readAsDataURL(directoryPath, fileName)
           .then(_dataString => {
+            let suffix, node;
 
             //Upload
-            let uploadedFileName = new Date().getTime() + '.jpg';
-            let fileRef = firebase.storage().ref('uploads/' + taskId + '/images/' + uploadedFileName);
+            switch (uploadType) {
+              case 'image':
+                suffix = '.jpg';
+                node = 'images/';
+                break;
+              case 'video':
+                suffix = '.mp4';
+                node = 'videos/';
+                break;
+              case 'voice':
+                suffix = '.mp3';
+                node = 'voice/';
+                break;
+              default:
+                suffix = '.jpg';
+                node = 'images/';
+            }
+
+            let uploadedFileName = new Date().getTime() + suffix;
+            let fileRef = firebase.storage().ref('uploads/' + taskId + '/' + node + uploadedFileName);
 
             //Promise
             let uploadTask = fileRef.putString(_dataString, 'data_url');
@@ -33,10 +53,10 @@ export class FileService {
             //Upload image
             uploadTask.then(function (_snapshot) {
               //Console
-              console.log('Image was uploaded');
+              console.log(uploadType + ' was uploaded');
 
               //Add reference to task
-              firebase.database().ref('/tasks/' + taskId + '/attachments/images/').push(uploadTask.snapshot.downloadURL);
+              firebase.database().ref('/tasks/' + taskId + '/attachments/' + node).push(uploadTask.snapshot.downloadURL);
             });
           })
       });

@@ -11,6 +11,7 @@ import {MyApp} from './app.component';
 import {Ionic2RatingModule} from 'ionic2-rating';
 import {Camera} from '@ionic-native/camera';
 import {File} from '@ionic-native/file';
+import {MediaCapture} from '@ionic-native/media-capture';
 
 //Services
 import {AuthService} from "../services/auth.service";
@@ -108,7 +109,8 @@ import {StatisticsPage} from "../pages/statistics/statistics";
     NotificationService,
     FileService,
     Camera,
-    File
+    File,
+    MediaCapture
   ]
 })
 export class AppModule {
