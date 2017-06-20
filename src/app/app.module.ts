@@ -10,11 +10,13 @@ import {MyApp} from './app.component';
 //Modules
 import {Ionic2RatingModule} from 'ionic2-rating';
 import {Camera} from '@ionic-native/camera';
+import {File} from '@ionic-native/file';
 
 //Services
 import {AuthService} from "../services/auth.service";
 import {TaskService} from "../services/task.service";
 import {UserService} from "../services/user.service";
+import {FileService} from "../services/file.service";
 
 //Pages
 import {SigninPage} from "../pages/signin/signin";
@@ -101,7 +103,9 @@ import {CoachSendTaskModalPage} from "../pages/coach-send-task-modal/coach-send-
     StudentService,
     CoachService,
     NotificationService,
-    Camera
+    FileService,
+    Camera,
+    File
   ]
 })
 export class AppModule {

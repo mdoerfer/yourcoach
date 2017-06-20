@@ -4,6 +4,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {TaskService} from "../../services/task.service";
 import {AuthService} from "../../services/auth.service";
 import {Camera,CameraOptions} from '@ionic-native/camera';
+import {FileService} from "../../services/file.service";
 
 @IonicPage()
 @Component({
@@ -19,19 +20,26 @@ export class CreateTaskPage implements OnInit {
   responses: string[];
   states: object[];
 
+  newAttachments = {
+    images: [],
+    videos: []
+  };
+
   constructor(private navParams: NavParams,
               private navCtrl: NavController,
               private authService: AuthService,
               private taskService: TaskService,
               private toastCtrl: ToastController,
-              private camera: Camera) {
+              private camera: Camera,
+              private fileService: FileService) {
     this.tid = this.navParams.get('tid') || null;
     this.mode = this.navParams.get('mode') || 'create';
 
     this.cameraOptions = {
       quality: 100,
       destinationType: this.camera.DestinationType.FILE_URI,
-      mediaType: this.camera.MediaType.ALLMEDIA
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE
     };
   }
 
@@ -86,6 +94,7 @@ export class CreateTaskPage implements OnInit {
       responseInstructions: null,
       state: 'open',
       rating: 0,
+      draft: false
     };
 
     //Prefill form with task data if we're in edit mode
@@ -100,6 +109,7 @@ export class CreateTaskPage implements OnInit {
         formData.responseInstructions = task.responseInstructions;
         formData.state = task.state;
         formData.rating = task.rating || 0;
+        formData.draft = task.draft;
       });
     }
 
@@ -112,6 +122,7 @@ export class CreateTaskPage implements OnInit {
       responseInstructions: new FormControl(formData.responseInstructions, null),
       state: new FormControl(formData.state, null),
       rating: new FormControl(formData.rating, null),
+      draft: new FormControl(formData.draft, null)
     });
   }
 
@@ -119,19 +130,20 @@ export class CreateTaskPage implements OnInit {
    * Add attachment
    */
   addAttachment() {
+    //TODO: Action-sheet with video/picture/voice-msg
 
-    this.camera.getPicture(this.cameraOptions).then((imageData) => {
-      // imageData is either a base64 encoded string or a file URI
-      // If it's base64:
-      let base64Image = 'data:image/jpeg;base64,' + imageData;
+    this.addPicture();
+  }
 
-      alert('Image added');
-
-      console.log(imageData);
-      console.log(base64Image);
+  /**
+   * Add picture
+   */
+  addPicture() {
+    this.camera.getPicture(this.cameraOptions).then((_imagePath) => {
+      this.newAttachments.images.push(_imagePath);
     }, (err) => {
       // Handle error
-      console.error(err);
+      console.log(err.message);
     });
   }
 
@@ -150,6 +162,11 @@ export class CreateTaskPage implements OnInit {
       rating: this.taskForm.get('rating').value,
       updated_at: new Date().valueOf(),
     }).then(data => {
+      //Upload new images
+      for(let i = 0; i < this.newAttachments.images.length; i++) {
+        this.fileService.uploadFileToStorage(this.newAttachments.images[i], newTaskID);
+      }
+
       this.showToast("Aufgabe wurde erfolgreich bearbeitet.");
 
       this.navCtrl.pop();
@@ -164,7 +181,9 @@ export class CreateTaskPage implements OnInit {
    * and save it in the datababase
    */
   onDraftTask(){
-    this.taskService.createTask({
+    let newTaskID = this.taskService.getNewTaskID();
+
+    this.taskService.createTask(newTaskID, {
       from: this.authService.getActiveUser().uid,
       to: null,
       from_to: null,
@@ -176,8 +195,17 @@ export class CreateTaskPage implements OnInit {
       created_at: new Date().valueOf(),
       updated_at: new Date().valueOf(),
       draft: true,
+      attachments: {
+        images: {},
+        videos: {}
+      }
     })
       .then(data => {
+        //Upload new images
+        for(let i = 0; i < this.newAttachments.images.length; i++) {
+          this.fileService.uploadFileToStorage(this.newAttachments.images[i], newTaskID);
+        }
+
         this.showToast("Aufgabe wurde erfolgreich erstellt.");
 
         this.navCtrl.pop();
@@ -192,7 +220,9 @@ export class CreateTaskPage implements OnInit {
    * and save it in the database
    */
   onCreateTask() {
-    this.taskService.createTask({
+    let newTaskID = this.taskService.getNewTaskID();
+
+    this.taskService.createTask(newTaskID, {
       from: this.authService.getActiveUser().uid,
       to: this.navParams.get('sid'),
       from_to: this.authService.getActiveUser().uid + '_' + this.navParams.get('sid'),
@@ -206,8 +236,17 @@ export class CreateTaskPage implements OnInit {
       created_at: new Date().valueOf(),
       updated_at: new Date().valueOf(),
       draft: false,
+      attachments: {
+        images: {},
+        videos: {}
+      }
     })
       .then(data => {
+        //Upload new images
+        for(let i = 0; i < this.newAttachments.images.length; i++) {
+            this.fileService.uploadFileToStorage(this.newAttachments.images[i], newTaskID);
+        }
+
         this.showToast("Aufgabe wurde erfolgreich gesendet.");
 
         this.navCtrl.pop();
@@ -231,7 +270,6 @@ export class CreateTaskPage implements OnInit {
       default:
         this.onCreateTask();
     }
-
   }
 
   /**

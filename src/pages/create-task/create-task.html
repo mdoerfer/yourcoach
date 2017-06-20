@@ -48,6 +48,12 @@
         <ion-icon name="add" (click)="addAttachment()" item-right></ion-icon>
       </ion-item>
 
+      <ion-list>
+        <ion-item *ngFor="let newImage of newAttachments.images; let i = index" >
+          <img [src]="newImage">
+        </ion-item>
+      </ion-list>
+
       <ion-item-divider color="primary">
         <ion-icon name="cog" item-left></ion-icon>
         Einstellungen

@@ -108,15 +108,22 @@ export class TaskService {
   }
 
   /**
+   * Get task id for new task
+   */
+  getNewTaskID() {
+    return firebase.database().ref(this.nodeName).push().key;
+  }
+
+  /**
    * Create a new task
    *
    * @param task
    * @returns {firebase.database.ThenableReference}
    */
-  createTask(task) {
+  createTask(id, task) {
     return firebase.database()
-      .ref(this.nodeName)
-      .push(task)
+      .ref(this.nodeName + '/' + id)
+      .update(task)
       .then(data => {
         this.events.publish('tasks:create-success', {
           message: 'Die Aufgabe wurde erstellt.'
