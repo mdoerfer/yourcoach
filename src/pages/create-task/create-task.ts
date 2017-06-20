@@ -3,6 +3,7 @@ import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angula
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {TaskService} from "../../services/task.service";
 import {AuthService} from "../../services/auth.service";
+import {Camera,CameraOptions} from '@ionic-native/camera';
 
 @IonicPage()
 @Component({
@@ -12,6 +13,7 @@ import {AuthService} from "../../services/auth.service";
 export class CreateTaskPage implements OnInit {
   mode: string;
   tid: string;
+  cameraOptions: CameraOptions;
   taskForm: FormGroup;
   difficulties: string[];
   responses: string[];
@@ -21,9 +23,17 @@ export class CreateTaskPage implements OnInit {
               private navCtrl: NavController,
               private authService: AuthService,
               private taskService: TaskService,
-              private toastCtrl: ToastController) {
+              private toastCtrl: ToastController,
+              private camera: Camera) {
     this.tid = this.navParams.get('tid') || null;
     this.mode = this.navParams.get('mode') || 'create';
+
+    this.cameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE
+    };
   }
 
   /**
