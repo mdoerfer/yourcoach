@@ -5,3 +5,27 @@
   </ion-navbar>
 
 </ion-header>
+
+<ion-content>
+  <ion-list-header>Meine Schüler</ion-list-header>
+  <p padding *ngIf="students.length == 0">
+    Du hast keine Studenten zur Zeit
+  </p>
+  <ion-list *ngIf="students.length > 0">
+    <ion-item *ngFor="let student of students; let i = index" (click)="sendTaskToStudent(i)" (press)="openActionSheet(i)">
+      <ion-avatar item-left>
+        <img src="../../assets/images/dummy-avatar.png">
+      </ion-avatar>
+      <h2>{{student.name}}</h2>
+    </ion-item>
+  </ion-list>
+
+  <button color="danger" (click)="dismissModal()"
+          ion-button
+          block>
+    <span>Abbrechen</span>
+  </button>
+
+</ion-content>
+
+
