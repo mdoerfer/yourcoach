@@ -5,6 +5,18 @@ page-role-choice {
     text-align: center;
   }
 
+  .card{
+    margin: 30px auto 30px auto;
+    width: 44%;
+    font-size: 1.4rem;
+    height: 25%;
+    border-radius: 113px;
+  }
+
+  .card img{
+    height: 100%;
+  }
+
   .card-title {
     position: absolute;
     top: 36%;
@@ -20,5 +32,14 @@ page-role-choice {
     top: 52%;
     width: 100%;
     color: #fff;
+  }
+
+  .toolbar{
+    min-height: 0px!important;
+  }
+
+  .scroll-content{
+    padding:0px !important;
+    margin-top: 0px !important;
   }
 }
