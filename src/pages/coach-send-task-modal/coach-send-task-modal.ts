@@ -49,7 +49,6 @@ export class CoachSendTaskModalPage implements OnInit{
    */
   dismissModal(){
     this.viewCtrl.dismiss();
-
   }
 
   /**
