@@ -9,6 +9,60 @@
 
 <ion-content padding>
 
+<ion-list>
 
+<ion-item>
+  <ion-icon name="time" item-left></ion-icon>
+  Aktiv seit {{activeSince}}.
+</ion-item>
+
+  <ion-item>
+    <ion-icon name="checkmark-circle" item-left></ion-icon>
+    {{doneTasks.length}} erledigte Tasks.
+  </ion-item>
+
+  <ion-item>
+    <ion-grid>
+      <ion-row>
+
+        <ion-col col-4>
+          <ion-badge color="badgeeasy" class="difficulty">Einfach</ion-badge>
+          <br>
+          {{countEasy}}
+          <br>
+          {{percentEasy}} %
+        </ion-col>
+
+        <ion-col col-4>
+          <ion-badge color="badgemedium" class="difficulty">Mittel</ion-badge>
+          <br>
+          {{countMiddle}}
+          <br>
+          {{percentMiddle}} %
+        </ion-col>
+
+        <ion-col col-4>
+          <ion-badge color="badgehard" class="difficulty">Schwer</ion-badge>
+          <br>
+          {{countHard}}
+          <br>
+          {{percentHard}} %
+        </ion-col>
+
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+
+  <ion-item>
+    <ion-icon name="star" item-left></ion-icon>
+    &#216; Bewertung: {{averageRating}} Sterne.
+  </ion-item>
+
+  <ion-item>
+    <ion-icon name="calendar" item-left></ion-icon>
+    <!-- durchschn. sterne --> erledigte Tasks im letzten Monat.
+  </ion-item>
+
+</ion-list>
 
 </ion-content>
