@@ -9,6 +9,7 @@ import {MyApp} from './app.component';
 
 //Modules
 import {Ionic2RatingModule} from 'ionic2-rating';
+import {Camera} from '@ionic-native/camera';
 
 //Services
 import {AuthService} from "../services/auth.service";
@@ -93,7 +94,8 @@ import {EditProfileModalPage} from "../pages/edit-profile-modal/edit-profile-mod
     InviteService,
     StudentService,
     CoachService,
-    NotificationService
+    NotificationService,
+    Camera
   ]
 })
 export class AppModule {

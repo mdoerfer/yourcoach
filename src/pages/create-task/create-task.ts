@@ -76,7 +76,8 @@ export class CreateTaskPage implements OnInit {
       responseType: this.responses[0],
       responseInstructions: null,
       state: 'open',
-      rating: 0
+      rating: 0,
+      draft: false
     };
 
     //Prefill form with task data if we're in edit mode
@@ -91,6 +92,7 @@ export class CreateTaskPage implements OnInit {
         formData.responseInstructions = task.responseInstructions;
         formData.state = task.state;
         formData.rating = task.rating || 0;
+        formData.draft = task.draft;
       });
     }
 
@@ -102,7 +104,8 @@ export class CreateTaskPage implements OnInit {
       responseType: new FormControl(formData.responseType, null),
       responseInstructions: new FormControl(formData.responseInstructions, null),
       state: new FormControl(formData.state, null),
-      rating: new FormControl(formData.rating, null)
+      rating: new FormControl(formData.rating, null),
+      draft: new FormControl(formData.draft, null)
     });
   }
 
@@ -119,7 +122,8 @@ export class CreateTaskPage implements OnInit {
       responseInstructions: this.taskForm.get('responseInstructions').value,
       state: this.taskForm.get('state').value,
       rating: this.taskForm.get('rating').value,
-      updated_at: new Date().valueOf()
+      updated_at: new Date().valueOf(),
+      draft: this.taskForm.get('draft').value
     }).then(data => {
       this.showToast("Aufgabe wurde erfolgreich bearbeitet.");
 
@@ -147,7 +151,8 @@ export class CreateTaskPage implements OnInit {
       responseInstructions: this.taskForm.get('responseInstructions').value,
       state: 'open',
       created_at: new Date().valueOf(),
-      updated_at: new Date().valueOf()
+      updated_at: new Date().valueOf(),
+      draft: this.taskForm.get('draft').value
     })
       .then(data => {
         this.showToast("Aufgabe wurde erfolgreich gesendet.");
