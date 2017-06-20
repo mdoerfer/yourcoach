@@ -110,7 +110,8 @@ export class StudentTaskPage implements OnInit {
    */
   presentPopover(myEvent) {
     let popover = this.popoverCtrl.create(TaskPopoverPage, {
-      user: this.user
+      user: this.user,
+      doneTasks: this.doneTasks
     });
     popover.present({
       ev: myEvent

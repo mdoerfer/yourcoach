@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {NavController, NavParams, ViewController} from "ionic-angular";
 import {AuthService} from "../../services/auth.service";
 import {ProfilePage} from "../profile/profile";
+import {StatisticsPage} from "../statistics/statistics";
 
 @Component({
   selector: 'page-task-popover',
@@ -10,6 +11,7 @@ import {ProfilePage} from "../profile/profile";
 export class TaskPopoverPage {
 
   user: any;
+  doneTasks: any;
 
   constructor(public viewCtrl: ViewController,
               private authService: AuthService,
@@ -17,6 +19,8 @@ export class TaskPopoverPage {
               private navParams: NavParams) {
 
     this.user = this.navParams.get('user');
+    this.doneTasks = this.navParams.get('doneTasks');
+
   }
 
   goToProfile() {
@@ -25,7 +29,7 @@ export class TaskPopoverPage {
   }
 
   goToStatistic() {
-    console.log('Statistic clicked. View not created yet.');
+    this.navCtrl.push(StatisticsPage, {doneTasks: this.doneTasks});
     this.close();
   }
 
