@@ -21,6 +21,8 @@ export class FileService {
         let directoryPath = _fileEntry.nativeURL.replace(_fileEntry.name, '');
         let fileName = _fileEntry.name;
 
+        alert(_fileEntry.nativeURL+'\n\n'+_fileEntry.fullPath);
+
         this.file.readAsDataURL(directoryPath, fileName)
           .then(_dataString => {
             let suffix, node;
