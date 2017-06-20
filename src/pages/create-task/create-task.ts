@@ -164,7 +164,7 @@ export class CreateTaskPage implements OnInit {
     }).then(data => {
       //Upload new images
       for(let i = 0; i < this.newAttachments.images.length; i++) {
-        this.fileService.uploadFileToStorage(this.newAttachments.images[i], newTaskID);
+        this.fileService.uploadFileToStorage(this.newAttachments.images[i], this.tid);
       }
 
       this.showToast("Aufgabe wurde erfolgreich bearbeitet.");
