@@ -13,6 +13,8 @@ export class FileService {
    * @param _filePath
    */
   uploadFileToStorage(_filePath, taskId, uploadType) {
+    alert(_filePath);
+
     //Resolve filesystem url
     this.file.resolveLocalFilesystemUrl(_filePath)
       .then(_fileEntry => {
@@ -20,8 +22,6 @@ export class FileService {
         //Get directory and file name
         let directoryPath = _fileEntry.nativeURL.replace(_fileEntry.name, '');
         let fileName = _fileEntry.name;
-
-        alert(_fileEntry.nativeURL+'\n\n'+_fileEntry.fullPath);
 
         this.file.readAsDataURL(directoryPath, fileName)
           .then(_dataString => {
