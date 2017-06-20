@@ -30,9 +30,8 @@ export class CreateTaskPage implements OnInit {
 
     this.cameraOptions = {
       quality: 100,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
+      destinationType: this.camera.DestinationType.FILE_URI,
+      mediaType: this.camera.MediaType.ALLMEDIA
     };
   }
 
@@ -116,6 +115,26 @@ export class CreateTaskPage implements OnInit {
       state: new FormControl(formData.state, null),
       rating: new FormControl(formData.rating, null),
       draft: new FormControl(formData.draft, null)
+    });
+  }
+
+  /**
+   * Add attachment
+   */
+  addAttachment() {
+
+    this.camera.getPicture(this.cameraOptions).then((imageData) => {
+      // imageData is either a base64 encoded string or a file URI
+      // If it's base64:
+      let base64Image = 'data:image/jpeg;base64,' + imageData;
+
+      alert('Image added');
+
+      console.log(imageData);
+      console.log(base64Image);
+    }, (err) => {
+      // Handle error
+      console.error(err);
     });
   }
 

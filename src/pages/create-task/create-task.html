@@ -10,78 +10,96 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
 
   <form [formGroup]="taskForm" (ngSubmit)="submitForm()">
-    <ion-item>
-      <ion-label floating>Titel</ion-label>
-      <ion-input
-        type="text"
-        block
-        formControlName="title">
-      </ion-input>
-    </ion-item>
+    <ion-list>
+      <ion-item-divider color="primary">
+        <ion-icon name="clipboard" item-left></ion-icon>
+        Allgemeines
+      </ion-item-divider>
 
-    <ion-item>
-      <ion-label floating>Beschreibung</ion-label>
-      <ion-input
-        type="text"
-        block
-        formControlName="description">
-      </ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label fixed>Anhänge</ion-label>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Schwierigkeit</ion-label>
-      <ion-select formControlName="difficulty">
-        <ion-option
-          *ngFor="let difficulty of difficulties"
-          [value]="difficulty">{{ difficulty }}
-        </ion-option>
-      </ion-select>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Rückmeldung</ion-label>
-      <ion-select formControlName="responseType">
-        <ion-option
-          *ngFor="let response of responses"
-          [value]="response">{{ response }}
-        </ion-option>
-      </ion-select>
-    </ion-item>
-
-    <ion-item *ngIf="taskForm.get('responseType').value != 'Keine'">
-      <ion-label floating>Was soll der Schüler rückmelden?</ion-label>
-      <ion-input
-        type="text"
-        block
-        formControlName="responseInstructions">
-      </ion-input>
-    </ion-item>
-
-    <div *ngIf="mode === 'edit'">
       <ion-item>
-        <ion-label>Status</ion-label>
-        <ion-select formControlName="state">
+        <ion-label fixed>Titel</ion-label>
+        <ion-input
+          type="text"
+          block
+          formControlName="title">
+        </ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label fixed>Beschreibung</ion-label>
+        <ion-input
+          type="text"
+          block
+          formControlName="description">
+        </ion-input>
+      </ion-item>
+
+      <ion-item-divider color="primary">
+        <ion-icon name="attach" item-left></ion-icon>
+        Anhänge
+      </ion-item-divider>
+
+      <ion-item>
+        Es gibt noch keine Anhänge
+        <ion-icon name="add" (click)="addAttachment()" item-right></ion-icon>
+      </ion-item>
+
+      <ion-item-divider color="primary">
+        <ion-icon name="cog" item-left></ion-icon>
+        Einstellungen
+      </ion-item-divider>
+
+      <ion-item>
+        <ion-label fixed>Schwierigkeit</ion-label>
+        <ion-select formControlName="difficulty">
           <ion-option
-            *ngFor="let state of states"
-            [value]="state.value">{{ state.label }}
+            *ngFor="let difficulty of difficulties"
+            [value]="difficulty">{{ difficulty }}
           </ion-option>
         </ion-select>
       </ion-item>
 
-      <rating text-right formControlName="rating" readOnly="false" nullable="true" max="3"></rating>
-    </div>
+      <ion-item>
+        <ion-label fixed>Rückmeldung</ion-label>
+        <ion-select formControlName="responseType">
+          <ion-option
+            *ngFor="let response of responses"
+            [value]="response">{{ response }}
+          </ion-option>
+        </ion-select>
+      </ion-item>
 
-    <ion-item>
-      <ion-label>Entwurf</ion-label>
-      <ion-checkbox color="primary" formControlName="draft"></ion-checkbox>
-    </ion-item>
+      <ion-item *ngIf="taskForm.get('responseType').value != 'Keine'">
+        <ion-label fixed>Was soll der Schüler rückmelden?</ion-label>
+        <ion-input
+          type="text"
+          block
+          formControlName="responseInstructions">
+        </ion-input>
+      </ion-item>
+
+      <div *ngIf="mode === 'edit'">
+        <ion-item>
+          <ion-label fixed>Status</ion-label>
+          <ion-select formControlName="state">
+            <ion-option
+              *ngFor="let state of states"
+              [value]="state.value">{{ state.label }}
+            </ion-option>
+          </ion-select>
+        </ion-item>
+
+        <rating text-right formControlName="rating" readOnly="false" nullable="true" max="3"></rating>
+      </div>
+
+      <ion-item>
+        <ion-label fixed>Entwurf</ion-label>
+        <ion-checkbox color="primary" formControlName="draft"></ion-checkbox>
+      </ion-item>
+    </ion-list>
 
     <button
       ion-button
