@@ -226,7 +226,7 @@ export class CreateTaskPage implements OnInit {
         path = 'file://' + _filePath;
       }
       else {
-        path = _filePath;
+        path = _filePath.replace('file://', '');
       }
 
       this.newAttachments.push(path);
