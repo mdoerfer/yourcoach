@@ -33,7 +33,7 @@ export class StartSliderPage {
     },
     {
       title: "Deinen Coach immer in der Tasche",
-      description: "Du willst auch trainieren, wenn dein Personal Coach nicht dabei ist? Lasse dich von <b>deinem Coach</b> digital coachen",
+      description: "Du willst auch trainieren, wenn dein Personal Coach nicht dabei ist? Lasse dich von <b>deinem Coach</b> digital coachen.",
       image: "assets/images/slide2.png",
     },
     {
