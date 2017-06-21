@@ -135,30 +135,46 @@ export class AuthService {
     firebase.database().ref('/users/' + user.uid).update({
       deleted: true
     }).then(data => {
-      //Delete auth node
-      firebase.auth()
-        .signInWithEmailAndPassword(user.email, pass)
-        .then(data => {
-          user.delete()
-            .then(data => {
-              this.events.publish('auth:delete-user-success', {
-                message: 'Konto erfolgreich gelöscht'
-              });
-            }, error => {
-              this.events.publish('auth:delete-user-failed', {
-                message: error.message
-              });
-            })
-        }, error => {
-          this.events.publish('auth:delete-user-failed', {
-            message: error.message
+      //Delete all pairings the user is involved in
+      firebase.database().ref('/pairings/').once('value', snapshot => {
+        let dbPairings = snapshot.val();
+
+        for (let pairingId in dbPairings) {
+          let pairing = dbPairings[pairingId];
+
+          if (pairing.coach === user.uid || pairing.student === user.uid) {
+            firebase.database().ref('/pairings/' + pairingId).update({
+              deleted: true
+            });
+          }
+        }
+      }).then(data => {
+        //Delete auth node
+        firebase.auth()
+          .signInWithEmailAndPassword(user.email, pass)
+          .then(data => {
+            user.delete()
+              .then(data => {
+                this.events.publish('auth:delete-user-success', {
+                  message: 'Konto erfolgreich gelöscht'
+                });
+              }, error => {
+                this.events.publish('auth:delete-user-failed', {
+                  message: error.message
+                });
+              })
+          }, error => {
+            this.events.publish('auth:delete-user-failed', {
+              message: error.message
+            });
           });
+      }, error => {
+        this.events.publish('auth:delete-user-failed', {
+          message: error.message
         });
-    }, error => {
-      this.events.publish('auth:delete-user-failed', {
-        message: error.message
       });
-    });
+      ;
+    })
   }
 
   /**

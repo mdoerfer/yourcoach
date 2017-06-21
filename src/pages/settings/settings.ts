@@ -230,7 +230,6 @@ export class SettingsPage {
   subscribeDeleteUser() {
     this.events.subscribe('auth:delete-user-success', (payload) => {
       this.showToast(payload.message);
-      this.navCtrl.popToRoot();
     });
 
     this.events.subscribe('auth:delete-user-failed', (payload) => {
