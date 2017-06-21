@@ -106,6 +106,38 @@ export class SettingsPage {
     this.navCtrl.push(RoleChoicePage);
   }
 
+  /**
+   * Show feedback prompt
+   */
+  showFeedbackPrompt() {
+    let prompt = this.alertCtrl.create({
+      title: 'Feedback geben',
+      message: "Was können wir verbessern?",
+      inputs: [
+        {
+          type: 'textarea',
+          name: 'feedback',
+          placeholder: "Gibt uns Feedback"
+        },
+      ],
+      buttons: [
+        {
+          text: 'Abbrechen',
+          role: 'cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Senden',
+          handler: data => {
+            this.authService.changePassword(data.oldPass, data.newPass);
+          }
+        }
+      ]
+    });
+    prompt.present();
+  }
 
   /**
    * Show change password Prompt
