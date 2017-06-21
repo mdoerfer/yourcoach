@@ -10,11 +10,13 @@ export class FileService {
   }
 
   /**
-   * Upload file to storage
+   * Upload attachment to storage
    *
    * @param _filePath
+   * @param taskId
+   * @param uploadType
    */
-  uploadFileToStorage(_filePath, taskId) {
+  uploadFileToStorage(_filePath, taskId, uploadType = 'attachment') {
     if (this.platform.is('android')) {
       /**
        *
@@ -42,13 +44,22 @@ export class FileService {
 
               //Upload image
               uploadTask.then(function (_snapshot) {
-                //Add reference to task
-                firebase.database().ref('/tasks/' + taskId + '/attachments/').push({
+                let fileData = {
                   url: uploadTask.snapshot.downloadURL,
                   name: fileName,
                   uploadName: uploadedFileName,
                   type: fileType
-                });
+                };
+
+                switch(uploadType) {
+                  case 'attachment':
+                    //Add attachment media reference to task
+                    firebase.database().ref('/tasks/' + taskId + '/attachments/').push(fileData);
+                    break;
+                  case 'response':
+                    //Add response media reference to task
+                    firebase.database().ref('/tasks/' + taskId + '/response').update(fileData);
+                }
               });
             })
         });
@@ -77,13 +88,22 @@ export class FileService {
 
               //Upload image
               uploadTask.then(function (_snapshot) {
-                //Add reference to task
-                firebase.database().ref('/tasks/' + taskId + '/attachments/').push({
+                let fileData = {
                   url: uploadTask.snapshot.downloadURL,
                   name: fileName,
                   uploadName: uploadedFileName,
                   type: fileType
-                });
+                };
+
+                switch(uploadType) {
+                  case 'attachment':
+                    //Add attachment media reference to task
+                    firebase.database().ref('/tasks/' + taskId + '/attachments/').push(fileData);
+                    break;
+                  case 'response':
+                    //Add response media reference to task
+                    firebase.database().ref('/tasks/' + taskId + '/response').update(fileData);
+                }
               });
             });
         });

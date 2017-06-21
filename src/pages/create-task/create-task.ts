@@ -62,7 +62,7 @@ export class CreateTaskPage implements OnInit {
       'Bild',
       'Video',
       'Sprachnachricht',
-      'Auswahlmöglichkeit...'
+      //'Auswahlmöglichkeit...'
     ];
 
     this.states = [
@@ -306,8 +306,6 @@ export class CreateTaskPage implements OnInit {
       rating: this.taskForm.get('rating').value,
       updated_at: new Date().valueOf(),
     }).then(data => {
-      //TODO: Remove attachments
-
       //Upload new attachments
       for (let i = 0; i < this.newAttachments.length; i++) {
         this.fileService.uploadFileToStorage(this.newAttachments[i].url, this.tid);

@@ -8,6 +8,9 @@ import {TaskService} from "../../services/task.service";
 import {UserService} from "../../services/user.service";
 import {StudentTaskTextModalPage} from "../student-task-text-modal/student-task-text-modal";
 import {TaskChatPage} from "../task-chat/task-chat";
+import {StudentTaskVideoModalPage} from "../student-task-video-modal/student-task-video-modal";
+import {StudentTaskImageModalPage} from "../student-task-image-modal/student-task-image-modal";
+import {StudentTaskVoiceModalPage} from "../student-task-voice-modal/student-task-voice-modal";
 
 @IonicPage()
 @Component({
@@ -145,6 +148,15 @@ export class StudentTaskPage implements OnInit {
       case "Text":
         this.showModalText(task);
         break;
+      case "Video":
+        this.showModalVideo(task);
+        break;
+      case "Bild":
+        this.showModalImage(task);
+        break;
+      case "Sprachnachricht":
+        this.showModalVoice(task);
+        break;
       default:
         this.markTaskAsGradeable(task);
     }
@@ -170,10 +182,80 @@ export class StudentTaskPage implements OnInit {
           .catch(error => {
             this.showToast(error.message);
           });
-
       }
     });
+  }
 
+  /**
+   * Shows modal for video response
+   *
+   * @param task
+   */
+  showModalVideo(task: any) {
+    let videoModal = this.modalCtrl.create(StudentTaskVideoModalPage, {task: task});
+    videoModal.present();
+    videoModal.onDidDismiss(data => {
+      if (data) {
+        this.taskService.updateTaskById(task._id, {
+          response: data
+        })
+          .then(data => {
+            this.showToast("Rückmeldung wurde versendet.");
+            this.markTaskAsGradeable(task);
+          })
+          .catch(error => {
+            this.showToast(error.message);
+          });
+      }
+    });
+  }
+
+  /**
+   * Shows modal for image response
+   *
+   * @param task
+   */
+  showModalImage(task: any) {
+    let imageModal = this.modalCtrl.create(StudentTaskImageModalPage, {task: task});
+    imageModal.present();
+    imageModal.onDidDismiss(data => {
+      if (data) {
+        this.taskService.updateTaskById(task._id, {
+          response: data
+        })
+          .then(data => {
+            this.showToast("Rückmeldung wurde versendet.");
+            this.markTaskAsGradeable(task);
+          })
+          .catch(error => {
+            this.showToast(error.message);
+          });
+      }
+    });
+  }
+
+  /**
+   * Shows modal for voice response
+   *
+   * @param task
+   */
+  showModalVoice(task: any) {
+    let voiceModal = this.modalCtrl.create(StudentTaskVoiceModalPage, {task: task});
+    voiceModal.present();
+    voiceModal.onDidDismiss(data => {
+      if (data) {
+        this.taskService.updateTaskById(task._id, {
+          response: data
+        })
+          .then(data => {
+            this.showToast("Rückmeldung wurde versendet.");
+            this.markTaskAsGradeable(task);
+          })
+          .catch(error => {
+            this.showToast(error.message);
+          });
+      }
+    });
   }
 
   /**
