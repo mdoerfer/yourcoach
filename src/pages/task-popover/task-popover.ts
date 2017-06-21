@@ -33,11 +33,6 @@ export class TaskPopoverPage {
     this.close();
   }
 
-  goToDelete() {
-    console.log('Delete clicked. View not created yet.');
-    this.close();
-  }
-
   private close() {
     this.viewCtrl.dismiss();
   }

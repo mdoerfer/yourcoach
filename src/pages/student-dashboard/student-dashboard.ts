@@ -9,6 +9,8 @@ import {NotificationService} from "../../services/notification.service";
 import {Notification} from "../../models/notification.model";
 import {NotificationPage} from "../notification/notification";
 import {DashboardStudentPopoverPage} from "../dashboard-student-popover/dashboard-student-popover";
+import {UserService} from "../../services/user.service";
+import {TaskService} from "../../services/task.service";
 
 
 @IonicPage()
@@ -23,6 +25,10 @@ export class StudentDashboardPage implements OnInit {
   private pendingInvites: any[] = [];
   private notifications: Notification[] = [];
 
+
+  tasks: any[] = [];
+  openTasksStudents: any[] = [];
+
   constructor(private inviteService: InviteService,
               private coachService: CoachService,
               private navCtrl: NavController,
@@ -30,6 +36,8 @@ export class StudentDashboardPage implements OnInit {
               private actionSheetCtrl: ActionSheetController,
               public alertCtrl: AlertController,
               private events: Events,
+              private userService: UserService,
+              private taskService: TaskService,
               private notificationService: NotificationService) {
   }
 
@@ -43,8 +51,13 @@ export class StudentDashboardPage implements OnInit {
     this.loadCoaches();
     this.subscribeCoaches();
 
+    this.subscribeTasks();
+
     this.loadUnreadNotifications();
     this.subscribeUnreadNotifications();
+
+    this.loadOpenTasksStudents();
+
   }
 
 
@@ -63,6 +76,15 @@ export class StudentDashboardPage implements OnInit {
     this.events.subscribe('coaches:changed', coaches => {
       this.coaches = coaches;
     })
+  }
+
+  /**
+   * Subscribe to tasks and listen for changes
+   */
+  private subscribeTasks() {
+    this.events.subscribe('tasks:tasks-changed', () => {
+      this.loadOpenTasksStudents();
+    });
   }
 
   /**
@@ -247,4 +269,27 @@ export class StudentDashboardPage implements OnInit {
       });
     }
   }
+
+  loadOpenTasksStudents(){
+  let countOpenTasks = 0;
+  this.openTasksStudents = [];
+    for(let i = 0; i < this.coaches.length; i++){
+      //countOpenTasks = 0;
+      let coachId = this.coaches[i]._id;
+      this.tasks = this.taskService.getTasks(coachId);
+      let openTasks = this.getTasksByState('open');
+      countOpenTasks = openTasks.length;
+      this.openTasksStudents.push(countOpenTasks);
+    }
+  }
+
+  /**
+   * Get tasks by state
+   */
+  getTasksByState(state: string) {
+    return this.tasks.filter((task) => {
+      return task.state === state;
+    });
+  }
+
 }

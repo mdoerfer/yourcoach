@@ -31,6 +31,11 @@ export class TaskService {
     });
   }
 
+  /**
+   * Get all drafts that were created by me
+   *
+   * @returns {any[]}
+   */
   getDrafts() {
     return this.assignments.filter((assignment) => {
       return assignment.draft === true;
