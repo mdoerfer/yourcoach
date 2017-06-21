@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {FormControl, FormGroup} from "@angular/forms";
 import {TaskService} from "../../services/task.service";
+import firebase from 'firebase';
 
 /**
  * Generated class for the TaskChatPage page.
@@ -20,6 +21,7 @@ export class TaskChatPage implements OnInit  {
   chatForm: FormGroup;
   taskMsgs: any[] = [];
 
+
   constructor(public navCtrl: NavController,
               public taskService: TaskService,
               public navParams: NavParams) {
@@ -28,9 +30,37 @@ export class TaskChatPage implements OnInit  {
   ngOnInit() {
     this.task = this.navParams.get('task');
     this.initializeForm();
-    this.initializeTaskMsgs();
-    console.log(this.taskMsgs);
+   // this.initializeTaskMsgs();
+    console.log(this.task._id);
+    this.updateTaskMsgs()
 
+  }
+
+
+
+  updateTaskMsgs(){
+
+
+
+    let nodeName: string = '/tasks/'+this.task._id+ '/chat/';
+
+    let query = firebase.database()
+      .ref(nodeName);
+
+      query.on('value', snapshot => {
+      let dbChat = snapshot.val();
+      let chat = [];
+
+      //Add tasks to matching arrays, depending on their state
+        for(let msgId in dbChat) {
+          let msg = dbChat[msgId];
+
+          chat.push(msg);
+        }
+
+      //Update state
+      this.taskMsgs = chat;
+    })
   }
 
   /**
@@ -50,6 +80,7 @@ export class TaskChatPage implements OnInit  {
   }
 
   initializeTaskMsgs(){
+    this.taskMsgs = [];
 
     if(this.task.chat !== null){
       for(let msgId in this.task.chat) {
@@ -67,6 +98,7 @@ export class TaskChatPage implements OnInit  {
   submitForm() {
       console.log(this.task["title"]);
       this.taskService.sendTaskChatMessage(this.task, this.chatForm.get('msg').value);
+      this.chatForm.reset()
   }
 
 
