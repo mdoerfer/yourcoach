@@ -35,7 +35,7 @@ export class StartSliderPage {
     },
     {
       title: "Du bist Coach und willst deine Schüler rund um die Uhr betreuen?",
-      description: "Lade <b>deine Schüler</b> ein, gib Ihnen Aufgaben und bewerte Ihren Fortschritt.",
+      description: "Lade <b>deine Schüler</b> ein, gib ihnen Aufgaben und bewerte Ihren Fortschritt.",
       image: "assets/images/slide3.png",
     }
   ];
