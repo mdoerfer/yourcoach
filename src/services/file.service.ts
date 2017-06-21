@@ -30,10 +30,11 @@ export class FileService {
           let directoryPath = _fileEntry.nativeURL.replace(_fileEntry.name, '');
           let fileName = _fileEntry.name;
           let fileType = fileName.split('.').pop();
+          let timestamp = new Date().getTime();
 
           this.file.readAsDataURL(directoryPath, fileName)
             .then(_dataString => {
-              let uploadedFileName = new Date().getTime() + '_' + fileName;
+              let uploadedFileName =  timestamp + '_' + fileName;
               let fileRef = firebase.storage().ref('uploads/' + taskId + '/' + uploadedFileName);
 
               //Promise
@@ -45,6 +46,7 @@ export class FileService {
                 firebase.database().ref('/tasks/' + taskId + '/attachments/').push({
                   url: uploadTask.snapshot.downloadURL,
                   name: fileName,
+                  uploadName: uploadedFileName,
                   type: fileType
                 });
               });
@@ -64,9 +66,10 @@ export class FileService {
             .then(_blob => {
               let fileName = _filePath.split('/').pop();
               let fileType = fileName.split('.').pop();
+              let timestamp = new Date().getTime();
 
               //Check type
-              let uploadedFileName = new Date().getTime() + '_' + fileName;
+              let uploadedFileName = timestamp + '_' + fileName;
               let fileRef = firebase.storage().ref('uploads/' + taskId + '/' + uploadedFileName);
 
               //Promise
@@ -78,6 +81,7 @@ export class FileService {
                 firebase.database().ref('/tasks/' + taskId + '/attachments/').push({
                   url: uploadTask.snapshot.downloadURL,
                   name: fileName,
+                  uploadName: uploadedFileName,
                   type: fileType
                 });
               });

@@ -267,7 +267,18 @@ export class TaskService {
   }
 
   deleteAttachment(attachment) {
-    console.log(attachment);
-    firebase.database().ref(this.nodeName + attachment.tid + '/attachments/' + attachment._id).remove();
+    //Delete file reference
+    firebase.storage().ref().child('/uploads/' + attachment.tid + '/' + attachment.uploadName).delete()
+      .then(() => {
+        firebase.database().ref(this.nodeName + attachment.tid + '/attachments/' + attachment._id).remove()
+          .then(() => {
+            console.log('Attachment successfully deleted.');
+          }, error => {
+            console.error(error.message);
+          });
+      }, error => {
+        console.error(error.message);
+      });
+
   }
 }
