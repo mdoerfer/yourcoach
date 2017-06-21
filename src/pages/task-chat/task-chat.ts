@@ -29,7 +29,7 @@ export class TaskChatPage implements OnInit  {
     this.task = this.navParams.get('task');
     this.initializeForm();
     this.initializeTaskMsgs();
-    console.log();
+    console.log(this.taskMsgs);
 
   }
 
