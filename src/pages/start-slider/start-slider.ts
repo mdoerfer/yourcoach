@@ -29,7 +29,7 @@ export class StartSliderPage {
       image: "assets/images/slide1.png",
     },
     {
-      title: "Du willst auch einmal trainieren, wenn dein Personal Coach nicht dabei ist?",
+      title: "Du willst auch trainieren, wenn dein Personal Coach nicht dabei ist?",
       description: "Lasse dich von <b>deinem Coach</b> zu seiner Schülerliste hinzufügen und erhalte Aufgaben und Tutorials per Text, Bild und Video.",
       image: "assets/images/slide2.png",
     },
