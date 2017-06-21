@@ -8,6 +8,7 @@ import {AlertController} from 'ionic-angular';
 import {NotificationService} from "../../services/notification.service";
 import {Notification} from "../../models/notification.model";
 import {NotificationPage} from "../notification/notification";
+import {DashboardStudentPopoverPage} from "../dashboard-student-popover/dashboard-student-popover";
 
 
 @IonicPage()
@@ -206,7 +207,7 @@ export class StudentDashboardPage implements OnInit {
    * @param myEvent
    */
   presentPopover(myEvent) {
-    let popover = this.popoverCtrl.create(DashboardPopoverPage);
+    let popover = this.popoverCtrl.create(DashboardStudentPopoverPage);
     popover.present({
       ev: myEvent
     });
