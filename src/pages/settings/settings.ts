@@ -69,7 +69,7 @@ export class SettingsPage {
   /**
    * Confirm deletion
    */
-  showConfirm() {
+  showDeleteUserConfirm() {
     let confirm = this.alertCtrl.create({
       title: 'Account löschen',
       message: 'Möchtest du deinen Account wirklich löschen?',
@@ -83,7 +83,7 @@ export class SettingsPage {
         {
           text: 'Löschen',
           handler: () => {
-            this.userService.deleteUser();
+            this.showDeleteUserPrompt();
           }
         }
       ]
@@ -92,24 +92,10 @@ export class SettingsPage {
   }
 
   /**
-   * Subscribe to user deletion
-   */
-  subscribeDeleteUser() {
-    this.events.subscribe('user:delete-success', (payload) => {
-      console.log(payload.message);
-      this.signOut();
-    });
-
-    this.events.subscribe('user:delete-failed', (payload) => {
-      console.log(payload.message);
-    })
-  }
-
-  /**
    * Sign a user out
    */
   signOut() {
-    this.navCtrl.pop();
+    this.navCtrl.popToRoot();
     this.authService.signout();
   }
 
@@ -120,25 +106,11 @@ export class SettingsPage {
     this.navCtrl.push(RoleChoicePage);
   }
 
-  /**
-   * Shows a short toast message
-   *
-   * @param msg
-   * @param duration
-   */
-  private showToast(msg: string, duration: number = 3000) {
-    let toast = this.toastCtrl.create({
-      message: msg,
-      duration: duration
-    });
-    toast.present();
-  }
-
 
   /**
    * Show change password Prompt
    */
-  showPrompt() {
+  showChangePasswordPrompt() {
     let prompt = this.alertCtrl.create({
       title: 'Passwort ändern',
       message: "Ändere dein Passwort",
@@ -175,6 +147,39 @@ export class SettingsPage {
   }
 
   /**
+   * Show delete user prompt
+   */
+  showDeleteUserPrompt() {
+    let prompt = this.alertCtrl.create({
+      title: 'Konto löschen',
+      message: "Gib dein Passwort ein um dein Konto zu löschen",
+      inputs: [
+        {
+          type: 'password',
+          name: 'pass',
+          placeholder: "Passwort"
+        }
+      ],
+      buttons: [
+        {
+          text: 'Abbrechen',
+          role: 'cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Senden',
+          handler: data => {
+            this.authService.deleteUser(data.pass);
+          }
+        }
+      ]
+    });
+    prompt.present();
+  }
+
+  /**
    * Subscribe to password change
    */
   subscribePasswordChange() {
@@ -187,4 +192,31 @@ export class SettingsPage {
     });
   }
 
+  /**
+   * Subscribe to user deletion
+   */
+  subscribeDeleteUser() {
+    this.events.subscribe('auth:delete-user-success', (payload) => {
+      this.showToast(payload.message);
+      this.navCtrl.popToRoot();
+    });
+
+    this.events.subscribe('auth:delete-user-failed', (payload) => {
+      this.showToast(payload.message);
+    })
+  }
+
+  /**
+   * Shows a short toast message
+   *
+   * @param msg
+   * @param duration
+   */
+  private showToast(msg: string, duration: number = 3000) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: duration
+    });
+    toast.present();
+  }
 }

@@ -16,6 +16,7 @@ export class FileService {
    */
   uploadFileToStorage(_filePath, taskId, uploadType) {
     if (this.platform.is('android')) {
+      //UPLOAD FOR ANDROID
       //Resolve filesystem url
       this.file.resolveLocalFilesystemUrl(_filePath)
         .then(_fileEntry => {
@@ -65,6 +66,7 @@ export class FileService {
         });
     }
     else {
+      //UPLOAD FOR IOS & CO.
       fetch(_filePath)
         .then((_response) => {
           //Turn response into blob

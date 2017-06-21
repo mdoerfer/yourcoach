@@ -53,23 +53,5 @@ export class UserService {
   getUserRefById(uid: string) {
     return firebase.database().ref(this.nodeName + uid);
   }
-
-  /**
-   * Delete user
-   */
-  deleteUser() {
-    this.updateActiveUserRef({
-      deleted: "true"
-    })
-      .then(data => {
-        this.events.publish('user:delete-success', {
-          message: 'Nutzer erfolgreich gelöscht',
-        });
-      }, error => {
-        this.events.publish('user:delete-failed', {
-          message: error.message
-        });
-      });
-  }
 }
 

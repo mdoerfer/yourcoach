@@ -12,18 +12,43 @@ export class AuthService {
   /**
    * Sign a user up
    *
+   * @param name
    * @param email
    * @param password
    * @returns {firebase.Promise<any>}
    */
-  signup(email: string, password: string) {
+  signup(name: string, email: string, password: string) {
     return firebase.auth()
       .createUserWithEmailAndPassword(email, password)
       .then(data => {
-        this.events.publish('auth:signup-success', {
-          message: 'Registrierung erfolgreich',
-          user: this.getActiveUser()
-        });
+        //Get user
+        let user = this.getActiveUser();
+
+        //Create database node for user
+        firebase.database().ref('/users/' + user.uid).update({
+          name: name,
+          email: email,
+          deleted: false,
+          created_at: new Date().valueOf(),
+          updated_at: new Date().valueOf()
+        }).then(data => {
+          //Send verification email
+          user.sendEmailVerification()
+            .then(data => {
+              this.events.publish('auth:signup-success', {
+                message: 'Registrierung erfolgreich. Bitte klicken Sie den Aktivierungs-Link in der Ihnen zugesandten Email.',
+                user: this.getActiveUser()
+              });
+            }, error => {
+              this.events.publish('auth:signup-failed', {
+                message: error.message
+              });
+            });
+        }, error => {
+          this.events.publish('auth:signup-failed', {
+            message: error.message
+          });
+        })
       }, error => {
         this.events.publish('auth:signup-failed', {
           message: error.message
@@ -67,7 +92,7 @@ export class AuthService {
    * Change user password
    */
   changePassword(oldPass: string, newPass: string) {
-    if(!oldPass.length || !newPass.length) {
+    if (!oldPass.length || !newPass.length) {
       this.events.publish('auth:change-password-failed', {
         message: 'Bitte fülle alle Felder aus.'
       });
@@ -93,6 +118,47 @@ export class AuthService {
           message: error.message
         });
       });
+  }
+
+  /**
+   * Delete user
+   */
+  deleteUser(pass: string) {
+    if (!pass.length) {
+      this.events.publish('auth:delete-user-failed', {
+        message: 'Bitte fülle alle Felder aus.'
+      });
+    }
+
+    let user = this.getActiveUser();
+
+    firebase.database().ref('/users/' + user.uid).update({
+      deleted: true
+    }).then(data => {
+      //Delete auth node
+      firebase.auth()
+        .signInWithEmailAndPassword(user.email, pass)
+        .then(data => {
+          user.delete()
+            .then(data => {
+              this.events.publish('auth:delete-user-success', {
+                message: 'Konto erfolgreich gelöscht'
+              });
+            }, error => {
+              this.events.publish('auth:delete-user-failed', {
+                message: error.message
+              });
+            })
+        }, error => {
+          this.events.publish('auth:delete-user-failed', {
+            message: error.message
+          });
+        });
+    }, error => {
+      this.events.publish('auth:delete-user-failed', {
+        message: error.message
+      });
+    });
   }
 
   /**
