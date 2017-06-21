@@ -13,19 +13,32 @@
   <ion-item>
     <div *ngIf="response !== null">
       <img [src]="response.url">
-      <button (click)="addResponse()">Video ändern</button>
+      <button
+        ion-button
+        block
+        (click)="addResponse()">Video ändern
+      </button>
+      <button
+        ion-button
+        block
+        (click)="removeResponse()">Video entfernen
+      </button>
     </div>
 
     <div *ngIf="response === null">
-      <button (click)="addResponse()">Video hochladen</button>
+      <button
+        ion-button
+        block
+        (click)="addResponse()">Video hochladen
+      </button>
     </div>
   </ion-item>
 
   <button
     ion-button
-    type="submit"
     block
-    [disabled]="response === null">
+    [disabled]="response === null"
+    (click)="submitResponse()">
     <span>Rückmelden</span>
   </button>
 

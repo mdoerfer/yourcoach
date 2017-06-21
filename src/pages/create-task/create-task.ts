@@ -172,7 +172,7 @@ export class CreateTaskPage implements OnInit {
     this.mediaCapture.captureImage()
       .then(
         (data: MediaFile[]) => {
-          for (var i = 0; i < data.length; i++) {
+          for (let i = 0; i < data.length; i++) {
             this.newAttachments.push(this.readFileInfo(data[i].fullPath));
           }
         }, (err: CaptureError) => {
@@ -188,7 +188,7 @@ export class CreateTaskPage implements OnInit {
     this.mediaCapture.captureVideo()
       .then(
         (data: MediaFile[]) => {
-          for (var i = 0; i < data.length; i++) {
+          for (let i = 0; i < data.length; i++) {
             this.newAttachments.push(this.readFileInfo(data[i].fullPath));
           }
         }, (err: CaptureError) => {
@@ -204,7 +204,7 @@ export class CreateTaskPage implements OnInit {
     this.mediaCapture.captureAudio()
       .then(
         (data: MediaFile[]) => {
-          for (var i = 0; i < data.length; i++) {
+          for (let i = 0; i < data.length; i++) {
             this.newAttachments.push(this.readFileInfo(data[i].fullPath));
           }
         }, (err: CaptureError) => {

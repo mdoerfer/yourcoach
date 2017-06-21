@@ -11,6 +11,7 @@ import {TaskChatPage} from "../task-chat/task-chat";
 import {StudentTaskVideoModalPage} from "../student-task-video-modal/student-task-video-modal";
 import {StudentTaskImageModalPage} from "../student-task-image-modal/student-task-image-modal";
 import {StudentTaskVoiceModalPage} from "../student-task-voice-modal/student-task-voice-modal";
+import {FileService} from "../../services/file.service";
 
 @IonicPage()
 @Component({
@@ -35,7 +36,8 @@ export class StudentTaskPage implements OnInit {
               public modalCtrl: ModalController,
               private toastCtrl: ToastController,
               private navCtrl: NavController,
-              private events: Events) {
+              private events: Events,
+              private fileService: FileService) {
   }
 
   /**
@@ -45,7 +47,7 @@ export class StudentTaskPage implements OnInit {
     this.cid = this.navParams.get('cid');
     this.tab = this.navParams.get('tab') || null;
 
-    if(this.tab) {
+    if (this.tab) {
       this.activeTab = this.tab;
     }
 
@@ -176,9 +178,9 @@ export class StudentTaskPage implements OnInit {
           response: data
         })
           .then(data => {
-          this.showToast("Rückmeldung wurde versendet.");
-          this.markTaskAsGradeable(task);
-        })
+            this.showToast("Rückmeldung wurde versendet.");
+            this.markTaskAsGradeable(task);
+          })
           .catch(error => {
             this.showToast(error.message);
           });
@@ -196,16 +198,8 @@ export class StudentTaskPage implements OnInit {
     videoModal.present();
     videoModal.onDidDismiss(data => {
       if (data) {
-        this.taskService.updateTaskById(task._id, {
-          response: data
-        })
-          .then(data => {
-            this.showToast("Rückmeldung wurde versendet.");
-            this.markTaskAsGradeable(task);
-          })
-          .catch(error => {
-            this.showToast(error.message);
-          });
+        this.fileService.uploadFileToStorage(data.url, task._id, 'response');
+        this.markTaskAsGradeable(task);
       }
     });
   }
