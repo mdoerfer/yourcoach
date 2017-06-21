@@ -6,6 +6,7 @@ import {AuthService} from "../../services/auth.service";
 import {NavController} from "ionic-angular";
 import {RoleChoicePage} from "../role-choice/role-choice";
 import {EditProfileModalPage} from "../edit-profile-modal/edit-profile-modal";
+import {ImpressumPage} from "../impressum/impressum";
 
 @IonicPage()
 @Component({
@@ -251,5 +252,12 @@ export class SettingsPage {
       duration: duration
     });
     toast.present();
+  }
+
+  /**
+   * Open impressum page
+   */
+  goToImpressum(){
+    this.navCtrl.push(ImpressumPage);
   }
 }
