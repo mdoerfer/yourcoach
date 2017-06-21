@@ -7,12 +7,42 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>task-chat</ion-title>
+    <ion-title>Chat {{task.title}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+  <ion-item *ngIf="task.chat">
+
+
+  </ion-item>
+  <ion-item>
+    <p>Es gibt noch keine Nachrichten</p>
+
+
+  </ion-item>
+
+  <form [formGroup]="chatForm" (ngSubmit)="submitForm()">
+
+    <ion-item>
+      <ion-input
+        type="text"
+        block
+        required
+        formControlName="msg">
+      </ion-input>
+    </ion-item>
+
+    <button
+      ion-button
+      type="submit"
+      block
+      [disabled]="!chatForm.valid">
+      <span>Senden</span>
+    </button>
+
+  </form>
 
 </ion-content>

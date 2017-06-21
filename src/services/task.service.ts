@@ -227,6 +227,17 @@ export class TaskService {
     });
   }
 
+  sendTaskChatMessage(task: any, msg: string) {
+    let uid = this.authService.getActiveUser().uid;
+
+    firebase.database().ref(this.nodeName + task._id + '/chat/').push({
+      from: uid,
+      msg: msg
+    });
+
+
+  }
+
   /**
    * Rate assignment and mark it as done
    *

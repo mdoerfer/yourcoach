@@ -46,6 +46,7 @@ import {StatisticsPage} from "../pages/statistics/statistics";
 import {DashboardStudentPopoverPage} from "../pages/dashboard-student-popover/dashboard-student-popover";
 import {StartSliderPage} from "../pages/start-slider/start-slider";
 import {ImpressumPage} from "../pages/impressum/impressum";
+import {TaskChatPage} from "../pages/task-chat/task-chat";
 
 
 @NgModule({
@@ -72,6 +73,7 @@ import {ImpressumPage} from "../pages/impressum/impressum";
     StatisticsPage,
     DashboardStudentPopoverPage,
     StartSliderPage,
+    TaskChatPage,
     ImpressumPage
   ],
   imports: [
@@ -103,7 +105,8 @@ import {ImpressumPage} from "../pages/impressum/impressum";
     StatisticsPage,
     DashboardStudentPopoverPage,
     StartSliderPage,
-    ImpressumPage
+    ImpressumPage,
+    TaskChatPage
   ],
   providers: [
     StatusBar,
