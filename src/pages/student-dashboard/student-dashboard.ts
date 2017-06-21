@@ -51,13 +51,11 @@ export class StudentDashboardPage implements OnInit {
     this.loadCoaches();
     this.subscribeCoaches();
 
+
     this.subscribeTasks();
 
     this.loadUnreadNotifications();
     this.subscribeUnreadNotifications();
-
-    this.loadOpenTasksStudents();
-
   }
 
 
@@ -75,6 +73,7 @@ export class StudentDashboardPage implements OnInit {
     //Listen for changes
     this.events.subscribe('coaches:changed', coaches => {
       this.coaches = coaches;
+      this.loadOpenTasksStudents(coaches);
     })
   }
 
@@ -83,7 +82,7 @@ export class StudentDashboardPage implements OnInit {
    */
   private subscribeTasks() {
     this.events.subscribe('tasks:tasks-changed', () => {
-      this.loadOpenTasksStudents();
+      this.loadOpenTasksStudents(this.coaches);
     });
   }
 
@@ -127,7 +126,7 @@ export class StudentDashboardPage implements OnInit {
    * @param i Index of the invite in the array
    */
   onAcceptInvite(i: number) {
-    if(this.searchIsActive) return;
+    if (this.searchIsActive) return;
 
     let iid = this.pendingInvites[i].inviteId;
     let cid = this.pendingInvites[i]._id;
@@ -141,7 +140,7 @@ export class StudentDashboardPage implements OnInit {
    * @param i Index of the invite in the array
    */
   onDeclineInvite(i: number) {
-    if(this.searchIsActive) return;
+    if (this.searchIsActive) return;
 
     let iid = this.pendingInvites[i].inviteId;
     let cid = this.pendingInvites[i]._id;
@@ -155,7 +154,7 @@ export class StudentDashboardPage implements OnInit {
    * @param i
    */
   goToTasks(i: number) {
-    if(this.searchIsActive) return;
+    if (this.searchIsActive) return;
 
     let cid = this.coaches[i]._id;
     this.navCtrl.push(StudentTaskPage, {
@@ -239,7 +238,7 @@ export class StudentDashboardPage implements OnInit {
    * Toggle search
    */
   toggleSearch() {
-    if(this.searchIsActive) {
+    if (this.searchIsActive) {
       this.searchIsActive = false;
       this.loadCoaches();
     }
@@ -252,7 +251,7 @@ export class StudentDashboardPage implements OnInit {
    * Close search if it is active
    */
   checkSearch() {
-    if(this.searchIsActive) {
+    if (this.searchIsActive) {
       this.toggleSearch();
     }
   }
@@ -270,16 +269,27 @@ export class StudentDashboardPage implements OnInit {
     }
   }
 
-  loadOpenTasksStudents(){
-  let countOpenTasks = 0;
-  this.openTasksStudents = [];
-    for(let i = 0; i < this.coaches.length; i++){
+  loadOpenTasksStudents(coaches) {
+    let countOpenTasks = 0;
+    this.openTasksStudents = [];
+
+    for (let i = 0; i < coaches.length; i++) {
+      console.log(this.coaches[i]);
+    }
+
+    for (let i = 0; i < this.coaches.length; i++) {
+
       //countOpenTasks = 0;
       let coachId = this.coaches[i]._id;
       this.tasks = this.taskService.getTasks(coachId);
       let openTasks = this.getTasksByState('open');
       countOpenTasks = openTasks.length;
-      this.openTasksStudents.push(countOpenTasks);
+
+      console.log(coachId);
+      console.log(this.tasks);
+      console.log(openTasks);
+
+      this.coaches[i].openTasks = countOpenTasks;
     }
   }
 
