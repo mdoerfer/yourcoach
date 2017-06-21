@@ -35,7 +35,7 @@ export class StartSliderPage {
     },
     {
       title: "Näher an den Schülern",
-      description: "Du bist Coach und willst deine Schüler rund um die Uhr betreuen? Lade <b>deine Schüler</b> ein, gib ihnen Aufgaben und bewerte Ihren Fortschritt.",
+      description: "Du bist Coach und willst deine Schüler rund um die Uhr betreuen? Lade <b>deine Schüler</b> ein, gib ihnen Aufgaben und bewerte ihren Fortschritt.",
       image: "assets/images/slide3.png",
     }
   ];
