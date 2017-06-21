@@ -76,7 +76,10 @@ export class NotificationPage implements OnInit {
         console.log('Go to chat page');
         break;
       case 'reminder':
-        console.log('Go to reminder');
+        this.navCtrl.push(StudentTaskPage, {
+          cid: notification.getAdditionalInfo('cid'),
+          tab: 'done'
+        });
         break;
       case 'invite:new':
         this.navCtrl.push(StudentDashboardPage);
