@@ -1,15 +1,16 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Coach oder Schüler</ion-title>
+  </ion-navbar>
+</ion-header>
 <ion-content padding>
-  <h1 class="inverted">Wissen erwerben</h1>
-  <h2 class="inverted">Sei ein Schüler</h2>
         <ion-card (click)="setRole('coach')">
-          <img src="assets/images/lehren.jpeg"/>
           <div class="card-title">Coach</div>
+          <img src="assets/images/lehren.png"/>
         </ion-card>
-  <h1 class="inverted">Wissen teilen</h1>
-  <h2 class="inverted">Sei ein Coach</h2>
         <ion-card (click)="setRole('student')">
-          <img src="assets/images/lernen.jpeg"/>
           <div class="card-title">Schüler</div>
+          <img src="assets/images/lernen.png"/>
         </ion-card>
 
 </ion-content>

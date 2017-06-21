@@ -1,45 +1,20 @@
 page-role-choice {
-
   ion-card {
     position: relative;
     text-align: center;
-  }
-
-  .card{
-    margin: 30px auto 30px auto;
-    width: 44%;
-    font-size: 1.4rem;
-    height: 25%;
-    border-radius: 113px;
-  }
-
-  .card img{
-    height: 100%;
+    height: 40%;
   }
 
   .card-title {
     position: absolute;
-    top: 36%;
-    font-size: 2.0em;
-    width: 100%;
-    font-weight: bold;
-    color: #fff;
-  }
-
-  .card-subtitle {
-    font-size: 1.0em;
-    position: absolute;
-    top: 52%;
+    top: 5%;
+    left: 5%;
     width: 100%;
     color: #fff;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+    text-align:left;
+    font-size: 24pt;
   }
 
-  .toolbar{
-    min-height: 0px!important;
-  }
-
-  .scroll-content{
-    padding:0px !important;
-    margin-top: 0px !important;
-  }
 }
