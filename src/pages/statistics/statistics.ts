@@ -27,6 +27,8 @@ export class StatisticsPage {
 
   averageRating: number;
 
+  doneTasksLastMonth: number;
+
   constructor(public navCtrl: NavController,
               public navParams: NavParams) {
 
@@ -36,8 +38,12 @@ export class StatisticsPage {
     this.countDiffuculty();
     this.calculatePercentageDifficulty();
     this.calculateAverageRating();
+    this.calculateDoneTasksLastMonth();
   }
 
+  /**
+   * calculates when the first task is done
+   */
   calculateActiveSince(){
     let min = new Date().valueOf();
 
@@ -51,6 +57,9 @@ export class StatisticsPage {
     this.activeSince = d.getDate() + '.' + (d.getMonth()+1) + '.' + d.getFullYear();
   }
 
+  /**
+   * counts the difficulty of the tasks
+   */
   countDiffuculty(){
     let countEasy = 0;
     let countMiddle = 0;
@@ -74,12 +83,18 @@ export class StatisticsPage {
     this.countHard = countHard;
   }
 
+  /**
+   * calculates the percentage of the difficulty of the tasks
+   */
   calculatePercentageDifficulty(){
     this.percentEasy = Math.round(this.countEasy / this.doneTasks.length * 100);
     this.percentMiddle = Math.round(this.countMiddle / this.doneTasks.length * 100);
     this.percentHard = Math.round(this.countHard / this.doneTasks.length * 100);
   }
 
+  /**
+   * calculates the average rating of the tasks
+   */
   calculateAverageRating(){
     let rating = 0;
 
@@ -91,5 +106,19 @@ export class StatisticsPage {
 
     }
 
+  /**
+   * Calculates the number of tasks done in the last 4 weeks
+   */
+  calculateDoneTasksLastMonth(){
+    let currentTime = new Date().valueOf();
+    let timeOneMonthAgo = currentTime - 2419000000;
+    let doneTasksLastMonth = 0;
 
+      for(let i = 0; i < this.doneTasks.length; i++){
+        if (timeOneMonthAgo < this.doneTasks[i].created_at){
+          doneTasksLastMonth++;
+        }
+      }
+      this.doneTasksLastMonth = doneTasksLastMonth;
+    }
 }
