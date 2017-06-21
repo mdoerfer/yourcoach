@@ -24,7 +24,7 @@ export class StartSliderPage {
 
   slides = [
     {
-      title: "Willkommen zu YOUR COACH!",
+      title: "Willkommen!",
       description: "Mit <b>YOUR COACH</b> bleiben Coach und Schüler im engen Kontakt beim Training.",
       image: "assets/images/slide1.png",
     },
