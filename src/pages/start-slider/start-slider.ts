@@ -24,8 +24,8 @@ export class StartSliderPage {
 
   slides = [
     {
-      title: "Welcome to the Docs!",
-      description: "The <b>Ionic Component Documentation</b> showcases a number of useful components that are included out of the box with Ionic.",
+      title: "Willkommen zu YOURCOACH!",
+      description: "Mit <b>YOURCOACH</b> bleiben Coach und Schüler im engen Kontakt beim Training. Ob Sport, Musik oder Malerei -  alles ist möglich!",
       image: "assets/images/slide1.png",
     },
     {
