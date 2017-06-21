@@ -41,6 +41,13 @@
           <p>{{assignment.description}}</p>
         </ion-card-content>
 
+        <ion-list *ngIf="assignment.open && assignment.attachmentsArr.length">
+          <ion-item-divider>Anhänge</ion-item-divider>
+          <ion-item *ngFor="let attachment of assignment.attachmentsArr;">
+            <p (click)="watchAttachment(attachment)">{{attachment.name}}</p>
+          </ion-item>
+        </ion-list>
+
         <ion-item *ngIf="assignment.open" text-wrap>
           <h2>Rückmeldung</h2>
           <p>{{assignment.responseType}}</p>

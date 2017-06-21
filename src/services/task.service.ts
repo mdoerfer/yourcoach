@@ -61,6 +61,12 @@ export class TaskService {
       for (let assignmentId in dbAssignments) {
         let assignment = dbAssignments[assignmentId];
         assignment._id = assignmentId;
+        assignment.attachmentsArr = [];
+
+        //Turn attachments into array
+        for(let attachmentId in assignment.attachments) {
+          assignment.attachmentsArr.push(assignment.attachments[attachmentId]);
+        }
 
         assignments.push(assignment);
       }
@@ -102,6 +108,12 @@ export class TaskService {
       for (let taskId in dbTasks) {
         let task = dbTasks[taskId];
         task._id = taskId;
+        task.attachmentsArr = [];
+
+        //Turn attachments into array
+        for(let attachmentId in task.attachments) {
+          task.attachmentsArr.push(task.attachments[attachmentId]);
+        }
 
         tasks.push(task);
       }
@@ -251,8 +263,6 @@ export class TaskService {
       from: uid,
       msg: msg
     });
-
-
   }
 
   /**

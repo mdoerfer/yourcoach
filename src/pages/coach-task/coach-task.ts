@@ -188,6 +188,15 @@ export class CoachTaskPage implements OnInit {
   }
 
   /**
+   * Watch attachment
+   *
+   * @param attachment
+   */
+  watchAttachment(attachment: any) {
+    console.log(attachment);
+  }
+
+  /**
    * Show the popover at event location
    *
    * @param myEvent

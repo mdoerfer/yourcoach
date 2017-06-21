@@ -59,6 +59,13 @@
               <p>{{assignment.description}}</p>
             </ion-card-content>
 
+            <ion-list *ngIf="assignment.open && assignment.attachmentsArr.length">
+              <ion-item-divider>Anhänge</ion-item-divider>
+              <ion-item *ngFor="let attachment of assignment.attachmentsArr;">
+                <p (click)="watchAttachment(attachment)">{{attachment.name}}</p>
+              </ion-item>
+            </ion-list>
+
             <ion-item *ngIf="assignment.open" text-wrap>
               <h2>Rückmeldung</h2>
               <p>{{assignment.responseType}}</p>
@@ -77,6 +84,8 @@
         </ion-card>
       </div>
     </div>
+
+    <!-- --------------------------------------------------------------------------------- -->
 
     <div *ngSwitchCase="'grade'">
       <div *ngIf="gradeAssignments.length == 0">Es liegen keine zu bewertenden Aufgaben für diesen Studenten vor</div>
@@ -111,6 +120,13 @@
               <p>{{assignment.description}}</p>
             </ion-card-content>
 
+            <ion-list *ngIf="assignment.open && assignment.attachmentsArr.length">
+              <ion-item-divider>Anhänge</ion-item-divider>
+              <ion-item *ngFor="let attachment of assignment.attachmentsArr;">
+                <p (click)="watchAttachment(attachment)">{{attachment.name}}</p>
+              </ion-item>
+            </ion-list>
+
             <ion-item *ngIf="assignment.open" text-wrap>
               <h2>Rückmeldung</h2>
               <p>{{assignment.responseType}}</p>
@@ -134,6 +150,8 @@
         </ion-card>
       </div>
     </div>
+
+    <!-- --------------------------------------------------------------------------------- -->
 
     <div *ngSwitchCase="'done'">
       <div *ngIf="doneAssignments.length == 0">Es liegen keine erledigten Aufgaben für diesen Studenten vor</div>
@@ -167,6 +185,13 @@
             <ion-card-content *ngIf="assignment.open" text-wrap>
               <p>{{assignment.description}}</p>
             </ion-card-content>
+
+            <ion-list *ngIf="assignment.open && assignment.attachmentsArr.length">
+              <ion-item-divider>Anhänge</ion-item-divider>
+              <ion-item *ngFor="let attachment of assignment.attachmentsArr;">
+                <p (click)="watchAttachment(attachment)">{{attachment.name}}</p>
+              </ion-item>
+            </ion-list>
 
             <ion-item *ngIf="assignment.open" text-wrap>
               <h2>Rückmeldung</h2>

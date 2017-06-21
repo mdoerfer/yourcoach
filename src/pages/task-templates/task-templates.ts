@@ -65,6 +65,15 @@ export class TaskTemplatesPage implements OnInit {
   }
 
   /**
+   * Watch attachment
+   *
+   * @param attachment
+   */
+  watchAttachment(attachment: any) {
+    console.log(attachment);
+  }
+
+  /**
    * Open action sheet
    *
    * @param tid Task ID
@@ -155,7 +164,7 @@ export class TaskTemplatesPage implements OnInit {
     confirm.present();
   }
 
-  showModal(i: string){
+  showModal(i: string) {
     let sendModal = this.modalCtrl.create(CoachSendTaskModalPage);
     sendModal.present();
     sendModal.onDidDismiss(data => {
@@ -165,7 +174,7 @@ export class TaskTemplatesPage implements OnInit {
         let newTaskID = this.taskService.getNewTaskID();
 
         //Mark attachments as cloned
-        for(let attachmentId in task.attachments) {
+        for (let attachmentId in task.attachments) {
           task.attachments[attachmentId].cloned = true;
         }
 
