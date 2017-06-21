@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActionSheetController, IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
+import {ActionSheetController, IonicPage, NavController, NavParams, Platform, ToastController} from 'ionic-angular';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {TaskService} from "../../services/task.service";
 import {AuthService} from "../../services/auth.service";
@@ -23,7 +23,8 @@ export class CreateTaskPage implements OnInit {
   existingAttachments = [];
   newAttachments = [];
 
-  constructor(private navParams: NavParams,
+  constructor(private platform: Platform,
+              private navParams: NavParams,
               private navCtrl: NavController,
               private authService: AuthService,
               private taskService: TaskService,
@@ -219,9 +220,16 @@ export class CreateTaskPage implements OnInit {
       sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM,
       mediaType: this.camera.MediaType.ALLMEDIA
     }).then((_filePath) => {
-      let correctedPath = 'file://' + _filePath;
+      let path;
 
-      this.newAttachments.push(correctedPath);
+      if(this.platform.is('android')) {
+        path = 'file://' + _filePath;
+      }
+      else {
+        path = _filePath;
+      }
+
+      this.newAttachments.push(path);
     }, (err) => {
       console.error(err);
     });
