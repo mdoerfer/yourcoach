@@ -29,13 +29,13 @@ export class StartSliderPage {
       image: "assets/images/slide1.png",
     },
     {
-      title: "Du willst auch trainieren, wenn dein Personal Coach nicht dabei ist?",
-      description: "Lasse dich von <b>deinem Coach</b> zu seiner Schülerliste hinzufügen und erhalte Aufgaben und Tutorials per Text, Bild und Video.",
+      title: "Der Coach immer in der Tasche",
+      description: "Du willst auch trainieren, wenn dein Personal Coach nicht dabei ist? Lasse dich von <b>deinem Coach</b> zu seiner Schülerliste hinzufügen und erhalte Aufgaben und Tutorials per Text, Bild und Video.",
       image: "assets/images/slide2.png",
     },
     {
-      title: "Du bist Coach und willst deine Schüler rund um die Uhr betreuen?",
-      description: "Lade <b>deine Schüler</b> ein, gib ihnen Aufgaben und bewerte Ihren Fortschritt.",
+      title: "Näher an den Schülern",
+      description: "Du bist Coach und willst deine Schüler rund um die Uhr betreuen? Lade <b>deine Schüler</b> ein, gib ihnen Aufgaben und bewerte Ihren Fortschritt.",
       image: "assets/images/slide3.png",
     }
   ];
