@@ -29,6 +29,7 @@ export class FileService {
           //Get directory and file name
           let directoryPath = _fileEntry.nativeURL.replace(_fileEntry.name, '');
           let fileName = _fileEntry.name;
+          let fileType = fileName.split('.').pop();
 
           this.file.readAsDataURL(directoryPath, fileName)
             .then(_dataString => {
@@ -40,11 +41,12 @@ export class FileService {
 
               //Upload image
               uploadTask.then(function (_snapshot) {
-                //Console
-                console.log('Attachment was uploaded');
-
                 //Add reference to task
-                firebase.database().ref('/tasks/' + taskId + '/attachments/').push(uploadTask.snapshot.downloadURL);
+                firebase.database().ref('/tasks/' + taskId + '/attachments/').push({
+                  url: uploadTask.snapshot.downloadURL,
+                  name: fileName,
+                  type: fileType
+                });
               });
             })
         });
@@ -60,13 +62,11 @@ export class FileService {
           //Turn response into blob
           _response.blob()
             .then(_blob => {
-              let filePathArr = _filePath.split('/');
-              let fileName = filePathArr[filePathArr.length - 1];
-
-              alert(fileName);
+              let fileName = _filePath.split('/').pop();
+              let fileType = fileName.split('.').pop();
 
               //Check type
-              let uploadedFileName = new Date().getTime() + _filePath;
+              let uploadedFileName = new Date().getTime() + '_' + fileName;
               let fileRef = firebase.storage().ref('uploads/' + taskId + '/' + uploadedFileName);
 
               //Promise
@@ -74,11 +74,12 @@ export class FileService {
 
               //Upload image
               uploadTask.then(function (_snapshot) {
-                //Console
-                console.log('Attachment was uploaded');
-
                 //Add reference to task
-                firebase.database().ref('/tasks/' + taskId + '/attachments/').push(uploadTask.snapshot.downloadURL);
+                firebase.database().ref('/tasks/' + taskId + '/attachments/').push({
+                  url: uploadTask.snapshot.downloadURL,
+                  name: fileName,
+                  type: fileType
+                });
               });
             });
         });

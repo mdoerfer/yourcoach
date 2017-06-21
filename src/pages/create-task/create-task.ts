@@ -108,6 +108,8 @@ export class CreateTaskPage implements OnInit {
         //Add existing attachments to task
         for(let attachmentId in task.attachments) {
           let attachment = task.attachments[attachmentId];
+          attachment._id = attachmentId;
+          attachment.tid = this.tid;
 
           this.existingAttachments.push(attachment);
         }
@@ -171,7 +173,7 @@ export class CreateTaskPage implements OnInit {
       .then(
         (data: MediaFile[]) => {
           for (var i = 0; i < data.length; i++) {
-            this.newAttachments.push(data[i].fullPath);
+            this.newAttachments.push(this.readFileInfo(data[i].fullPath));
           }
         }, (err: CaptureError) => {
           console.error(err);
@@ -187,7 +189,7 @@ export class CreateTaskPage implements OnInit {
       .then(
         (data: MediaFile[]) => {
           for (var i = 0; i < data.length; i++) {
-            this.newAttachments.push(data[i].fullPath);
+            this.newAttachments.push(this.readFileInfo(data[i].fullPath));
           }
         }, (err: CaptureError) => {
           console.error(err);
@@ -203,7 +205,7 @@ export class CreateTaskPage implements OnInit {
       .then(
         (data: MediaFile[]) => {
           for (var i = 0; i < data.length; i++) {
-            this.newAttachments.push(data[i].fullPath);
+            this.newAttachments.push(this.readFileInfo(data[i].fullPath));
           }
         }, (err: CaptureError) => {
           console.error(err);
@@ -229,11 +231,66 @@ export class CreateTaskPage implements OnInit {
         path = _filePath.replace('file://', '');
       }
 
-      this.newAttachments.push(path);
+      this.newAttachments.push(this.readFileInfo(path));
     }, (err) => {
       console.error(err);
     });
   }
+
+  /**
+   * Read file name and type from path
+   */
+  readFileInfo(path) {
+    let fileName, fileType;
+
+    fileName = path.split('/').pop();
+    fileType = fileName.split('.').pop();
+
+    return {
+      url: path,
+      type: fileType,
+      name: fileName
+    }
+  }
+
+  /**
+   * Watch new attachment
+   *
+   * @param index
+   */
+  watchNewAttachment(index) {
+    console.log(this.newAttachments[index]);
+  }
+
+  /**
+   * Delete new attachment
+   *
+   * @param index
+   */
+  deleteNewAttachment(index) {
+    this.newAttachments.splice(index, 1);
+  }
+
+  /**
+   * Watch existing attachment
+   *
+   * @param index
+   */
+  watchExistingAttachment(index) {
+    console.log(this.existingAttachments[index]);
+  }
+
+  /**
+   * Delete existing attachment
+   *
+   * @param index
+   */
+  deleteExistingAttachment(index) {
+    console.log(this.existingAttachments[index]);
+    this.taskService.deleteAttachment(this.existingAttachments[index]);
+    this.existingAttachments.splice(index, 1);
+  }
+
 
   /**
    * Edit task
@@ -254,7 +311,7 @@ export class CreateTaskPage implements OnInit {
 
       //Upload new attachments
       for (let i = 0; i < this.newAttachments.length; i++) {
-        this.fileService.uploadFileToStorage(this.newAttachments[i], this.tid);
+        this.fileService.uploadFileToStorage(this.newAttachments[i].url, this.tid);
       }
 
       this.showToast("Aufgabe wurde erfolgreich bearbeitet.");
@@ -290,7 +347,7 @@ export class CreateTaskPage implements OnInit {
       .then(data => {
         //Upload new attachments
         for (let i = 0; i < this.newAttachments.length; i++) {
-          this.fileService.uploadFileToStorage(this.newAttachments[i], newTaskID);
+          this.fileService.uploadFileToStorage(this.newAttachments[i].url, newTaskID);
         }
 
         this.showToast("Aufgabe wurde erfolgreich erstellt.");
@@ -328,7 +385,7 @@ export class CreateTaskPage implements OnInit {
       .then(data => {
         //Upload new attachments
         for (let i = 0; i < this.newAttachments.length; i++) {
-          this.fileService.uploadFileToStorage(this.newAttachments[i], newTaskID);
+          this.fileService.uploadFileToStorage(this.newAttachments[i].url, newTaskID);
         }
 
         this.showToast("Aufgabe wurde erfolgreich gesendet.");
