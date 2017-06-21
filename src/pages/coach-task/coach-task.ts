@@ -7,6 +7,7 @@ import {CreateTaskPage} from "../create-task/create-task";
 import {TaskPopoverPage} from "../task-popover/task-popover";
 import {TaskService} from "../../services/task.service";
 import {UserService} from "../../services/user.service";
+import {TaskChatPage} from "../task-chat/task-chat";
 
 @IonicPage()
 @Component({
@@ -199,6 +200,16 @@ export class CoachTaskPage implements OnInit {
     popover.present({
       ev: myEvent
     });
+  }
+
+  /**
+   * Open Task Chat
+   *
+   * @param task
+   */
+  private openChat(task: any) {
+    this.navCtrl.push(TaskChatPage, {task: task});
+
   }
 }
 

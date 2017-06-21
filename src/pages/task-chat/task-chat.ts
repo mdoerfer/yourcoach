@@ -16,9 +16,9 @@ import {TaskService} from "../../services/task.service";
 })
 export class TaskChatPage implements OnInit  {
 
-  task: any[];
+  task: any;
   chatForm: FormGroup;
-  taskMsgs: any[];
+  taskMsgs: any[] = [];
 
   constructor(public navCtrl: NavController,
               public taskService: TaskService,
@@ -41,7 +41,6 @@ export class TaskChatPage implements OnInit  {
       msg: null,
     };
 
-
     //Create form
     this.chatForm = new FormGroup({
       msg: new FormControl(formData.msg)
@@ -52,8 +51,12 @@ export class TaskChatPage implements OnInit  {
 
   initializeTaskMsgs(){
 
-    if(this.task["chat"] !== null){
-      this.taskMsgs = this.task["chat"];
+    if(this.task.chat !== null){
+      for(let msgId in this.task.chat) {
+        let msg = this.task.chat[msgId];
+
+        this.taskMsgs.push(msg);
+      }
     }
 
   }

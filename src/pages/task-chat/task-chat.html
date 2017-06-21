@@ -20,6 +20,11 @@
   </ion-item>
   <ion-item>
     <p>Es gibt noch keine Nachrichten</p>
+    <p *ngFor="let msg of taskMsgs; let i = index">
+      <span>{{msg.msg}}</span>
+
+    </p>
+
 
 
   </ion-item>
@@ -34,6 +39,7 @@
         formControlName="msg">
       </ion-input>
     </ion-item>
+
 
     <button
       ion-button

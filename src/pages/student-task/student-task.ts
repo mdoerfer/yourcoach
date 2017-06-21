@@ -184,11 +184,10 @@ export class StudentTaskPage implements OnInit {
   /**
    * Open Task Chat
    *
-   * @param tId
+   * @param task
    */
   private openChat(task: any) {
     this.navCtrl.push(TaskChatPage, {task: task});
-    console.log(task);
 
   }
 
