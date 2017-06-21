@@ -27,7 +27,6 @@ export class StudentDashboardPage implements OnInit {
 
 
   tasks: any[] = [];
-  openTasksStudents: any[] = [];
 
   constructor(private inviteService: InviteService,
               private coachService: CoachService,
@@ -271,11 +270,6 @@ export class StudentDashboardPage implements OnInit {
 
   loadOpenTasksStudents(coaches) {
     let countOpenTasks = 0;
-    this.openTasksStudents = [];
-
-    for (let i = 0; i < coaches.length; i++) {
-      console.log(this.coaches[i]);
-    }
 
     for (let i = 0; i < this.coaches.length; i++) {
 
@@ -284,10 +278,6 @@ export class StudentDashboardPage implements OnInit {
       this.tasks = this.taskService.getTasks(coachId);
       let openTasks = this.getTasksByState('open');
       countOpenTasks = openTasks.length;
-
-      console.log(coachId);
-      console.log(this.tasks);
-      console.log(openTasks);
 
       this.coaches[i].openTasks = countOpenTasks;
     }
