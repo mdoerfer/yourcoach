@@ -15,23 +15,13 @@ import {FileService} from "../../services/file.service";
 export class CreateTaskPage implements OnInit {
   mode: string;
   tid: string;
-  cameraOptions: CameraOptions;
   taskForm: FormGroup;
   difficulties: string[];
   responses: string[];
   states: object[];
 
-  existingAttachments = {
-    images: [],
-    videos: [],
-    voice: []
-  };
-
-  newAttachments = {
-    images: [],
-    videos: [],
-    voice: []
-  };
+  existingAttachments = [];
+  newAttachments = [];
 
   constructor(private navParams: NavParams,
               private navCtrl: NavController,
@@ -44,13 +34,6 @@ export class CreateTaskPage implements OnInit {
               private actionSheetCtrl: ActionSheetController) {
     this.tid = this.navParams.get('tid') || null;
     this.mode = this.navParams.get('mode') || 'create';
-
-    this.cameraOptions = {
-      quality: 100,
-      destinationType: this.camera.DestinationType.FILE_URI,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
-    };
   }
 
   /**
@@ -158,6 +141,11 @@ export class CreateTaskPage implements OnInit {
           handler: () => {
             this.addVoice();
           }
+        },{
+          text: 'Aus Album hochladen',
+          handler: () => {
+            this.addFromGallery();
+          }
         }, {
           text: 'Abbrechen',
           role: 'cancel',
@@ -175,10 +163,10 @@ export class CreateTaskPage implements OnInit {
       .then(
         (data: MediaFile[]) => {
           for (var i = 0; i < data.length; i++) {
-            this.newAttachments.images.push(data[i].fullPath);
+            this.newAttachments.push(data[i].fullPath);
           }
         }, (err: CaptureError) => {
-          console.error(err)
+          console.error(err);
         }
       );
   }
@@ -191,10 +179,10 @@ export class CreateTaskPage implements OnInit {
       .then(
         (data: MediaFile[]) => {
           for (var i = 0; i < data.length; i++) {
-            this.newAttachments.videos.push(data[i].fullPath);
+            this.newAttachments.push(data[i].fullPath);
           }
         }, (err: CaptureError) => {
-          console.error(err)
+          console.error(err);
         }
       );
   }
@@ -207,12 +195,29 @@ export class CreateTaskPage implements OnInit {
       .then(
         (data: MediaFile[]) => {
           for (var i = 0; i < data.length; i++) {
-            this.newAttachments.voice.push(data[i].fullPath);
+            this.newAttachments.push(data[i].fullPath);
           }
         }, (err: CaptureError) => {
-          console.error(err)
+          console.error(err);
         }
       );
+  }
+
+  /**
+   * Add from gallery
+   */
+  addFromGallery() {
+    this.camera.getPicture({
+      destinationType: this.camera.DestinationType.NATIVE_URI,
+      sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM,
+      mediaType: this.camera.MediaType.ALLMEDIA
+    }).then((_filePath) => {
+      let correctedPath = 'file://' + _filePath;
+
+      this.newAttachments.push(correctedPath);
+    }, (err) => {
+      console.error(err);
+    });
   }
 
   /**
@@ -232,19 +237,9 @@ export class CreateTaskPage implements OnInit {
     }).then(data => {
       //TODO: Remove attachments
 
-      //Upload new images
-      for (let i = 0; i < this.newAttachments.images.length; i++) {
-        this.fileService.uploadFileToStorage(this.newAttachments.images[i], this.tid, 'image');
-      }
-
-      //Upload new videos
-      for (let i = 0; i < this.newAttachments.videos.length; i++) {
-        this.fileService.uploadFileToStorage(this.newAttachments.videos[i], this.tid, 'video');
-      }
-
-      //Upload new voice records
-      for (let i = 0; i < this.newAttachments.voice.length; i++) {
-        this.fileService.uploadFileToStorage(this.newAttachments.voice[i], this.tid, 'voice');
+      //Upload new attachments
+      for (let i = 0; i < this.newAttachments.length; i++) {
+        this.fileService.uploadFileToStorage(this.newAttachments[i], this.tid);
       }
 
       this.showToast("Aufgabe wurde erfolgreich bearbeitet.");
@@ -275,26 +270,12 @@ export class CreateTaskPage implements OnInit {
       created_at: new Date().valueOf(),
       updated_at: new Date().valueOf(),
       draft: true,
-      attachments: {
-        images: {},
-        videos: {},
-        voice: {}
-      }
+      attachments: {}
     })
       .then(data => {
-        //Upload new images
-        for (let i = 0; i < this.newAttachments.images.length; i++) {
-          this.fileService.uploadFileToStorage(this.newAttachments.images[i], newTaskID, 'image');
-        }
-
-        //Upload new videos
-        for (let i = 0; i < this.newAttachments.videos.length; i++) {
-          this.fileService.uploadFileToStorage(this.newAttachments.videos[i], newTaskID, 'video');
-        }
-
-        //Upload new voice records
-        for (let i = 0; i < this.newAttachments.voice.length; i++) {
-          this.fileService.uploadFileToStorage(this.newAttachments.voice[i], newTaskID, 'voice');
+        //Upload new attachments
+        for (let i = 0; i < this.newAttachments.length; i++) {
+          this.fileService.uploadFileToStorage(this.newAttachments[i], newTaskID);
         }
 
         this.showToast("Aufgabe wurde erfolgreich erstellt.");
@@ -327,26 +308,12 @@ export class CreateTaskPage implements OnInit {
       created_at: new Date().valueOf(),
       updated_at: new Date().valueOf(),
       draft: false,
-      attachments: {
-        images: {},
-        videos: {},
-        voice: {}
-      }
+      attachments: {}
     })
       .then(data => {
-        //Upload new images
-        for (let i = 0; i < this.newAttachments.images.length; i++) {
-          this.fileService.uploadFileToStorage(this.newAttachments.images[i], newTaskID, 'image');
-        }
-
-        //Upload new videos
-        for (let i = 0; i < this.newAttachments.videos.length; i++) {
-          this.fileService.uploadFileToStorage(this.newAttachments.videos[i], newTaskID, 'video');
-        }
-
-        //Upload new voice records
-        for (let i = 0; i < this.newAttachments.voice.length; i++) {
-          this.fileService.uploadFileToStorage(this.newAttachments.voice[i], newTaskID, 'voice');
+        //Upload new attachments
+        for (let i = 0; i < this.newAttachments.length; i++) {
+          this.fileService.uploadFileToStorage(this.newAttachments[i], newTaskID);
         }
 
         this.showToast("Aufgabe wurde erfolgreich gesendet.");

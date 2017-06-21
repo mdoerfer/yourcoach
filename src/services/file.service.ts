@@ -14,9 +14,14 @@ export class FileService {
    *
    * @param _filePath
    */
-  uploadFileToStorage(_filePath, taskId, uploadType) {
+  uploadFileToStorage(_filePath, taskId) {
     if (this.platform.is('android')) {
-      //UPLOAD FOR ANDROID
+      /**
+       *
+       * UPLOAD FOR ANDROID
+       *
+       */
+
       //Resolve filesystem url
       this.file.resolveLocalFilesystemUrl(_filePath)
         .then(_fileEntry => {
@@ -27,29 +32,10 @@ export class FileService {
 
           this.file.readAsDataURL(directoryPath, fileName)
             .then(_dataString => {
-              let suffix, node;
-
-              //Upload
-              switch (uploadType) {
-                case 'image':
-                  suffix = '.jpg';
-                  node = 'images/';
-                  break;
-                case 'video':
-                  suffix = '.mp4';
-                  node = 'videos/';
-                  break;
-                case 'voice':
-                  suffix = '.mp3';
-                  node = 'voice/';
-                  break;
-                default:
-                  suffix = '.jpg';
-                  node = 'images/';
-              }
+              let suffix = this.getFileType(fileName);
 
               let uploadedFileName = new Date().getTime() + suffix;
-              let fileRef = firebase.storage().ref('uploads/' + taskId + '/' + node + uploadedFileName);
+              let fileRef = firebase.storage().ref('uploads/' + taskId + '/' + uploadedFileName);
 
               //Promise
               let uploadTask = fileRef.putString(_dataString, 'data_url');
@@ -57,45 +43,30 @@ export class FileService {
               //Upload image
               uploadTask.then(function (_snapshot) {
                 //Console
-                console.log(uploadType + ' was uploaded');
+                console.log('Attachment was uploaded');
 
                 //Add reference to task
-                firebase.database().ref('/tasks/' + taskId + '/attachments/' + node).push(uploadTask.snapshot.downloadURL);
+                firebase.database().ref('/tasks/' + taskId + '/attachments/').push(uploadTask.snapshot.downloadURL);
               });
             })
         });
     }
     else {
-      //UPLOAD FOR IOS & CO.
+      /**
+       *
+       * UPLOAD FOR IOS & CO
+       *
+       */
       fetch(_filePath)
         .then((_response) => {
           //Turn response into blob
           _response.blob()
             .then(_blob => {
               //Check type
-              let suffix, node;
-
-              //Upload
-              switch (uploadType) {
-                case 'image':
-                  suffix = '.jpg';
-                  node = 'images/';
-                  break;
-                case 'video':
-                  suffix = '.mov';
-                  node = 'videos/';
-                  break;
-                case 'voice':
-                  suffix = '.mp3';
-                  node = 'voice/';
-                  break;
-                default:
-                  suffix = '.jpg';
-                  node = 'images/';
-              }
+              let suffix = this.getFileType(_filePath);
 
               let uploadedFileName = new Date().getTime() + suffix;
-              let fileRef = firebase.storage().ref('uploads/' + taskId + '/' + node + uploadedFileName);
+              let fileRef = firebase.storage().ref('uploads/' + taskId + '/' + uploadedFileName);
 
               //Promise
               let uploadTask = fileRef.put(_blob);
@@ -103,13 +74,34 @@ export class FileService {
               //Upload image
               uploadTask.then(function (_snapshot) {
                 //Console
-                console.log(uploadType + ' was uploaded');
+                console.log('Attachment was uploaded');
 
                 //Add reference to task
-                firebase.database().ref('/tasks/' + taskId + '/attachments/' + node).push(uploadTask.snapshot.downloadURL);
+                firebase.database().ref('/tasks/' + taskId + '/attachments/').push(uploadTask.snapshot.downloadURL);
               });
             });
         });
     }
+  }
+
+  private getFileType(fileName) {
+    let types = [
+      '.mp3',
+      '.amr',
+      '.mp4',
+      '.jpg',
+      '.png',
+      '.mov'
+    ];
+
+    let type: string = '.jpg';
+
+    for(let i = 0; i < types.length; i++) {
+      if(fileName.indexOf(types[i]) !== -1) {
+        type = types[i];
+      }
+    }
+
+    return type;
   }
 }
