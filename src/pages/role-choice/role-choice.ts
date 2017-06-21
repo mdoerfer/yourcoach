@@ -54,13 +54,5 @@ export class RoleChoicePage {
     });
     toast.present();
   }
-
-
-  /**
-   *  Open role choice page
-   */
-  goToStartSlider() {
-    this.navCtrl.push(StartSliderPage);
-  }
 }
 

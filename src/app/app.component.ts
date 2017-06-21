@@ -7,9 +7,12 @@ import firebase from 'firebase';
 import {SignupPage} from "../pages/signup/signup";
 import {RoleChoicePage} from "../pages/role-choice/role-choice";
 import {SigninPage} from "../pages/signin/signin";
+import {StartSliderPage} from "../pages/start-slider/start-slider";
 
 import {AuthService} from "../services/auth.service";
 import {UserService} from "../services/user.service";
+
+import {Storage} from '@ionic/storage';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyBpt2x5kZIDvSBs1M7uxKpwuRllO3_LjXQ",
@@ -26,7 +29,12 @@ export const firebaseConfig = {
 export class MyApp {
   rootPage: any = SignupPage;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private authService: AuthService, private userService: UserService) {
+  constructor(platform: Platform,
+              statusBar: StatusBar,
+              splashScreen: SplashScreen,
+              private authService: AuthService,
+              private userService: UserService,
+              private storage: Storage) {
     /**
      * Initialize Firebase
      */
@@ -65,11 +73,20 @@ export class MyApp {
 
     //If user is logged in and verified
     if(user && user.emailVerified) {
-      this.rootPage = RoleChoicePage;
+      this.storage.get('introShown').then((result) => {
+        if(result){
+          this.rootPage = RoleChoicePage;
+        }
+        else {
+          this.rootPage = StartSliderPage;
+        }
+    });
     }
+
     //If user is logged in but not verified
     else if(user && !user.emailVerified) {
       this.rootPage = SigninPage;
+      this.storage.set('introShown', false);
     }
     //If user is null
     else {

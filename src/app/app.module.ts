@@ -12,6 +12,7 @@ import {Ionic2RatingModule} from 'ionic2-rating';
 import {Camera} from '@ionic-native/camera';
 import {File} from '@ionic-native/file';
 import {MediaCapture} from '@ionic-native/media-capture';
+import {IonicStorageModule} from '@ionic/storage';
 
 //Services
 import {AuthService} from "../services/auth.service";
@@ -75,7 +76,8 @@ import {StartSliderPage} from "../pages/start-slider/start-slider";
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    Ionic2RatingModule
+    Ionic2RatingModule,
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
