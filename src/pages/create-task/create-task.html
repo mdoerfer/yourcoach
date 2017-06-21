@@ -48,6 +48,10 @@
       </ion-item>
 
       <ion-list>
+        <ion-item *ngFor="let existingAttachment of existingAttachments; let i = index">
+          <p>{{existingAttachment}}</p>
+        </ion-item>
+
         <ion-item *ngFor="let newAttachment of newAttachments; let i = index" >
           <p>{{newAttachment}}</p>
         </ion-item>
