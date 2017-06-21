@@ -51,7 +51,7 @@
         <!-- EXISTING ATTACHMENTS -->
         <ion-item *ngFor="let attachment of existingAttachments;let i = index">
           <p (click)="watchExistingAttachment(i)">{{attachment.name}}</p>
-          <ion-icon name="trash" item-right (click)="deleteExistingAttachment(i)"></ion-icon>
+          <ion-icon *ngIf="!attachment.cloned" name="trash" item-right (click)="deleteExistingAttachment(i)"></ion-icon>
         </ion-item>
 
         <!-- NEW ATTACHMENTS -->

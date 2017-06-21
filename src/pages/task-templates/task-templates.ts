@@ -164,6 +164,11 @@ export class TaskTemplatesPage implements OnInit {
 
         let newTaskID = this.taskService.getNewTaskID();
 
+        //Mark attachments as cloned
+        for(let attachmentId in task.attachments) {
+          task.attachments[attachmentId].cloned = true;
+        }
+
         this.taskService.createTask(newTaskID, {
           from: this.authService.getActiveUser().uid,
           to: data._id,

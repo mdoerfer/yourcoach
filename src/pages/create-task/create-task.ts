@@ -286,7 +286,6 @@ export class CreateTaskPage implements OnInit {
    * @param index
    */
   deleteExistingAttachment(index) {
-    console.log(this.existingAttachments[index]);
     this.taskService.deleteAttachment(this.existingAttachments[index]);
     this.existingAttachments.splice(index, 1);
   }
