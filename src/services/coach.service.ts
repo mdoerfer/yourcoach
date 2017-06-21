@@ -43,13 +43,12 @@ export class CoachService {
 
         this.userService.getUserRefById(pairing.coach).once('value', user => {
           let newCoach = user.val();
-          if(newCoach !== null){
-            newCoach._id = pairing.coach;
-            newCoach.pairingId = pairingId;
 
-            if (!pairing.deleted && !newCoach.deleted) {
-              coaches.push(newCoach);
-            }
+          newCoach._id = pairing.coach;
+          newCoach.pairingId = pairingId;
+
+          if (!pairing.deleted && !newCoach.deleted) {
+            coaches.push(newCoach);
           }
         })
       }

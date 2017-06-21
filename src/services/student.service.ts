@@ -44,13 +44,11 @@ export class StudentService {
         this.userService.getUserRefById(pairing.student).once('value', user => {
           let newStudent = user.val();
 
-          if(newStudent !== null) {
-            newStudent._id = pairing.student;
-            newStudent.pairingId = pairingId;
+          newStudent._id = pairing.student;
+          newStudent.pairingId = pairingId;
 
-            if (!pairing.deleted && !newStudent.deleted) {
-              students.push(newStudent);
-            }
+          if (!pairing.deleted && !newStudent.deleted) {
+            students.push(newStudent);
           }
         })
       }
