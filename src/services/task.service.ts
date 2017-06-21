@@ -190,19 +190,36 @@ export class TaskService {
    * @returns {firebase.Promise<any>}
    */
   deleteTaskById(taskId: string) {
-    return firebase.database()
-      .ref(this.nodeName)
-      .child(taskId)
-      .remove()
-      .then(data => {
-        this.events.publish('tasks:delete-success', {
-          message: 'Die Aufgabe wurde gelöscht'
-        });
-      }, error => {
-        this.events.publish('tasks:delete-failed', {
-          message: error.message
-        });
-      });
+    this.getTaskWithId(taskId).once('value', snapshot => {
+      let dbTask = snapshot.val();
+
+      //Delete attachments recursively
+      for(let attachmentId in dbTask.attachments) {
+        let attachment = dbTask.attachments[attachmentId];
+
+        firebase.storage().ref('/uploads/' + taskId + '/' + attachment.uploadName).delete()
+          .then(() => {
+            console.log('Attachment ' + attachmentId + ' successfully deleted.');
+          }, error => {
+            console.error(error.message);
+          })
+      }
+    }).then(() => {
+        firebase.database()
+          .ref(this.nodeName)
+          .child(taskId)
+          .remove()
+          .then(data => {
+            this.events.publish('tasks:delete-success', {
+              message: 'Die Aufgabe wurde gelöscht'
+            });
+          }, error => {
+            this.events.publish('tasks:delete-failed', {
+              message: error.message
+            });
+          });
+      }
+    )
   }
 
   markTaskAsGradeable(task: any) {
