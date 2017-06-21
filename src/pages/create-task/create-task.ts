@@ -216,7 +216,7 @@ export class CreateTaskPage implements OnInit {
    */
   addFromGallery() {
     this.camera.getPicture({
-      destinationType: this.camera.DestinationType.NATIVE_URI,
+      destinationType: this.camera.DestinationType.FILE_URI,
       sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM,
       mediaType: this.camera.MediaType.ALLMEDIA
     }).then((_filePath) => {
