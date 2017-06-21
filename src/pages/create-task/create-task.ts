@@ -103,6 +103,13 @@ export class CreateTaskPage implements OnInit {
         formData.state = task.state;
         formData.rating = task.rating || 0;
         formData.draft = task.draft;
+
+        //Add existing attachments to task
+        for(let attachmentId in task.attachments) {
+          let attachment = task.attachments[attachmentId];
+
+          this.existingAttachments.push(attachment);
+        }
       });
     }
 
