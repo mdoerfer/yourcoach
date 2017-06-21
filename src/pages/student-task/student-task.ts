@@ -1,9 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {Events, IonicPage, ModalController, NavParams, PopoverController, ToastController} from 'ionic-angular';
+import {
+  Events, IonicPage, ModalController, NavController, NavParams, PopoverController,
+  ToastController
+} from 'ionic-angular';
 import {TaskPopoverPage} from "../task-popover/task-popover";
 import {TaskService} from "../../services/task.service";
 import {UserService} from "../../services/user.service";
 import {StudentTaskTextModalPage} from "../student-task-text-modal/student-task-text-modal";
+import {TaskChatPage} from "../task-chat/task-chat";
 
 @IonicPage()
 @Component({
@@ -27,6 +31,7 @@ export class StudentTaskPage implements OnInit {
               private userService: UserService,
               public modalCtrl: ModalController,
               private toastCtrl: ToastController,
+              private navCtrl: NavController,
               private events: Events) {
   }
 
@@ -174,6 +179,17 @@ export class StudentTaskPage implements OnInit {
       duration: duration
     });
     toast.present();
+  }
+
+  /**
+   * Open Task Chat
+   *
+   * @param tId
+   */
+  private openChat(task: any) {
+    this.navCtrl.push(TaskChatPage, {task: task});
+    console.log(task);
+
   }
 
 }
