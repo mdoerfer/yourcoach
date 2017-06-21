@@ -100,6 +100,13 @@ export class SettingsPage {
   }
 
   /**
+   * Back to root
+   */
+  backToRoot() {
+    this.navCtrl.popToRoot();
+  }
+
+  /**
    *  Open role choice page
    */
   goToRoleChoice() {
@@ -221,8 +228,10 @@ export class SettingsPage {
    * Subscribe to user deletion
    */
   subscribeDeleteUser() {
+    let self = this;
+
     this.events.subscribe('auth:delete-user-success', (payload) => {
-      this.showToast(payload.message);
+      self.backToRoot();
     });
 
     this.events.subscribe('auth:delete-user-failed', (payload) => {
