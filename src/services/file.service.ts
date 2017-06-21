@@ -32,9 +32,7 @@ export class FileService {
 
           this.file.readAsDataURL(directoryPath, fileName)
             .then(_dataString => {
-              let suffix = this.getFileType(fileName);
-
-              let uploadedFileName = new Date().getTime() + suffix;
+              let uploadedFileName = new Date().getTime() + '_' + fileName;
               let fileRef = firebase.storage().ref('uploads/' + taskId + '/' + uploadedFileName);
 
               //Promise
@@ -62,10 +60,13 @@ export class FileService {
           //Turn response into blob
           _response.blob()
             .then(_blob => {
-              //Check type
-              let suffix = this.getFileType(_filePath);
+              let filePathArr = _filePath.split('/');
+              let fileName = filePathArr[filePathArr.length - 1];
 
-              let uploadedFileName = new Date().getTime() + suffix;
+              alert(fileName);
+
+              //Check type
+              let uploadedFileName = new Date().getTime() + _filePath;
               let fileRef = firebase.storage().ref('uploads/' + taskId + '/' + uploadedFileName);
 
               //Promise
@@ -82,26 +83,5 @@ export class FileService {
             });
         });
     }
-  }
-
-  private getFileType(fileName) {
-    let types = [
-      '.mp3',
-      '.amr',
-      '.mp4',
-      '.jpg',
-      '.png',
-      '.mov'
-    ];
-
-    let type: string = '.jpg';
-
-    for(let i = 0; i < types.length; i++) {
-      if(fileName.indexOf(types[i]) !== -1) {
-        type = types[i];
-      }
-    }
-
-    return type;
   }
 }
