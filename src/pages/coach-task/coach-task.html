@@ -67,7 +67,7 @@
 
             <ion-row *ngIf="assignment.open">
               <ion-col text-right>
-                <button ion-button icon-left clear small (click)="openChat(task)">
+                <button ion-button icon-left clear small (click)="openChat(assignment)">
                   <ion-icon name="text"></ion-icon>
                   <div>Chat</div>
                 </button>
@@ -124,7 +124,7 @@
                         (click)="rateAssignmentAndMarkAsDone(assignment)"></rating>
               </ion-col>
               <ion-col text-right *ngIf="assignment.open">
-                <button ion-button icon-left clear small (click)="openChat(task)">
+                <button ion-button icon-left clear small (click)="openChat(assignment)">
                   <ion-icon name="text"></ion-icon>
                   <div>Chat</div>
                 </button>
@@ -180,7 +180,7 @@
                 <rating [(ngModel)]="assignment.rating" readOnly="true" max="3"></rating>
               </ion-col>
               <ion-col text-right *ngIf="assignment.open">
-                <button ion-button icon-left clear small (click)="openChat(task)">
+                <button ion-button icon-left clear small (click)="openChat(assignment)">
                   <ion-icon name="text"></ion-icon>
                   <div>Chat</div>
                 </button>
