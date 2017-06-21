@@ -27,7 +27,8 @@
 <ion-content padding>
   <div [ngSwitch]="activeTab">
     <div *ngSwitchCase="'open'">
-      <div *ngIf="openAssignments.length == 0">Es liegen keine offenen Aufgaben für diesen Studenten vor</div>
+      <div *ngIf="openAssignments.length == 0"><img class="no-task" src="assets/images/notask.png">
+        </div>
 
       <div *ngIf="openAssignments.length > 0">
         <ion-card *ngFor="let assignment of openAssignments; let i = index" (press)="openActionSheet(assignment._id)">
@@ -79,7 +80,7 @@
     </div>
 
     <div *ngSwitchCase="'grade'">
-      <div *ngIf="gradeAssignments.length == 0">Es liegen keine zu bewertenden Aufgaben für diesen Studenten vor</div>
+      <div *ngIf="gradeAssignments.length == 0"><img class="no-task" src="assets/images/notask.png"></div>
 
       <div *ngIf="gradeAssignments.length > 0">
         <ion-card *ngFor="let assignment of gradeAssignments; let i = index;" (press)="openActionSheet(assignment._id)">
@@ -136,7 +137,7 @@
     </div>
 
     <div *ngSwitchCase="'done'">
-      <div *ngIf="doneAssignments.length == 0">Es liegen keine erledigten Aufgaben für diesen Studenten vor</div>
+      <div *ngIf="doneAssignments.length == 0"><img class="no-task" src="assets/images/notask.png"></div>
 
       <div *ngIf="doneAssignments.length > 0">
         <ion-card *ngFor="let assignment of doneAssignments; let i = index;" (press)="openActionSheet(assignment._id)">
