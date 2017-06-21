@@ -48,21 +48,8 @@
       </ion-item>
 
       <ion-list>
-        <ion-item *ngFor="let newImage of newAttachments.images; let i = index" >
-          <img [src]="newImage">
-        </ion-item>
-      </ion-list>
-
-      <ion-list>
-        <ion-item *ngFor="let newVideo of newAttachments.videos; let i = index" >
-          <video [src]="newVideo"></video>
-        </ion-item>
-      </ion-list>
-      <ion-list>
-        <ion-item *ngFor="let newVoice of newAttachments.voice; let i = index" >
-          <audio controls>
-            <source [src]="newVoice">
-          </audio>
+        <ion-item *ngFor="let newAttachment of newAttachments; let i = index" >
+          <p>{{newAttachment}}</p>
         </ion-item>
       </ion-list>
 
