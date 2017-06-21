@@ -65,9 +65,7 @@ export class CoachService {
    * @param pid Pairing ID
    */
   deleteCoach(pid: string) {
-    firebase.database().ref(this.nodeName + pid).update({
-      deleted: true
-    }).then(data => {
+    firebase.database().ref(this.nodeName + pid).remove().then(data => {
       this.events.publish('coaches:delete-success', {
         message: 'Coach wurde gelöscht'
       });

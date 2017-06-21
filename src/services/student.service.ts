@@ -65,9 +65,7 @@ export class StudentService {
    * @param pid Pairing ID
    */
   deleteStudent(pid: string) {
-    firebase.database().ref(this.nodeName + pid).update({
-      deleted: true
-    }).then(data => {
+    firebase.database().ref(this.nodeName + pid).remove().then(data => {
       this.events.publish('students:delete-success', {
         message: 'Student wurde gelöscht'
       });

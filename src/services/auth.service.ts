@@ -132,9 +132,7 @@ export class AuthService {
 
     let user = this.getActiveUser();
 
-    firebase.database().ref('/users/' + user.uid).update({
-      deleted: true
-    }).then(data => {
+    firebase.database().ref('/users/' + user.uid).remove().then(data => {
       //Delete all pairings the user is involved in
       firebase.database().ref('/pairings/').once('value', snapshot => {
         let dbPairings = snapshot.val();
@@ -143,9 +141,7 @@ export class AuthService {
           let pairing = dbPairings[pairingId];
 
           if (pairing.coach === user.uid || pairing.student === user.uid) {
-            firebase.database().ref('/pairings/' + pairingId).update({
-              deleted: true
-            });
+            firebase.database().ref('/pairings/' + pairingId).remove();
           }
         }
       }).then(data => {
