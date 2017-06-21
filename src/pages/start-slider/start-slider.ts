@@ -24,12 +24,12 @@ export class StartSliderPage {
 
   slides = [
     {
-      title: "Willkommen zu YOURCOACH!",
+      title: "Willkommen zu YOUR COACH!",
       description: "Mit <b>YOUR COACH</b> bleiben Coach und Schüler im engen Kontakt beim Training.",
       image: "assets/images/slide1.png",
     },
     {
-      title: "Der Coach immer in der Tasche",
+      title: "Deinen Coach immer in der Tasche",
       description: "Du willst auch trainieren, wenn dein Personal Coach nicht dabei ist? Verbinde dich mit <b>deinem Coach</b> und erhalte Aufgaben.",
       image: "assets/images/slide2.png",
     },
