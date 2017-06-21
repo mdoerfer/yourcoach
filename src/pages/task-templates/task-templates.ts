@@ -178,11 +178,7 @@ export class TaskTemplatesPage implements OnInit {
           created_at: new Date().valueOf(),
           updated_at: new Date().valueOf(),
           draft: false,
-          attachments: {
-            images: task.attachments.images || {},
-            videos: task.attachments.videos || {},
-            voice: task.attachments.voice || {},
-          }
+          attachments: task.attachments || {}
         })
           .then(data => {
             this.showToast("Aufgabe wurde erfolgreich gesendet.");
