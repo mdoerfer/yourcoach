@@ -43,6 +43,7 @@ import {EditProfileModalPage} from "../pages/edit-profile-modal/edit-profile-mod
 import {TaskTemplatesPage} from "../pages/task-templates/task-templates";
 import {CoachSendTaskModalPage} from "../pages/coach-send-task-modal/coach-send-task-modal";
 import {StatisticsPage} from "../pages/statistics/statistics";
+import {DashboardStudentPopoverPage} from "../pages/dashboard-student-popover/dashboard-student-popover";
 
 
 @NgModule({
@@ -66,7 +67,8 @@ import {StatisticsPage} from "../pages/statistics/statistics";
     EditProfileModalPage,
     TaskTemplatesPage,
     CoachSendTaskModalPage,
-    StatisticsPage
+    StatisticsPage,
+    DashboardStudentPopoverPage
   ],
   imports: [
     BrowserModule,
@@ -94,7 +96,8 @@ import {StatisticsPage} from "../pages/statistics/statistics";
     EditProfileModalPage,
     TaskTemplatesPage,
     CoachSendTaskModalPage,
-    StatisticsPage
+    StatisticsPage,
+    DashboardStudentPopoverPage
   ],
   providers: [
     StatusBar,
