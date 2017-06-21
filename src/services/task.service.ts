@@ -265,4 +265,9 @@ export class TaskService {
       });
     });
   }
+
+  deleteAttachment(attachment) {
+    console.log(attachment);
+    firebase.database().ref(this.nodeName + attachment.tid + '/attachments/' + attachment._id).remove();
+  }
 }
