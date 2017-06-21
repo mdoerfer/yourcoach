@@ -4,6 +4,7 @@ import {IonicPage, NavController, ToastController} from 'ionic-angular';
 import {CoachDashboardPage} from "../coach-dashboard/coach-dashboard";
 import {StudentDashboardPage} from "../student-dashboard/student-dashboard";
 import {UserService} from "../../services/user.service";
+import {StartSliderPage} from "../start-slider/start-slider";
 
 @IonicPage()
 @Component({
@@ -53,4 +54,13 @@ export class RoleChoicePage {
     });
     toast.present();
   }
+
+
+  /**
+   *  Open role choice page
+   */
+  goToStartSlider() {
+    this.navCtrl.push(StartSliderPage);
+  }
 }
+
