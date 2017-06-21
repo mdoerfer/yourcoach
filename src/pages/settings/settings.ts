@@ -111,27 +111,20 @@ export class SettingsPage {
    */
   showFeedbackPrompt() {
     let prompt = this.alertCtrl.create({
-      title: 'Feedback geben',
-      message: "Was können wir verbessern?",
-      inputs: [
-        {
-          type: 'textarea',
-          name: 'feedback',
-          placeholder: "Gibt uns Feedback"
-        },
-      ],
+      title: 'Gefällt dir diese App',
+      message: "Gib uns eine Bewertung im AppStore",
       buttons: [
         {
-          text: 'Abbrechen',
+          text: 'Nicht Jetzt',
           role: 'cancel',
           handler: data => {
             console.log('Cancel clicked');
           }
         },
         {
-          text: 'Senden',
+          text: 'Bewerten',
           handler: data => {
-            this.authService.changePassword(data.oldPass, data.newPass);
+
           }
         }
       ]
