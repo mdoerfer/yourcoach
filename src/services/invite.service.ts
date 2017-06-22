@@ -40,6 +40,8 @@ export class InviteService {
       let dbInvites = snapshot.val();
       let invites: any[] = [];
 
+      console.log('OBSERVING INVITES FIRED');
+
       for (let inviteId in dbInvites) {
         let invite = dbInvites[inviteId];
 

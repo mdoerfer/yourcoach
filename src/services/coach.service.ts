@@ -39,6 +39,8 @@ export class CoachService {
     query.on('value', snapshot => {
       let dbPairings = snapshot.val();
       let coaches: any[] = [];
+      
+      console.log('OBSERVING COACHES FIRED');
 
       for (let pairingId in dbPairings) {
         let pairing = dbPairings[pairingId];
