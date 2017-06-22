@@ -140,9 +140,9 @@
             </ion-row>
 
             <!-- RÜCKMELDUNG-->
-            <ion-list class="icons-wrapper" *ngIf="assignment.open && assignment.responseType!=='Keine'"  >
+            <ion-list class="icons-wrapper" *ngIf="assignment.open && assignment.responseType !== 'Keine'">
               <ion-item class="icon-wrapper">
-                <div  (click)="watchResponse(response)" class="icon-background">
+                <div (click)="watchResponse(assignment.response)" class="icon-background">
                   <ion-icon class="attachment-icon" *ngIf="assignment.responseType=='Bild'" name="camera"></ion-icon>
                   <ion-icon class="attachment-icon" *ngIf="assignment.responseType=='Video'" name="videocam"></ion-icon>
                   <ion-icon class="attachment-icon" *ngIf="assignment.responseType=='Sprachnachricht'" name="musical-notes"></ion-icon>
@@ -167,9 +167,7 @@
         </ion-card>
       </div>
     </div>
-
-    <!--    <rating [(ngModel)]="assignment.rating" readOnly="false" max="3"
-                         (click)="rateAssignmentAndMarkAsDone(assignment)"></rating>-->
+    
     <!-- --------------------------------------------------------------------------------- -->
 
     <div *ngSwitchCase="'done'">
@@ -208,40 +206,30 @@
               <p>{{assignment.description}}</p>
             </ion-card-content>
 
-            <!-- ANHÄNGE -->
-            <ion-list *ngIf="assignment.open && assignment.attachmentsArr.length">
-              <ion-item-divider>Anhänge</ion-item-divider>
-              <ion-item *ngFor="let attachment of assignment.attachmentsArr;">
-                <p (click)="watchAttachment(attachment)">{{attachment.name}}</p>
+            <!-- RÜCKMELDUNG-->
+            <ion-list class="icons-wrapper" *ngIf="assignment.open && assignment.responseType !== 'Keine'">
+              <ion-item class="icon-wrapper">
+                <div (click)="watchResponse(assignment.response)" class="icon-background">
+                  <ion-icon class="attachment-icon" *ngIf="assignment.responseType=='Bild'" name="camera"></ion-icon>
+                  <ion-icon class="attachment-icon" *ngIf="assignment.responseType=='Video'" name="videocam"></ion-icon>
+                  <ion-icon class="attachment-icon" *ngIf="assignment.responseType=='Sprachnachricht'" name="musical-notes"></ion-icon>
+                  <p *ngIf="assignment.responseType=='Text'">{{assignment.response}}</p>
+                </div>
               </ion-item>
             </ion-list>
 
-            <!-- RÜCKMELDUNG -->
-            <ion-item *ngIf="assignment.open" text-wrap>
-              <h2>Rückmeldung</h2>
-              <p>{{assignment.responseType}}</p>
-              <p *ngIf="assignment.responseInstructions">{{assignment.responseInstructions}}</p>
-
-              <!-- TEXT RÜCKMELDUNG -->
-              <p *ngIf="assignment.responseType === 'Text'">
-                {{assignment.response}}
-              </p>
-
-              <!-- VIDEO RÜCKMELDUNG -->
-              <p *ngIf="assignment.responseType === 'Video'" (click)="watchResponse(assignment.response)">
-                {{assignment.response.name}}
-              </p>
-
-              <!-- BILD RÜCKMELDUNG -->
-              <p *ngIf="assignment.responseType === 'Bild'" (click)="watchResponse(assignment.response)">
-                {{assignment.response.name}}
-              </p>
-
-              <!-- SPRACHNACHRICHT RÜCKMELDUNG -->
-              <p *ngIf="assignment.responseType === 'Sprachnachricht'" (click)="watchResponse(assignment.response)">
-                {{assignment.response.name}}
-              </p>
-            </ion-item>
+            <ion-grid>
+              <ion-row *ngIf="assignment.open">
+                <ion-col text-right>
+                  <ion-col>
+                    <button class="chatButton" ion-button icon-left small (click)="openChat(assignment)">
+                      <ion-icon class="chatIcon" name="text"></ion-icon>
+                      <div class="chatText">Chat</div>
+                    </button>
+                  </ion-col>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
 
             <ion-row>
               <ion-col text-left>
