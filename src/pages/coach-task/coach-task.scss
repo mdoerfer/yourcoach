@@ -4,10 +4,15 @@ page-coach-task {
     font-weight: normal;
   }
 .no-task {
-  margin: 0;
-  width: 90%;
-  position: relative;
-  left: 10%;
-  top: 10px;
+  width: 83%!important;
+  left: 11% !important;
+  position: relative !important;
 }
+  .noTaskgradable{
+    width: 66% !important;
+    left: 20% !important;
+    position: relative !important;
+    top: 54px !important;
+  }
+
 }

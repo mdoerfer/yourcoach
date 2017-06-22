@@ -9,7 +9,7 @@
 
 <ion-content padding>
 
-  <div *ngIf="draftAssignments.length == 0">Du hast noch keine Task Templates angelegt.</div>
+  <div *ngIf="draftAssignments.length == 0"><img class="noTemplates" src="assets/images/noTemplates.png"></div>
 
   <div *ngIf="draftAssignments.length > 0">
     <ion-card *ngFor="let assignment of draftAssignments; let i = index" (press)="openActionSheet(assignment._id)" class="task-card">

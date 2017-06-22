@@ -27,10 +27,9 @@
 <ion-content padding class="contetenFooterFix">
   <div [ngSwitch]="activeTab">
     <div *ngSwitchCase="'open'">
-      <div *ngIf="openTasks.length == 0">Es gibt keine offenen Aufgaben von diesem Coach</div>
-
+      <div *ngIf="openTasks.length == 0"><img class="notasksgradablestudent" src="assets/images/allTasksdone.png"></div>
       <div *ngIf="openTasks.length > 0">
-        <ion-card *ngFor="let task of gradeTasks; let i = index;" (press)="openActionSheet(task._id)" class="task-card">
+        <ion-card *ngFor="let task of openTasks; let i = index;" (press)="openActionSheet(task._id)" class="task-card">
           <div>
             <ion-item (tap)="toggle(task)">
               <ion-grid>
@@ -87,7 +86,7 @@
                     <div *ngIf="task.responseType!=='Keine'" class="chatText">Rückmeldung</div>
                   </button>
                   <ion-col>
-                    <button class="chatButton" ion-button icon-left small (click)="openChat(assignment)">
+                    <button class="chatButton" ion-button icon-left small (click)="openChat(task)">
                       <ion-icon class="chatIcon" name="text"></ion-icon>
                       <div class="chatText">Chat</div>
                     </button>
@@ -104,9 +103,7 @@
     <!-- --------------------------------------------------------------------------------- -->
 
     <div *ngSwitchCase="'grade'">
-      <div *ngIf="gradeTasks.length == 0">Du wartest auf keine Bewertungen</div>
-
-      <div *ngIf="gradeTasks.length > 0">
+      <div *ngIf="gradeTasks.length == 0"><img class="allTasksDone" src="assets/images/notasksgradablestudent.png"></div>
         <ion-card *ngFor="let task of gradeTasks; let i = index;" (press)="openActionSheet(task._id)" class="task-card">
           <div>
             <ion-item (tap)="toggle(task)">
@@ -163,7 +160,7 @@
           </div>
         </ion-card>
       </div>
-    </div>
+
 
     <!-- --------------------------------------------------------------------------------- -->
 

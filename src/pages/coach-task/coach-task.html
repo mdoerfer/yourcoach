@@ -27,7 +27,7 @@
 <ion-content padding class="contetenFooterFix">
   <div [ngSwitch]="activeTab">
     <div *ngSwitchCase="'open'">
-      <div *ngIf="openAssignments.length == 0"><img class="no-task" src="assets/images/notask.png">
+      <div *ngIf="openAssignments.length == 0"><img class="no-task"  src="assets/images/notask.png">
         </div>
 
       <div *ngIf="openAssignments.length > 0">
@@ -102,7 +102,7 @@
     <!-- --------------------------------------------------------------------------------- -->
 
     <div *ngSwitchCase="'grade'">
-      <div *ngIf="gradeAssignments.length == 0"><img class="no-task" src="assets/images/notask.png"></div>
+      <div *ngIf="gradeAssignments.length == 0"><img class="noTaskgradable" src="assets/images/notaskgradable.png"></div>
 
       <div *ngIf="gradeAssignments.length > 0">
         <ion-card *ngFor="let assignment of gradeAssignments; let i = index;" (press)="openActionSheet(assignment._id)" class="task-card">
