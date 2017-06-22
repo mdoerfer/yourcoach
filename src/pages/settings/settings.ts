@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {Events, IonicPage, ModalController, NavParams, ToastController} from 'ionic-angular';
+import {Component, OnInit} from '@angular/core';
+import {ActionSheetController, Events, IonicPage, ModalController, ToastController} from 'ionic-angular';
 import {UserService} from "../../services/user.service";
 import {AlertController} from 'ionic-angular';
 import {AuthService} from "../../services/auth.service";
@@ -7,13 +7,14 @@ import {NavController} from "ionic-angular";
 import {RoleChoicePage} from "../role-choice/role-choice";
 import {EditProfileModalPage} from "../edit-profile-modal/edit-profile-modal";
 import {ImpressumPage} from "../impressum/impressum";
+import {FileService} from "../../services/file.service";
 
 @IonicPage()
 @Component({
   selector: 'page-settings',
   templateUrl: 'settings.html',
 })
-export class SettingsPage {
+export class SettingsPage implements OnInit {
 
   user: any;
 
@@ -22,9 +23,13 @@ export class SettingsPage {
               private navCtrl: NavController,
               public alertCtrl: AlertController,
               public modalCtrl: ModalController,
+              private actionSheetCtrl: ActionSheetController,
               public toastCtrl: ToastController,
-              private events: Events) {
+              private events: Events,
+              private fileService: FileService) {
+  }
 
+  ngOnInit() {
     this.subscribeDeleteUser();
     this.subscribePasswordChange();
     this.initializeUser();
@@ -34,7 +39,7 @@ export class SettingsPage {
    * Get user info
    */
   initializeUser() {
-    this.userService.getActiveUserRef().once('value',
+    this.userService.getActiveUserRef().on('value',
       snapshot => {
         this.user = snapshot.val();
       });
@@ -44,7 +49,10 @@ export class SettingsPage {
    * Shows modal for edit profile
    */
   showModalEditProfile() {
-    let editProfileModal = this.modalCtrl.create(EditProfileModalPage, {user: this.user});
+    let editProfileModal = this.modalCtrl.create(EditProfileModalPage, {
+      user: this.user
+    });
+
     editProfileModal.present();
 
     editProfileModal.onDidDismiss(data => {
@@ -52,11 +60,10 @@ export class SettingsPage {
         this.userService.updateActiveUserRef({
           name: data.get('name').value,
           aboutMe: data.get('aboutMe').value,
-          dateOfBirth: data.get('dateOfBirth').value,
+          dateOfBirth: data.get('dateOfBirth').value
         })
           .then(data => {
-            this.showToast("Profil wurde gespeichert");
-            this.initializeUser();
+            this.showToast("Profil wurde gespeichert.");
           })
           .catch(error => {
             this.showToast(error.message);
@@ -78,7 +85,7 @@ export class SettingsPage {
         {
           text: 'Abbrechen',
           handler: () => {
-            console.log('Disagree clicked');
+            console.log('Cancel clicked');
           }
         },
         {
@@ -257,7 +264,7 @@ export class SettingsPage {
   /**
    * Open impressum page
    */
-  goToImpressum(){
+  goToImpressum() {
     this.navCtrl.push(ImpressumPage);
   }
 }

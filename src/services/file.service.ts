@@ -2,21 +2,23 @@ import firebase from 'firebase';
 import {Injectable} from "@angular/core";
 import {File} from '@ionic-native/file';
 import {Platform} from "ionic-angular";
+import {AuthService} from "./auth.service";
 
 @Injectable()
 export class FileService {
   constructor(private file: File,
-              private platform: Platform) {
+              private platform: Platform,
+              private authService: AuthService) {
   }
 
   /**
    * Upload attachment to storage
    *
    * @param _filePath
-   * @param taskId
+   * @param id
    * @param uploadType
    */
-  uploadFileToStorage(_filePath, taskId, uploadType = 'attachment') {
+  uploadFileToStorage(_filePath, id, uploadType = 'attachment') {
     if (this.platform.is('android')) {
       /**
        *
@@ -36,8 +38,8 @@ export class FileService {
 
           this.file.readAsDataURL(directoryPath, fileName)
             .then(_dataString => {
-              let uploadedFileName =  timestamp + '_' + fileName;
-              let fileRef = firebase.storage().ref('uploads/' + taskId + '/' + uploadedFileName);
+              let uploadedFileName = timestamp + '_' + fileName;
+              let fileRef = firebase.storage().ref('uploads/' + id + '/' + uploadedFileName);
 
               //Promise
               let uploadTask = fileRef.putString(_dataString, 'data_url');
@@ -51,14 +53,17 @@ export class FileService {
                   type: fileType
                 };
 
-                switch(uploadType) {
+                switch (uploadType) {
                   case 'attachment':
                     //Add attachment media reference to task
-                    firebase.database().ref('/tasks/' + taskId + '/attachments/').push(fileData);
+                    firebase.database().ref('/tasks/' + id + '/attachments/').push(fileData);
                     break;
                   case 'response':
                     //Add response media reference to task
-                    firebase.database().ref('/tasks/' + taskId + '/response').update(fileData);
+                    firebase.database().ref('/tasks/' + id + '/response').update(fileData);
+                  case 'avatar':
+                    //Add avatar media reference to user
+                    firebase.database().ref('/users/' + id + '/avatar').update(fileData);
                 }
               });
             })
@@ -81,7 +86,7 @@ export class FileService {
 
               //Check type
               let uploadedFileName = timestamp + '_' + fileName;
-              let fileRef = firebase.storage().ref('uploads/' + taskId + '/' + uploadedFileName);
+              let fileRef = firebase.storage().ref('uploads/' + id + '/' + uploadedFileName);
 
               //Promise
               let uploadTask = fileRef.put(_blob);
@@ -95,14 +100,17 @@ export class FileService {
                   type: fileType
                 };
 
-                switch(uploadType) {
+                switch (uploadType) {
                   case 'attachment':
                     //Add attachment media reference to task
-                    firebase.database().ref('/tasks/' + taskId + '/attachments/').push(fileData);
+                    firebase.database().ref('/tasks/' + id + '/attachments/').push(fileData);
                     break;
                   case 'response':
                     //Add response media reference to task
-                    firebase.database().ref('/tasks/' + taskId + '/response').update(fileData);
+                    firebase.database().ref('/tasks/' + id + '/response').update(fileData);
+                  case 'avatar':
+                    //Add avatar media reference to user
+                    firebase.database().ref('/users/' + id + '/avatar').update(fileData);
                 }
               });
             });

@@ -26,12 +26,16 @@ export class AuthService {
 
         //Create database node for user
         firebase.database().ref('/users/' + user.uid).update({
-          aboutMe: "Hey there! I'm using Your Coach",
           name: name,
           email: email,
           deleted: false,
           created_at: new Date().valueOf(),
-          updated_at: new Date().valueOf()
+          updated_at: new Date().valueOf(),
+          avatar: {
+            url: 'assets/images/dummy-avatar.png'
+          },
+          aboutMe: "Hey there! I'm using Your Coach",
+          dateOfBirth: "1980-01-01"
         }).then(data => {
           //Send verification email
           user.sendEmailVerification()
