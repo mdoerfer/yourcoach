@@ -64,9 +64,11 @@ export class TaskService {
         assignment.attachmentsArr = [];
 
         //Turn attachments into array
-        for(let attachmentId in assignment.attachments) {
+        for (let attachmentId in assignment.attachments) {
           assignment.attachmentsArr.push(assignment.attachments[attachmentId]);
         }
+
+        //TODO: Check assignment state, and if still 'grade' send notification
 
         assignments.push(assignment);
       }
@@ -111,9 +113,11 @@ export class TaskService {
         task.attachmentsArr = [];
 
         //Turn attachments into array
-        for(let attachmentId in task.attachments) {
+        for (let attachmentId in task.attachments) {
           task.attachmentsArr.push(task.attachments[attachmentId]);
         }
+
+        //TODO: Check task state, and if still 'open' send notification
 
         tasks.push(task);
       }
@@ -206,7 +210,7 @@ export class TaskService {
       let dbTask = snapshot.val();
 
       //Delete attachments recursively
-      for(let attachmentId in dbTask.attachments) {
+      for (let attachmentId in dbTask.attachments) {
         let attachment = dbTask.attachments[attachmentId];
 
         firebase.storage().ref('/uploads/' + taskId + '/' + attachment.uploadName).delete()
@@ -262,7 +266,27 @@ export class TaskService {
     firebase.database().ref(this.nodeName + task._id + '/chat/').push({
       from: uid,
       msg: msg
-    });
+    })
+      .then(() => {
+        //Check who the notification is meant for
+        let msgTarget;
+
+        if (task.to === uid) {
+          msgTarget = task.from;
+        }
+        else if (task.from === uid) {
+          msgTarget = task.to;
+        }
+
+        //Create notification
+        this.notificationService.createNotification(new Notification()
+          .setType('chat:new-message')
+          .setDescription(task.title)
+          .setTo(msgTarget)
+          .setAdditionalInfo({
+            task: task
+          }));
+      });
   }
 
   /**

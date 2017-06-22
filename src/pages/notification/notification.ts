@@ -6,6 +6,7 @@ import {StudentTaskPage} from "../student-task/student-task";
 import {CoachTaskPage} from "../coach-task/coach-task";
 import {StudentDashboardPage} from "../student-dashboard/student-dashboard";
 import {CoachDashboardPage} from "../coach-dashboard/coach-dashboard";
+import {TaskChatPage} from "../task-chat/task-chat";
 
 @IonicPage()
 @Component({
@@ -73,7 +74,9 @@ export class NotificationPage implements OnInit {
         });
         break;
       case 'chat:new-message':
-        console.log('Go to chat page');
+        this.navCtrl.push(TaskChatPage, {
+          task: notification.getAdditionalInfo('task')
+        });
         break;
       case 'reminder':
         this.navCtrl.push(StudentTaskPage, {

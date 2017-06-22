@@ -16,32 +16,30 @@ import firebase from 'firebase';
   templateUrl: 'task-chat.html',
 })
 export class TaskChatPage implements OnInit  {
-
   task: any;
   chatForm: FormGroup;
   taskMsgs: any[] = [];
-
 
   constructor(public navCtrl: NavController,
               public taskService: TaskService,
               public navParams: NavParams) {
   }
 
+  /**
+   * Initialize component
+   */
   ngOnInit() {
     this.task = this.navParams.get('task');
-    this.initializeForm();
-   // this.initializeTaskMsgs();
-    console.log(this.task._id);
-    this.updateTaskMsgs()
 
+    this.initializeForm();
+    this.updateTaskMsgs();
   }
 
-
-
+  /**
+   * Read task messages on initial load
+   * and add listener for changes
+   */
   updateTaskMsgs(){
-
-
-
     let nodeName: string = '/tasks/'+this.task._id+ '/chat/';
 
     let query = firebase.database()
@@ -79,24 +77,10 @@ export class TaskChatPage implements OnInit  {
 
   }
 
-  initializeTaskMsgs(){
-    this.taskMsgs = [];
-
-    if(this.task.chat !== null){
-      for(let msgId in this.task.chat) {
-        let msg = this.task.chat[msgId];
-
-        this.taskMsgs.push(msg);
-      }
-    }
-
-  }
-
   /**
-   *
+   * Submit chat message
    */
   submitForm() {
-      console.log(this.task["title"]);
       this.taskService.sendTaskChatMessage(this.task, this.chatForm.get('msg').value);
       this.chatForm.reset()
   }
