@@ -84,6 +84,12 @@ export class NotificationPage implements OnInit {
           tab: 'done'
         });
         break;
+      case 'task:reminder':
+        this.navCtrl.push(StudentDashboardPage);
+        break;
+      case 'assignment:reminder':
+        this.navCtrl.push(CoachDashboardPage);
+        break;
       case 'invite:new':
         this.navCtrl.push(StudentDashboardPage);
         break;
