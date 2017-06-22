@@ -197,6 +197,15 @@ export class CoachTaskPage implements OnInit {
   }
 
   /**
+   * Watch response
+   * 
+   * @param response
+   */
+  watchResponse(response: any) {
+    console.log(response);
+  }
+
+  /**
    * Show the popover at event location
    *
    * @param myEvent

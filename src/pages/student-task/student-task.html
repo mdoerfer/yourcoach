@@ -62,6 +62,7 @@
               <p>{{task.description}}</p>
             </ion-card-content>
 
+            <!-- ANHÄNGE -->
             <ion-list *ngIf="task.open && task.attachmentsArr.length">
               <ion-item-divider>Anhänge</ion-item-divider>
               <ion-item *ngFor="let attachment of task.attachmentsArr;">
@@ -69,6 +70,7 @@
               </ion-item>
             </ion-list>
 
+            <!-- RÜCKMELDUNG -->
             <ion-item *ngIf="task.open" text-wrap>
               <h2>Rückmeldung</h2>
               <p>{{task.responseType}}</p>
@@ -92,7 +94,7 @@
       </div>
     </div>
 
-<!-- --------------------------------------------------------------------------------- -->
+    <!-- --------------------------------------------------------------------------------- -->
 
     <div *ngSwitchCase="'grade'">
       <div *ngIf="gradeTasks.length == 0">Du wartest auf keine Bewertungen</div>
@@ -130,6 +132,7 @@
               <p>{{task.description}}</p>
             </ion-card-content>
 
+            <!-- ANHÄNGE -->
             <ion-list *ngIf="task.open && task.attachmentsArr.length">
               <ion-item-divider>Anhänge</ion-item-divider>
               <ion-item *ngFor="let attachment of task.attachmentsArr;">
@@ -137,11 +140,31 @@
               </ion-item>
             </ion-list>
 
+            <!-- RÜCKMELDUNG -->
             <ion-item *ngIf="task.open" text-wrap>
               <h2>Rückmeldung</h2>
               <p>{{task.responseType}}</p>
               <p *ngIf="task.responseInstructions">{{task.responseInstructions}}</p>
-              <p>{{task.response}}</p>
+
+              <!-- TEXT RÜCKMELDUNG -->
+              <p *ngIf="task.responseType === 'Text'">
+                {{task.response}}
+              </p>
+
+              <!-- VIDEO RÜCKMELDUNG -->
+              <p *ngIf="task.responseType === 'Video'" (click)="watchResponse(task.response)">
+                {{task.response.name}}
+              </p>
+
+              <!-- BILD RÜCKMELDUNG -->
+              <p *ngIf="task.responseType === 'Bild'" (click)="watchResponse(task.response)">
+                {{task.response.name}}
+              </p>
+
+              <!-- SPRACHNACHRICHT RÜCKMELDUNG -->
+              <p *ngIf="task.responseType === 'Sprachnachricht'" (click)="watchResponse(task.response)">
+                {{task.response.name}}
+              </p>
             </ion-item>
 
             <ion-row>
@@ -195,6 +218,7 @@
               <p>{{task.description}}</p>
             </ion-card-content>
 
+            <!-- ANHÄNGE -->
             <ion-list *ngIf="task.open && task.attachmentsArr.length">
               <ion-item-divider>Anhänge</ion-item-divider>
               <ion-item *ngFor="let attachment of task.attachmentsArr;">
@@ -202,11 +226,31 @@
               </ion-item>
             </ion-list>
 
+            <!-- RÜCKMELDUNG -->
             <ion-item *ngIf="task.open" text-wrap>
               <h2>Rückmeldung</h2>
               <p>{{task.responseType}}</p>
               <p *ngIf="task.responseInstructions">{{task.responseInstructions}}</p>
-              <p>{{task.response}}</p>
+
+              <!-- TEXT RÜCKMELDUNG -->
+              <p *ngIf="task.responseType === 'Text'">
+                {{task.response}}
+              </p>
+
+              <!-- VIDEO RÜCKMELDUNG -->
+              <p *ngIf="task.responseType === 'Video'" (click)="watchResponse(task.response)">
+                {{task.response.name}}
+              </p>
+
+              <!-- BILD RÜCKMELDUNG -->
+              <p *ngIf="task.responseType === 'Bild'" (click)="watchResponse(task.response)">
+                {{task.response.name}}
+              </p>
+
+              <!-- SPRACHNACHRICHT RÜCKMELDUNG -->
+              <p *ngIf="task.responseType === 'Sprachnachricht'" (click)="watchResponse(task.response)">
+                {{task.response.name}}
+              </p>
             </ion-item>
 
             <ion-row>
