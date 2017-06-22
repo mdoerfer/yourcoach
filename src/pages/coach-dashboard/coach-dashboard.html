@@ -31,11 +31,11 @@
 
 
 <ion-content padding (click)="checkSearch()">
-  <ion-list-header class="list-header">Meine Schüler</ion-list-header>
   <p padding *ngIf="students.length == 0">
-    Du hast keine Studenten zur Zeit
+    <img src="assets/images/noStudents.png">
   </p>
   <ion-list *ngIf="students.length > 0">
+    <ion-list-header class="list-header">Meine Schüler</ion-list-header>
     <ion-item *ngFor="let student of students; let i = index" (click)="goToTasks(i)" (press)="openActionSheet(i)">
       <ion-avatar item-left>
         <img class="list-avatar" src="assets/images/dummy-avatar.png">
