@@ -32,8 +32,8 @@
 
 <ion-content padding (click)="checkSearch()">
   <p padding *ngIf="students.length == 0">
-    <img src="assets/images/noStudents.png">
-  </p>
+  <img class="noStudents" src="assets/images/noStudents.png">
+</p>
   <ion-list *ngIf="students.length > 0">
     <ion-list-header class="list-header">Meine Schüler</ion-list-header>
     <ion-item *ngFor="let student of students; let i = index" (click)="goToTasks(i)" (press)="openActionSheet(i)">
