@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {Content, IonicPage, NavController, NavParams} from 'ionic-angular';
 import {FormControl, FormGroup} from "@angular/forms";
 import {TaskService} from "../../services/task.service";
 import firebase from 'firebase';
+import {UserService} from "../../services/user.service";
 
 /**
  * Generated class for the TaskChatPage page.
@@ -16,12 +17,15 @@ import firebase from 'firebase';
   templateUrl: 'task-chat.html',
 })
 export class TaskChatPage implements OnInit  {
+  @ViewChild(Content) content: Content;
   task: any;
   chatForm: FormGroup;
   taskMsgs: any[] = [];
+  uid: string;
 
   constructor(public navCtrl: NavController,
               public taskService: TaskService,
+              public userService: UserService,
               public navParams: NavParams) {
   }
 
@@ -30,10 +34,35 @@ export class TaskChatPage implements OnInit  {
    */
   ngOnInit() {
     this.task = this.navParams.get('task');
+    this.uid = this.userService.getActiveUserId();
 
     this.initializeForm();
     this.updateTaskMsgs();
+
+    //this.initializeMsgs();
+
   }
+
+  /**
+   * Scroll to bottom when loaded
+   */
+  ionViewDidEnter() {
+    if(this.content._scroll) this.content.scrollToBottom(0);
+  }
+
+  /*initializeMsgs(){
+    let chat = [];
+
+    //Add tasks to matching arrays, depending on their state
+    for(let t in this.task.chat) {
+      let msg = chat[t];
+
+      chat.push(msg);
+    }
+
+    console.log(chat);
+    console.log(this.task.msg);
+  }*/
 
   /**
    * Read task messages on initial load
@@ -58,6 +87,8 @@ export class TaskChatPage implements OnInit  {
 
       //Update state
       this.taskMsgs = chat;
+      //Scroll to bottom
+        if(this.content._scroll) this.content.scrollToBottom(0);
     })
   }
 

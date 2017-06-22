@@ -114,7 +114,6 @@ ion-fab {
 }
 
 .task-card .item {
-  margin: 0 !important;
   padding-left: 3px !important;
 }
 
@@ -158,4 +157,56 @@ ion-fab {
 
 .first-row-col {
   padding-bottom: 2px !important;
+}
+
+.icons-wrapper {
+  text-align: center !important;
+  margin-top: 10px !important;
+}
+
+.icon-wrapper {
+  display: inline-block !important;
+  width: 30% !important;
+  text-align: center !important;
+  margin-bottom: 8px !important;
+
+}
+
+.icon-wrapper:first-child {
+  border:none !important;
+}
+
+.icon-wrapper:last-child {
+  border:none !important;
+
+}
+
+.icon-background {
+  background-color: #d1d1d1 !important;
+  display: inline-block !important;
+  width: 90px !important;
+  height: 90px !important;
+  text-align: center !important;
+  border: solid #d1d1d1 !important;
+  border-radius: 10px !important;
+  margin-bottom: 3px !important;
+
+}
+
+.attachment-icon {
+  color: white !important;
+  font-size: 4em !important;
+  padding: 5px 15px 5px 15px !important;
+}
+
+.response-background {
+  width: 30px !important;
+  height: 30px !important;
+  background-color: #0477bd !important;
+  text-align: center !important;
+  display: inline-block !important;
+}
+
+.response-icon {
+  color: white !important;
 }

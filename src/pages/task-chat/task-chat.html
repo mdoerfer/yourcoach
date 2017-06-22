@@ -1,48 +1,40 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title class="header-title">Chat {{task.title}}</ion-title>
+    <ion-title class="header-title">Chat: {{task.title}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
-
-<ion-content padding>
-  <ion-item *ngIf="task.chat">
-
-
-  </ion-item>
-  <ion-item>
-    <p>Es gibt noch keine Nachrichten</p>
-    <p *ngFor="let msg of taskMsgs; let i = index">
-      <span>{{msg.msg}}</span>
-
-    </p>
-
-
-
-  </ion-item>
-
-  <form [formGroup]="chatForm" (ngSubmit)="submitForm()">
-
-    <ion-item>
-      <ion-input
-        type="text"
-        block
-        required
-        formControlName="msg">
-      </ion-input>
-    </ion-item>
-
-
-    <button
-      ion-button
-      type="submit"
-      block
-      [disabled]="!chatForm.valid">
-      <span>Senden</span>
-    </button>
-
-  </form>
-
+<ion-content padding class="page-task-chat" id="page-task-chat">
+  <div class="messages">
+    <div class="message" *ngFor="let msg of taskMsgs; let i = index" [ngClass]="{'me': uid === msg.from}">
+    <span *ngIf="task.chat">{{msg.msg}}</span>
+  </div>
+  </div>
 </ion-content>
+
+<ion-footer>
+  <form [formGroup]="chatForm" (ngSubmit)="submitForm()">
+    <ion-toolbar>
+      <ion-row>
+
+        <ion-col>
+          <ion-input
+            type="text"
+            placeholder="Nachricht schreiben..."
+            required
+            formControlName="msg">
+          </ion-input>
+        </ion-col>
+        <ion-col col-2>
+          <button
+            ion-button type="submit"
+            [disabled]="!chatForm.valid">
+            <ion-icon name="send"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-toolbar>
+  </form>
+</ion-footer>

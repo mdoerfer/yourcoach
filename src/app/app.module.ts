@@ -87,7 +87,9 @@ import {WatchMediaModalPage} from "../pages/watch-media-modal/watch-media-modal"
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp, {
+      backButtonText: '',
+    }),
     Ionic2RatingModule,
     IonicStorageModule.forRoot()
   ],
