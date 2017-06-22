@@ -147,6 +147,14 @@ export class Notification {
         title = 'Du hast eine Erinnerung';
         icon = 'alarm';
         break;
+      case 'task:reminder':
+        title = 'Du hast offene Tasks';
+        icon = 'alarm';
+        break;
+      case 'assignment:reminder':
+        title = 'Es gibt zu bewertende Tasks';
+        icon = 'alarm';
+        break;
       case 'invite:new':
         title = 'Du hast eine Einladung';
         icon = 'mail';

@@ -9,6 +9,11 @@ import {Notification} from "../models/notification.model";
 export class TaskService {
   nodeName: string = '/tasks/';
 
+  //Flags
+  taskReminderSent: boolean = false;
+  assignmentReminderSent: boolean = false;
+
+  //Collections
   tasks: any[] = []; //Tasks for me from coach
   assignments: any[] = []; //Tasks from me to student
 
@@ -46,6 +51,7 @@ export class TaskService {
    * Observe all tasks that were created by me
    */
   observeAssignments() {
+    let mustBeReminded = false;
     let uid = this.authService.getActiveUser().uid;
 
     let query = firebase.database()
@@ -68,9 +74,24 @@ export class TaskService {
           assignment.attachmentsArr.push(assignment.attachments[attachmentId]);
         }
 
-        //TODO: Check assignment state, and if still 'grade' send notification
+        //Check if an gradeable assignments reminder must be sent
+        if (!this.assignmentReminderSent && assignment.state === 'grade') {
+          mustBeReminded = true;
+        }
 
         assignments.push(assignment);
+      }
+
+      //Send gradeable assignments reminder
+      if(mustBeReminded) {
+        //Send notification
+        this.notificationService.createNotification(new Notification()
+          .setType('assignment:reminder')
+          .setDescription('Es gibt was zu tun!')
+          .setTo(uid));
+
+        //Set reminder flag
+        this.assignmentReminderSent = true;
       }
 
       //Update state
@@ -95,6 +116,7 @@ export class TaskService {
    * Observe all tasks meant for me
    */
   observeTasks() {
+    let mustBeReminded = false;
     let uid = this.authService.getActiveUser().uid;
 
     let query = firebase.database()
@@ -117,9 +139,24 @@ export class TaskService {
           task.attachmentsArr.push(task.attachments[attachmentId]);
         }
 
-        //TODO: Check task state, and if still 'open' send notification
+        //Check if an open tasks reminder must be sent
+        if (!this.taskReminderSent && task.state === 'open') {
+          mustBeReminded = true;
+        }
 
         tasks.push(task);
+      }
+
+      //Send open tasks reminder
+      if(mustBeReminded) {
+        //Send notification
+        this.notificationService.createNotification(new Notification()
+          .setType('task:reminder')
+          .setDescription('Es gibt was zu tun!')
+          .setTo(uid));
+
+        //Set reminder flag
+        this.taskReminderSent = true;
       }
 
       //Update state
