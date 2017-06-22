@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar color="primary">
-    <ion-title>{{user?.name}}</ion-title>
+    <ion-title class="header-title">{{user?.name}}</ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="presentPopover($event)">
         <ion-icon name="more"></ion-icon>
@@ -268,3 +268,6 @@
     </button>
   </ion-fab>
 </ion-content>
+<ion-footer class="footer-element">
+  <img src="assets/images/footer-element.png">
+</ion-footer>
