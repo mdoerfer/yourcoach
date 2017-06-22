@@ -6,6 +6,7 @@ import {AuthService} from "../../services/auth.service";
 import {Camera, CameraOptions} from '@ionic-native/camera';
 import {MediaCapture, MediaFile, CaptureError, CaptureImageOptions} from '@ionic-native/media-capture';
 import {FileService} from "../../services/file.service";
+import {WatchMediaModalPage} from "../watch-media-modal/watch-media-modal";
 
 @IonicPage()
 @Component({
@@ -270,7 +271,10 @@ export class CreateTaskPage implements OnInit {
    * @param index
    */
   watchNewAttachment(index) {
-    console.log(this.newAttachments[index]);
+    this.navCtrl.push(WatchMediaModalPage, {
+      mediaType: this.responseType,
+      media: this.newAttachments[index]
+    });
   }
 
   /**
@@ -288,7 +292,10 @@ export class CreateTaskPage implements OnInit {
    * @param index
    */
   watchExistingAttachment(index) {
-    console.log(this.existingAttachments[index]);
+    this.navCtrl.push(WatchMediaModalPage, {
+      mediaType: this.responseType,
+      media: this.existingAttachments[index]
+    });
   }
 
   /**
@@ -305,7 +312,10 @@ export class CreateTaskPage implements OnInit {
    * Watch response
    */
   watchResponse() {
-    console.log(this.response);
+    this.navCtrl.push(WatchMediaModalPage, {
+      mediaType: this.responseType,
+      media: this.response
+    });
   }
 
 

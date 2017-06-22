@@ -51,6 +51,7 @@ import {TaskChatPage} from "../pages/task-chat/task-chat";
 import {StudentTaskVoiceModalPage} from "../pages/student-task-voice-modal/student-task-voice-modal";
 import {StudentTaskImageModalPage} from "../pages/student-task-image-modal/student-task-image-modal";
 import {StudentTaskVideoModalPage} from "../pages/student-task-video-modal/student-task-video-modal";
+import {WatchMediaModalPage} from "../pages/watch-media-modal/watch-media-modal";
 
 
 @NgModule({
@@ -73,6 +74,7 @@ import {StudentTaskVideoModalPage} from "../pages/student-task-video-modal/stude
     StudentTaskVoiceModalPage,
     StudentTaskImageModalPage,
     StudentTaskVideoModalPage,
+    WatchMediaModalPage,
     ProfilePage,
     EditProfileModalPage,
     TaskTemplatesPage,
@@ -109,6 +111,7 @@ import {StudentTaskVideoModalPage} from "../pages/student-task-video-modal/stude
     StudentTaskVoiceModalPage,
     StudentTaskImageModalPage,
     StudentTaskVideoModalPage,
+    WatchMediaModalPage,
     ProfilePage,
     EditProfileModalPage,
     TaskTemplatesPage,

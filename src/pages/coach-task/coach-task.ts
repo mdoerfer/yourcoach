@@ -8,6 +8,7 @@ import {TaskPopoverPage} from "../task-popover/task-popover";
 import {TaskService} from "../../services/task.service";
 import {UserService} from "../../services/user.service";
 import {TaskChatPage} from "../task-chat/task-chat";
+import {WatchMediaModalPage} from "../watch-media-modal/watch-media-modal";
 
 @IonicPage()
 @Component({
@@ -190,21 +191,27 @@ export class CoachTaskPage implements OnInit {
   /**
    * Watch attachment
    *
+   * @param mediaType
    * @param attachment
    */
   watchAttachment(mediaType: string, attachment: any) {
-    console.log(mediaType);
-    console.log(attachment);
+    this.navCtrl.push(WatchMediaModalPage, {
+      mediaType: mediaType,
+      media: attachment
+    });
   }
 
   /**
    * Watch response
    *
+   * @param mediaType
    * @param response
    */
   watchResponse(mediaType: string, response: any) {
-    console.log(mediaType);
-    console.log(response);
+    this.navCtrl.push(WatchMediaModalPage, {
+      mediaType: mediaType,
+      media: response
+    });
   }
 
   /**

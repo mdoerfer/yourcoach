@@ -13,7 +13,7 @@
   <img [src]="media.url" *ngIf="mediaType === 'Bild'">
 
   <audio controls *ngIf="mediaType === 'Sprachnachricht'">
-    <source [src]="response.url">
+    <source [src]="media.url">
   </audio>
 
   <button color="danger" (click)="dismissModal()"
