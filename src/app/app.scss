@@ -104,3 +104,58 @@ ion-fab {
   margin-bottom: 0px !important;
 }
 
+.task-card {
+  margin: 1px 1px 12px 1px !important;
+  width: 100% !important;
+}
+
+.task-card .label {
+  margin: 0 !important;
+}
+
+.task-card .item {
+  margin: 0 !important;
+  padding-left: 3px !important;
+}
+
+.task-title {
+  font-family: Raleway !important;
+  font-weight: 600 !important;
+  font-size: 13pt !important;
+  color: black !important;    margin: 1px 1px 12px 1px;
+  width: calc(100%);
+}
+
+.date {
+  text-align: right !important;
+  padding-top: 2px !important;
+}
+
+.task-date {
+  color: #707070 !important;
+  text-align: right !important;
+  margin: 0 !important;
+}
+
+.difficulties {
+  text-align: right !important;
+}
+
+.difficulty {
+  text-transform: uppercase !important;
+  text-align: center !important;
+  font-weight: bold !important;
+}
+
+.task-description {
+  font-size: 11pt !important;
+  color: black !important;
+}
+
+.second-row-col {
+  padding-top: 0 !important;
+}
+
+.first-row-col {
+  padding-bottom: 2px !important;
+}

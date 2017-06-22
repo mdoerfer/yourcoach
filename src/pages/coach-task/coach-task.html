@@ -31,20 +31,23 @@
         </div>
 
       <div *ngIf="openAssignments.length > 0">
-        <ion-card *ngFor="let assignment of openAssignments; let i = index" (press)="openActionSheet(assignment._id)">
+        <ion-card *ngFor="let assignment of openAssignments; let i = index" (press)="openActionSheet(assignment._id)" class="task-card">
           <div>
             <ion-item (tap)="toggle(assignment)">
               <ion-grid>
                 <ion-row>
-                  <ion-col>
-                    <h2>{{assignment.title}}</h2>
+                  <ion-col class="first-row-col">
+                    <p class="task-title">{{assignment.title}}</p>
+                  </ion-col>
+                  <ion-col class="first-row-col date">
+                    <ion-note class="task-date" item-left>{{assignment.created_at | date}}</ion-note>
                   </ion-col>
                 </ion-row>
                 <ion-row>
-                  <ion-col>
-                    <ion-note item-left>{{assignment.created_at | date}}</ion-note>
+                  <ion-col class="second-row-col">
+                    <p class="task-description">{{assignment.description}}</p>
                   </ion-col>
-                  <ion-col text-right>
+                  <ion-col class="second-row-col difficulties">
                     <ion-badge item-right *ngIf="assignment.difficulty=='Schwer'" color="badgehard" class="difficulty">{{assignment.difficulty}}
                     </ion-badge>
                     <ion-badge item-right *ngIf="assignment.difficulty=='Mittel'" color="badgemedium" class="difficulty">{{assignment.difficulty}}
@@ -55,10 +58,6 @@
                 </ion-row>
               </ion-grid>
             </ion-item>
-
-            <ion-card-content *ngIf="assignment.open" text-wrap>
-              <p>{{assignment.description}}</p>
-            </ion-card-content>
 
             <!-- ANHÄNGE -->
             <ion-list *ngIf="assignment.open && assignment.attachmentsArr.length">
@@ -99,15 +98,18 @@
             <ion-item (tap)="toggle(assignment)">
               <ion-grid>
                 <ion-row>
-                  <ion-col>
-                    <h2>{{assignment.title}}</h2>
+                  <ion-col class="first-row-col">
+                    <p class="task-title">{{assignment.title}}</p>
+                  </ion-col>
+                  <ion-col class="first-row-col date">
+                    <ion-note class="task-date" item-left>{{assignment.created_at | date}}</ion-note>
                   </ion-col>
                 </ion-row>
                 <ion-row>
-                  <ion-col>
-                    <ion-note item-left>{{assignment.created_at | date}}</ion-note>
+                  <ion-col class="second-row-col">
+                    <p class="task-description">{{assignment.description}}</p>
                   </ion-col>
-                  <ion-col text-right>
+                  <ion-col class="second-row-col difficulties">
                     <ion-badge item-right *ngIf="assignment.difficulty=='Schwer'" color="badgehard" class="difficulty">{{assignment.difficulty}}
                     </ion-badge>
                     <ion-badge item-right *ngIf="assignment.difficulty=='Mittel'" color="badgemedium" class="difficulty">{{assignment.difficulty}}
@@ -118,10 +120,6 @@
                 </ion-row>
               </ion-grid>
             </ion-item>
-
-            <ion-card-content *ngIf="assignment.open" text-wrap>
-              <p>{{assignment.description}}</p>
-            </ion-card-content>
 
             <!-- ANHÄNGE -->
             <ion-list *ngIf="assignment.open && assignment.attachmentsArr.length">
@@ -186,15 +184,18 @@
             <ion-item (tap)="toggle(assignment)">
               <ion-grid>
                 <ion-row>
-                  <ion-col>
-                    <h2>{{assignment.title}}</h2>
+                  <ion-col class="first-row-col">
+                    <p class="task-title">{{assignment.title}}</p>
+                  </ion-col>
+                  <ion-col class="first-row-col date">
+                    <ion-note class="task-date" item-left>{{assignment.created_at | date}}</ion-note>
                   </ion-col>
                 </ion-row>
                 <ion-row>
-                  <ion-col>
-                    <ion-note item-left>{{assignment.created_at | date}}</ion-note>
+                  <ion-col class="second-row-col">
+                    <p class="task-description">{{assignment.description}}</p>
                   </ion-col>
-                  <ion-col text-right>
+                  <ion-col class="second-row-col difficulties">
                     <ion-badge item-right *ngIf="assignment.difficulty=='Schwer'" color="badgehard" class="difficulty">{{assignment.difficulty}}
                     </ion-badge>
                     <ion-badge item-right *ngIf="assignment.difficulty=='Mittel'" color="badgemedium" class="difficulty">{{assignment.difficulty}}
