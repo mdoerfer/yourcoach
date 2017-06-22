@@ -16,8 +16,8 @@
       <ion-avatar item-left>
         <img src="{{user?.avatar.url}}">
       </ion-avatar>
-      <h2>{{user?.name}}</h2>
-      <h3>{{user?.dateOfBirth}}</h3>
+      <h2 class="item-header">{{user?.name}}</h2>
+      <p>{{user?.dateOfBirth}}</p>
       <p>{{user?.aboutMe}}</p>
     </ion-item>
     <ion-item (click)="goToRoleChoice()">
