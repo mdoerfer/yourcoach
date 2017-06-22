@@ -75,28 +75,24 @@
             </ion-list>
 
             <!-- RÜCKMELDUNG -->
-            <ion-item *ngIf="assignment.open" text-wrap>
-              <p>{{assignment.responseType}}</p>
-              <p *ngIf="assignment.responseInstructions">{{assignment.responseInstructions}}</p>
-            </ion-item>
             <ion-grid>
-            <ion-row *ngIf="assignment.open">
-              <ion-col text-right>
-                <div class="response-background">
-                <ion-icon *ngIf="assignment.responseType=='Keine'"></ion-icon>
-                <ion-icon class="response-icon" *ngIf="assignment.responseType=='Bild'" name="camera"></ion-icon>
-                <ion-icon class="response-icon" *ngIf="assignment.responseType=='Video'" name="videocam"></ion-icon>
-                <ion-icon class="response-icon" *ngIf="assignment.responseType=='Text'" name="text"></ion-icon>
-                <ion-icon class="response-icon" *ngIf="assignment.responseType=='Sprachnachricht'" name="musical-notes"></ion-icon>
-                </div>
-                <ion-col>
-                <button ion-button icon-left small (click)="openChat(assignment)">
-                  <ion-icon name="text"></ion-icon>
-                  <div>Chat</div>
-                </button>
+              <ion-row *ngIf="assignment.open">
+                <ion-col text-right>
+                  <button  *ngIf="assignment.responseType!=='Keine'" ion-button icon-left small class="response-background">
+                    <ion-icon *ngIf="assignment.responseType=='Keine'"></ion-icon>
+                    <ion-icon class="response-icon" *ngIf="assignment.responseType=='Bild'" name="camera"></ion-icon>
+                    <ion-icon class="response-icon" *ngIf="assignment.responseType=='Video'" name="videocam"></ion-icon>
+                    <ion-icon class="response-icon" *ngIf="assignment.responseType=='Text'" name="text"></ion-icon>
+                    <ion-icon class="response-icon" *ngIf="assignment.responseType=='Sprachnachricht'" name="musical-notes"></ion-icon>
+                  </button>
+                  <ion-col>
+                    <button class="chatButton" ion-button icon-left small (click)="openChat(assignment)">
+                      <ion-icon class="chatIcon" name="text"></ion-icon>
+                      <div class="chatText">Chat</div>
+                    </button>
+                  </ion-col>
                 </ion-col>
-              </ion-col>
-            </ion-row>
+              </ion-row>
             </ion-grid>
           </div>
         </ion-card>
@@ -137,58 +133,37 @@
               </ion-grid>
             </ion-item>
 
-            <!-- ANHÄNGE -->
-            <ion-list *ngIf="assignment.open && assignment.attachmentsArr.length">
-              <ion-item-divider>Anhänge</ion-item-divider>
-              <ion-item *ngFor="let attachment of assignment.attachmentsArr;">
-                <p (click)="watchAttachment(attachment)">{{attachment.name}}</p>
+            <!-- RÜCKMELDUNG-->
+            <ion-list class="icons-wrapper" *ngIf="assignment.responseType!=='Keine'">
+              <ion-item class="icon-wrapper">
+                <div  (click)="watchResponse(response)" class="icon-background">
+                  <ion-icon class="attachment-icon" *ngIf="assignment.responseType=='Bild'" name="camera"></ion-icon>
+                  <ion-icon class="attachment-icon" *ngIf="assignment.responseType=='Video'" name="videocam"></ion-icon>
+                  <ion-icon class="attachment-icon" *ngIf="assignment.responseType=='Sprachnachricht'" name="musical-notes"></ion-icon>
+                  <p *ngIf="assignment.responseType=='Text'">{{assignment.response}}</p>
+                </div>
               </ion-item>
             </ion-list>
 
-            <!-- RÜCKMELDUNG -->
-            <ion-item *ngIf="assignment.open" text-wrap>
-              <h2>Rückmeldung</h2>
-              <p>{{assignment.responseType}}</p>
-              <p *ngIf="assignment.responseInstructions">{{assignment.responseInstructions}}</p>
-
-              <!-- TEXT RÜCKMELDUNG -->
-              <p *ngIf="assignment.responseType === 'Text'">
-                {{assignment.response}}
-              </p>
-
-              <!-- VIDEO RÜCKMELDUNG -->
-              <p *ngIf="assignment.responseType === 'Video'" (click)="watchResponse(assignment.response)">
-                {{assignment.response.name}}
-              </p>
-
-              <!-- BILD RÜCKMELDUNG -->
-              <p *ngIf="assignment.responseType === 'Bild'" (click)="watchResponse(assignment.response)">
-                {{assignment.response.name}}
-              </p>
-
-              <!-- SPRACHNACHRICHT RÜCKMELDUNG -->
-              <p *ngIf="assignment.responseType === 'Sprachnachricht'" (click)="watchResponse(assignment.response)">
-                {{assignment.response.name}}
-              </p>
-            </ion-item>
-
-            <ion-row>
-              <ion-col text-left>
-                <rating [(ngModel)]="assignment.rating" readOnly="false" max="3"
-                        (click)="rateAssignmentAndMarkAsDone(assignment)"></rating>
-              </ion-col>
-              <ion-col text-right *ngIf="assignment.open">
-                <button ion-button icon-left clear small (click)="openChat(assignment)">
-                  <ion-icon name="text"></ion-icon>
-                  <div>Chat</div>
-                </button>
-              </ion-col>
-            </ion-row>
+            <ion-grid>
+              <ion-row *ngIf="assignment.open">
+                <ion-col text-right>
+                  <ion-col>
+                    <button class="chatButton" ion-button icon-left small (click)="openChat(assignment)">
+                      <ion-icon class="chatIcon" name="text"></ion-icon>
+                      <div class="chatText">Chat</div>
+                    </button>
+                  </ion-col>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
           </div>
         </ion-card>
       </div>
     </div>
 
+    <!--    <rating [(ngModel)]="assignment.rating" readOnly="false" max="3"
+                         (click)="rateAssignmentAndMarkAsDone(assignment)"></rating>-->
     <!-- --------------------------------------------------------------------------------- -->
 
     <div *ngSwitchCase="'done'">
