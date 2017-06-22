@@ -40,7 +40,7 @@
     <ion-list-header class="list-header">Meine Coaches</ion-list-header>
     <ion-item *ngFor="let coach of coaches; let i = index" (tap)="goToTasks(i)" (press)="openActionSheet(i)">
       <ion-avatar item-left>
-        <img class="list-avatar" src="assets/images/dummy-avatar.png">
+        <img class="list-avatar" [src]="coach.avatar.url">
       </ion-avatar>
       <h2 class="item-header">{{coach.name}}</h2>
       <p class="item-subheader">{{coach.aboutMe}}</p>
@@ -58,7 +58,7 @@
       <ion-card>
         <ion-item>
           <ion-avatar item-left>
-            <img src="assets/images/dummy-avatar.png">
+            <img [src]="coach.avatar.url">
           </ion-avatar>
           <h3>Eine Coaching Anfrage von<br>
             {{coach.name}}</h3>

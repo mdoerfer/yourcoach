@@ -17,9 +17,7 @@ export class EditProfileModalPage implements OnInit {
 
   profileForm: FormGroup;
 
-  avatar = {
-    url: 'assets/images/dummy-avatar.png'
-  };
+  avatar: any;
 
   constructor(public viewCtrl: ViewController,
               private navParams: NavParams,
@@ -138,7 +136,6 @@ export class EditProfileModalPage implements OnInit {
     formData.aboutMe = this.user.aboutMe;
     formData.dateOfBirth = this.user.dateOfBirth;
 
-    //Initialize avatar
     this.avatar = this.user.avatar;
 
     //Create form

@@ -38,7 +38,7 @@
     <ion-list-header class="list-header">Meine Schüler</ion-list-header>
     <ion-item *ngFor="let student of students; let i = index" (click)="goToTasks(i)" (press)="openActionSheet(i)">
       <ion-avatar item-left>
-        <img class="list-avatar" src="assets/images/dummy-avatar.png">
+        <img class="list-avatar" [src]="student.avatar.url">
       </ion-avatar>
       <h2 class="item-header">{{student.name}}</h2>
       <p class="item-subheader">{{student.aboutMe}}</p>
