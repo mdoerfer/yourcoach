@@ -174,7 +174,7 @@
       <div *ngIf="doneAssignments.length == 0"><img class="no-task" src="assets/images/notask.png"></div>
 
       <div *ngIf="doneAssignments.length > 0">
-        <ion-card *ngFor="let assignment of doneAssignments; let i = index;" (press)="openActionSheet(assignment._id)">
+        <ion-card *ngFor="let assignment of gradeAssignments; let i = index;" (press)="openActionSheet(assignment._id)" class="task-card">
           <div>
             <ion-item (tap)="toggle(assignment)">
               <ion-grid>
@@ -202,46 +202,12 @@
               </ion-grid>
             </ion-item>
 
-            <ion-card-content *ngIf="assignment.open" text-wrap>
-              <p>{{assignment.description}}</p>
-            </ion-card-content>
-
-            <!-- RÜCKMELDUNG-->
-            <ion-list class="icons-wrapper" *ngIf="assignment.open && assignment.responseType !== 'Keine'">
-              <ion-item class="icon-wrapper">
-                <div (click)="watchResponse(assignment.response)" class="icon-background">
-                  <ion-icon class="attachment-icon" *ngIf="assignment.responseType=='Bild'" name="camera"></ion-icon>
-                  <ion-icon class="attachment-icon" *ngIf="assignment.responseType=='Video'" name="videocam"></ion-icon>
-                  <ion-icon class="attachment-icon" *ngIf="assignment.responseType=='Sprachnachricht'" name="musical-notes"></ion-icon>
-                  <p *ngIf="assignment.responseType=='Text'">{{assignment.response}}</p>
-                </div>
-              </ion-item>
-            </ion-list>
-
-            <ion-grid>
-              <ion-row *ngIf="assignment.open">
-                <ion-col text-right>
-                  <ion-col>
-                    <button class="chatButton" ion-button icon-left small (click)="openChat(assignment)">
-                      <ion-icon class="chatIcon" name="text"></ion-icon>
-                      <div class="chatText">Chat</div>
-                    </button>
-                  </ion-col>
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-
-            <ion-row>
-              <ion-col text-left>
-                <rating [(ngModel)]="assignment.rating" readOnly="true" max="3"></rating>
-              </ion-col>
-              <ion-col text-right *ngIf="assignment.open">
-                <button ion-button icon-left clear small (click)="openChat(assignment)">
-                  <ion-icon name="text"></ion-icon>
-                  <div>Chat</div>
-                </button>
+            <ion-row class="rating-done-fix">
+              <ion-col text-left class="rating-col">
+                <rating class="rating" [(ngModel)]="assignment.rating" readOnly="false" max="3" (click)="rateAssignmentAndMarkAsDone(assignment)"></rating>
               </ion-col>
             </ion-row>
+
           </div>
         </ion-card>
       </div>
