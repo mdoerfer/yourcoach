@@ -38,6 +38,8 @@ export class StudentService {
       let dbPairings = snapshot.val();
       let students: any[] = [];
 
+      console.log('OBSERVING STUDENTS FIRED');
+
       for (let pairingId in dbPairings) {
         let pairing = dbPairings[pairingId];
 

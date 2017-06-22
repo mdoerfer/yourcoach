@@ -69,6 +69,8 @@ export class TaskService {
         assignment._id = assignmentId;
         assignment.attachmentsArr = [];
 
+        console.log('OBSERVING ASSIGNMENTS FIRED');
+
         //Turn attachments into array
         for (let attachmentId in assignment.attachments) {
           assignment.attachmentsArr.push(assignment.attachments[attachmentId]);
@@ -129,6 +131,8 @@ export class TaskService {
     query.on('value', snapshot => {
       let dbTasks = snapshot.val();
       let tasks = [];
+
+      console.log('OBSERVING TASKS FIRED');
 
       //Add tasks to matching arrays, depending on their state
       for (let taskId in dbTasks) {

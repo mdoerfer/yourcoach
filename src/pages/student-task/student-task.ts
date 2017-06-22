@@ -72,10 +72,8 @@ export class StudentTaskPage implements OnInit {
   /**
    * Load initial tasks
    */
-  private loadTasks(loadFromService = true) {
-    if(loadFromService) {
-      this.tasks = this.taskService.getTasks(this.cid);
-    }
+  private loadTasks() {
+    this.tasks = this.taskService.getTasks(this.cid);
 
     this.openTasks = this.getTasksByState('open');
     this.gradeTasks = this.getTasksByState('grade');
@@ -86,10 +84,8 @@ export class StudentTaskPage implements OnInit {
    * Subscribe to tasks and listen for changes
    */
   private subscribeTasks() {
-    this.events.subscribe('tasks:tasks-changed', tasks => {
-      this.tasks = tasks;
-
-      this.loadTasks(false);
+    this.events.subscribe('tasks:tasks-changed', () => {
+      this.loadTasks();
     });
   }
 
@@ -159,13 +155,13 @@ export class StudentTaskPage implements OnInit {
     });
 
     popover.onDidDismiss(data => {
-      if(data) {
-        if(data.page === 'statistic') {
+      if (data) {
+        if (data.page === 'statistic') {
           this.navCtrl.push(StatisticsPage, {
             doneTasks: data.doneTasks
           });
         }
-        else if(data.page === 'profile') {
+        else if (data.page === 'profile') {
           this.navCtrl.push(ProfilePage, {
             user: data.user
           });
