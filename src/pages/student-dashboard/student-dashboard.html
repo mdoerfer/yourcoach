@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-toolbar color="primary" *ngIf="!searchIsActive">
-    <ion-title>Meine Coaches</ion-title>
+    <ion-title class="header-title">Meine Coaches</ion-title>
     <ion-buttons start>
       <button ion-button icon-only (click)="toggleSearch()">
         <ion-icon name="search"></ion-icon>
@@ -32,7 +32,7 @@
 </ion-header>
 
 <ion-content padding (click)="checkSearch()">
-  <ion-list-header>Meine Coaches</ion-list-header>
+  <ion-list-header class="list-header">Meine Coaches</ion-list-header>
   <p padding *ngIf="coaches.length == 0">
     Du hast noch keine Coaches
   </p>
@@ -40,14 +40,15 @@
   <ion-list *ngIf="coaches.length > 0">
     <ion-item *ngFor="let coach of coaches; let i = index" (tap)="goToTasks(i)" (press)="openActionSheet(i)">
       <ion-avatar item-left>
-        <img src="assets/images/dummy-avatar.png">
+        <img class="list-avatar" src="assets/images/dummy-avatar.png">
       </ion-avatar>
-      <h2>{{coach.name}}</h2>
-      <p>{{coach?.openTasks}} Tasks offen</p>
+      <h2 class="item-header">{{coach.name}}</h2>
+      <p class="item-subheader">{{coach.aboutMe}}</p>
+      <p class="claim">{{coach?.openTasks}} Tasks offen</p>
       <!--   <ion-badge color="light" item-right>{{openTasksStudents[i]}}</ion-badge>    -->
     </ion-item>
   </ion-list>
-  <ion-list-header>Anfragen</ion-list-header>
+  <ion-list-header class="list-header">Anfragen</ion-list-header>
   <p padding *ngIf="pendingInvites.length == 0">
     Es liegen keine Einladungen vor
   </p>

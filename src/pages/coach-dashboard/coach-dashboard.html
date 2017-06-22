@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-toolbar color="primary" *ngIf="!searchIsActive">
-    <ion-title>Dashboard</ion-title>
+    <ion-title class="header-title">Dashboard</ion-title>
     <ion-buttons start>
       <button ion-button icon-only (click)="toggleSearch()">
         <ion-icon name="search"></ion-icon>
@@ -31,17 +31,18 @@
 
 
 <ion-content padding (click)="checkSearch()">
-  <ion-list-header>Meine Schüler</ion-list-header>
+  <ion-list-header class="list-header">Meine Schüler</ion-list-header>
   <p padding *ngIf="students.length == 0">
     Du hast keine Studenten zur Zeit
   </p>
   <ion-list *ngIf="students.length > 0">
     <ion-item *ngFor="let student of students; let i = index" (click)="goToTasks(i)" (press)="openActionSheet(i)">
       <ion-avatar item-left>
-        <img src="assets/images/dummy-avatar.png">
+        <img class="list-avatar" src="assets/images/dummy-avatar.png">
       </ion-avatar>
-      <h2>{{student.name}}</h2>
-
+      <h2 class="item-header">{{student.name}}</h2>
+      <p class="item-subheader">{{student.aboutMe}}</p>
+      <p class="claim">0 zu bewertende Tasks</p>
       <!--p>2 Tasks offen</p> TODO: Tasks and Badgeds
       <ion-badge color="light" item-right>2</ion-badge-->
     </ion-item>

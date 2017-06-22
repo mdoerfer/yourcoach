@@ -48,9 +48,42 @@ h2.inverted{
 
 }
 
-.list-header .label{
-  margin: 11px 8px 11px 0;
-  font-family: Raleway, sans-serif;;
+.header-title {
+  font-family: Raleway;
   font-weight: 700;
+  color: white;
+  font-size: 40pt;
 }
 
+ion-fab {
+  margin: 8px;
+}
+
+.list-header {
+  font-family: Raleway;
+  font-weight: 600;
+  font-style: italic;
+  font-size: 11pt;
+}
+
+.item-header {
+  font-family: Raleway !important;
+  font-weight: 600 !important;
+  font-size: 12pt !important;
+  font-style: normal !important;
+}
+
+.item-subheader {
+  font-size: 10pt !important;
+  color: black !important;
+}
+
+.claim {
+  color: #707070 !important;
+  font-size: 10pt !important;
+}
+
+.list-avatar {
+  width: 60px !important;
+  height: 60px !important;
+}

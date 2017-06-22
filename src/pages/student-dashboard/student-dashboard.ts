@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActionSheetController, Events, IonicPage, NavController, PopoverController} from 'ionic-angular';
 import {StudentTaskPage} from "../student-task/student-task";
-import {DashboardPopoverPage} from "../dashboard-popover/dashboard-popover";
 import {InviteService} from "../../services/invite.service";
 import {CoachService} from "../../services/coach.service";
 import {AlertController} from 'ionic-angular';
@@ -55,6 +54,7 @@ export class StudentDashboardPage implements OnInit {
 
     this.loadUnreadNotifications();
     this.subscribeUnreadNotifications();
+
   }
 
 
@@ -72,7 +72,7 @@ export class StudentDashboardPage implements OnInit {
     //Listen for changes
     this.events.subscribe('coaches:changed', coaches => {
       this.coaches = coaches;
-      this.loadOpenTasksStudents(coaches);
+      this.loadOpenTasksStudents();
     })
   }
 
@@ -81,7 +81,7 @@ export class StudentDashboardPage implements OnInit {
    */
   private subscribeTasks() {
     this.events.subscribe('tasks:tasks-changed', () => {
-      this.loadOpenTasksStudents(this.coaches);
+      this.loadOpenTasksStudents();
     });
   }
 
@@ -268,7 +268,10 @@ export class StudentDashboardPage implements OnInit {
     }
   }
 
-  loadOpenTasksStudents(coaches) {
+  /**
+   * Counts open tasks for every coach
+   */
+  loadOpenTasksStudents() {
     let countOpenTasks = 0;
 
     for (let i = 0; i < this.coaches.length; i++) {
