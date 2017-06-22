@@ -8,6 +8,7 @@ import {CreateTaskPage} from "../create-task/create-task";
 import {CoachSendTaskModalPage} from "../coach-send-task-modal/coach-send-task-modal";
 import {StudentTaskTextModalPage} from "../student-task-text-modal/student-task-text-modal";
 import {AuthService} from "../../services/auth.service";
+import {WatchMediaModalPage} from "../watch-media-modal/watch-media-modal";
 
 @IonicPage()
 @Component({
@@ -69,8 +70,11 @@ export class TaskTemplatesPage implements OnInit {
    *
    * @param attachment
    */
+
   watchAttachment(attachment: any) {
-    console.log(attachment);
+    this.navCtrl.push(WatchMediaModalPage, {
+      media: attachment
+    });
   }
 
   /**

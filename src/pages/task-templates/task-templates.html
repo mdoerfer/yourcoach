@@ -1,8 +1,8 @@
-<ion-header>
 
-  <ion-navbar>
-    <ion-title class="header-title">Task Templates</ion-title>
-  </ion-navbar>
+<ion-header>
+<ion-navbar color="primary">
+  <ion-title class="header-title">Templates</ion-title>
+</ion-navbar>
 
 </ion-header>
 
@@ -12,20 +12,23 @@
   <div *ngIf="draftAssignments.length == 0">Du hast noch keine Task Templates angelegt.</div>
 
   <div *ngIf="draftAssignments.length > 0">
-    <ion-card *ngFor="let assignment of draftAssignments; let i = index" (press)="openActionSheet(assignment._id)">
+    <ion-card *ngFor="let assignment of draftAssignments; let i = index" (press)="openActionSheet(assignment._id)" class="task-card">
       <div>
         <ion-item (tap)="toggle(assignment)">
           <ion-grid>
             <ion-row>
-              <ion-col>
-                <h2>{{assignment.title}}</h2>
+              <ion-col class="first-row-col">
+                <p class="task-title">{{assignment.title}}</p>
+              </ion-col>
+              <ion-col class="first-row-col date">
+                <ion-note class="task-date" item-left>{{assignment.created_at | date}}</ion-note>
               </ion-col>
             </ion-row>
             <ion-row>
-              <ion-col>
-                <ion-note item-left>{{assignment.created_at | date}}</ion-note>
+              <ion-col class="second-row-col">
+                <p class="task-description">{{assignment.description}}</p>
               </ion-col>
-              <ion-col text-right>
+              <ion-col class="second-row-col difficulties">
                 <ion-badge item-right *ngIf="assignment.difficulty=='Schwer'" color="badgehard" class="difficulty">{{assignment.difficulty}}
                 </ion-badge>
                 <ion-badge item-right *ngIf="assignment.difficulty=='Mittel'" color="badgemedium" class="difficulty">{{assignment.difficulty}}
@@ -37,31 +40,21 @@
           </ion-grid>
         </ion-item>
 
-        <ion-card-content *ngIf="assignment.open" text-wrap>
-          <p>{{assignment.description}}</p>
-        </ion-card-content>
-
-        <ion-list *ngIf="assignment.open && assignment.attachmentsArr.length">
-          <ion-item-divider>Anhänge</ion-item-divider>
-          <ion-item *ngFor="let attachment of assignment.attachmentsArr;">
-            <p (click)="watchAttachment(attachment)">{{attachment.name}}</p>
+        <!-- ANHÄNGE -->
+        <ion-list class="icons-wrapper" *ngIf="assignment.open && assignment.attachmentsArr.length">
+          <ion-item class="icon-wrapper" *ngFor="let attachment of assignment.attachmentsArr;">
+            <div (click)="watchAttachment(attachment)" class="icon-background">
+              <ion-icon class="attachment-icon" *ngIf="attachment.type=='jpg'" name="camera"></ion-icon>
+              <ion-icon class="attachment-icon" *ngIf="attachment.type=='png'" name="camera"></ion-icon>
+              <ion-icon class="attachment-icon" *ngIf="attachment.type=='MOV'" name="videocam"></ion-icon>
+              <ion-icon class="attachment-icon" *ngIf="attachment.type=='mp4'" name="videocam"></ion-icon>
+              <ion-icon class="attachment-icon" *ngIf="attachment.type=='amr'" name="musical-notes"></ion-icon>
+              <ion-icon class="attachment-icon" *ngIf="attachment.type=='mp3'" name="musical-notes"></ion-icon>
+              <ion-icon class="attachment-icon" *ngIf="attachment.type=='wav'" name="musical-notes"></ion-icon>
+            </div>
           </ion-item>
         </ion-list>
 
-        <ion-item *ngIf="assignment.open" text-wrap>
-          <h2>Rückmeldung</h2>
-          <p>{{assignment.responseType}}</p>
-          <p *ngIf="assignment.responseInstructions">{{assignment.responseInstructions}}</p>
-        </ion-item>
-
-        <ion-row *ngIf="assignment.open">
-          <ion-col text-right>
-            <button ion-button icon-left clear small (click)="showModal(i)">
-              <ion-icon name="send"></ion-icon>
-              <div>Senden</div>
-            </button>
-          </ion-col>
-        </ion-row>
       </div>
     </ion-card>
   </div>
@@ -73,3 +66,6 @@
   </ion-fab>
 
 </ion-content>
+<ion-footer class="footer-element">
+  <img src="assets/images/footer-element.png">
+</ion-footer>
