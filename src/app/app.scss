@@ -212,6 +212,14 @@ ion-fab {
   display: inline-block !important;
 }
 
+.response-background2 {
+  width: 160px !important;
+  height: 30px !important;
+  background-color: #0477bd !important;
+  text-align: center !important;
+  display: inline-block !important;
+}
+
 .response-icon {
   color: white !important;
   font-size: 2.2em !important;
@@ -274,4 +282,9 @@ ion-fab {
   width: auto;
   margin: 0 auto;
   display: block;
+}
+
+.textResponse{
+  text-align: justify !important;
+  padding: 0px 20px 0px 14px !important;
 }

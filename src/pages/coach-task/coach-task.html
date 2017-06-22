@@ -141,14 +141,14 @@
 
             <!-- RÜCKMELDUNG-->
             <ion-list class="icons-wrapper" *ngIf="assignment.open && assignment.responseType !== 'Keine'">
-              <ion-item class="icon-wrapper">
+              <ion-item class="icon-wrapper" *ngIf="assignment.responseType !== 'Text'">
                 <div (click)="watchResponse(assignment.response)" class="icon-background">
                   <ion-icon class="attachment-icon" *ngIf="assignment.responseType=='Bild'" name="camera"></ion-icon>
                   <ion-icon class="attachment-icon" *ngIf="assignment.responseType=='Video'" name="videocam"></ion-icon>
                   <ion-icon class="attachment-icon" *ngIf="assignment.responseType=='Sprachnachricht'" name="musical-notes"></ion-icon>
-                  <p *ngIf="assignment.responseType=='Text'">{{assignment.response}}</p>
                 </div>
               </ion-item>
+              <p class="textResponse" *ngIf="assignment.responseType=='Text'">{{assignment.response}}</p>
             </ion-list>
 
             <ion-grid>
@@ -174,7 +174,7 @@
       <div *ngIf="doneAssignments.length == 0"><img class="no-task" src="assets/images/notask.png"></div>
 
       <div *ngIf="doneAssignments.length > 0">
-        <ion-card *ngFor="let assignment of gradeAssignments; let i = index;" (press)="openActionSheet(assignment._id)" class="task-card">
+        <ion-card *ngFor="let assignment of doneAssignments; let i = index;" (press)="openActionSheet(assignment._id)" class="task-card">
           <div>
             <ion-item (tap)="toggle(assignment)">
               <ion-grid>
