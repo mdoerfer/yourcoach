@@ -60,10 +60,10 @@ ion-fab {
 }
 
 .list-header {
-  font-family: Raleway;
-  font-weight: 600;
-  font-style: italic;
-  font-size: 11pt;
+  font-family: Raleway !important;
+  font-weight: 600 !important;
+  font-style: italic !important;
+  font-size: 11pt !important;
 }
 
 .item-header {
