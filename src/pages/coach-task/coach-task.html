@@ -60,28 +60,44 @@
             </ion-item>
 
             <!-- ANHÄNGE -->
-            <ion-list *ngIf="assignment.open && assignment.attachmentsArr.length">
-              <ion-item-divider>Anhänge</ion-item-divider>
-              <ion-item *ngFor="let attachment of assignment.attachmentsArr;">
-                <p (click)="watchAttachment(attachment)">{{attachment.name}}</p>
+            <ion-list class="icons-wrapper" *ngIf="assignment.open && assignment.attachmentsArr.length">
+              <ion-item class="icon-wrapper" *ngFor="let attachment of assignment.attachmentsArr;">
+                <div (click)="watchAttachment(attachment)" class="icon-background">
+                  <ion-icon class="attachment-icon" *ngIf="attachment.type=='jpg'" name="camera"></ion-icon>
+                  <ion-icon class="attachment-icon" *ngIf="attachment.type=='png'" name="camera"></ion-icon>
+                  <ion-icon class="attachment-icon" *ngIf="attachment.type=='MOV'" name="videocam"></ion-icon>
+                  <ion-icon class="attachment-icon" *ngIf="attachment.type=='mp4'" name="videocam"></ion-icon>
+                  <ion-icon class="attachment-icon" *ngIf="attachment.type=='amr'" name="musical-notes"></ion-icon>
+                  <ion-icon class="attachment-icon" *ngIf="attachment.type=='mp3'" name="musical-notes"></ion-icon>
+                  <ion-icon class="attachment-icon" *ngIf="attachment.type=='wav'" name="musical-notes"></ion-icon>
+                </div>
               </ion-item>
             </ion-list>
 
             <!-- RÜCKMELDUNG -->
             <ion-item *ngIf="assignment.open" text-wrap>
-              <h2>Rückmeldung</h2>
               <p>{{assignment.responseType}}</p>
               <p *ngIf="assignment.responseInstructions">{{assignment.responseInstructions}}</p>
             </ion-item>
-
+            <ion-grid>
             <ion-row *ngIf="assignment.open">
               <ion-col text-right>
-                <button ion-button icon-left clear small (click)="openChat(assignment)">
+                <div class="response-background">
+                <ion-icon *ngIf="assignment.responseType=='Keine'"></ion-icon>
+                <ion-icon class="response-icon" *ngIf="assignment.responseType=='Bild'" name="camera"></ion-icon>
+                <ion-icon class="response-icon" *ngIf="assignment.responseType=='Video'" name="videocam"></ion-icon>
+                <ion-icon class="response-icon" *ngIf="assignment.responseType=='Text'" name="text"></ion-icon>
+                <ion-icon class="response-icon" *ngIf="assignment.responseType=='Sprachnachricht'" name="musical-notes"></ion-icon>
+                </div>
+                <ion-col>
+                <button ion-button icon-left small (click)="openChat(assignment)">
                   <ion-icon name="text"></ion-icon>
                   <div>Chat</div>
                 </button>
+                </ion-col>
               </ion-col>
             </ion-row>
+            </ion-grid>
           </div>
         </ion-card>
       </div>
