@@ -18,8 +18,10 @@ export class UserService {
    * @param ref
    * @returns {firebase.Promise<any>}
    */
-  updateActiveUserRef(ref: object) {
+  updateActiveUserRef(ref) {
     let uid = this.authService.getActiveUser().uid;
+
+    ref.updated_at = new Date().valueOf();
 
     return firebase.database().ref(this.nodeName + uid).update(ref);
   }

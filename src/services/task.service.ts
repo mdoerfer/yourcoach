@@ -183,7 +183,10 @@ export class TaskService {
    * @param updateObj
    * @returns {firebase.Promise<any>}
    */
-  updateTaskById(taskId: string, updateObj: object) {
+  updateTaskById(taskId: string, updateObj) {
+    //Set updated_at
+    updateObj.updated_at = new Date().valueOf();
+
     return firebase.database()
       .ref(this.nodeName)
       .child(taskId)

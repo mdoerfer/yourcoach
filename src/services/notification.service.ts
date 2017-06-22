@@ -98,7 +98,9 @@ export class NotificationService {
   /**
    * Update notification
    */
-  updateNotification(nid: string, updateData: object) {
+  updateNotification(nid: string, updateData) {
+    updateData.updated_at = new Date().valueOf();
+
     firebase.database()
       .ref(this.nodeName)
       .child(nid)

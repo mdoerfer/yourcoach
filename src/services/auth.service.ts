@@ -26,6 +26,7 @@ export class AuthService {
 
         //Create database node for user
         firebase.database().ref('/users/' + user.uid).update({
+          aboutMe: "Hey there! I'm using Your Coach",
           name: name,
           email: email,
           deleted: false,
