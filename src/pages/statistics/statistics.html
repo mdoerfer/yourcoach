@@ -1,6 +1,6 @@
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="primary">
     <ion-title class="header-title">Statistiken</ion-title>
   </ion-navbar>
 
@@ -12,12 +12,12 @@
 <ion-list>
 
 <ion-item>
-  <ion-icon name="time" item-left></ion-icon>
+  <ion-icon class="statistics-icon" name="time" item-left></ion-icon>
   Aktiv seit {{activeSince}}.
 </ion-item>
 
   <ion-item>
-    <ion-icon name="checkmark-circle" item-left></ion-icon>
+    <ion-icon class="statistics-icon" name="checkmark-circle" item-left></ion-icon>
     {{doneTasks.length}} erledigte Tasks.
   </ion-item>
 
@@ -25,26 +25,26 @@
     <ion-grid>
       <ion-row>
 
-        <ion-col col-4>
+        <ion-col col-4 class="counter-number">
           <ion-badge color="badgeeasy" class="difficulty">Einfach</ion-badge>
           <br>
-          {{countEasy}}
+          {{countEasy}} x
           <br>
-          {{percentEasy}} %
+         {{percentEasy}} %
         </ion-col>
 
-        <ion-col col-4>
+        <ion-col col-4 class="counter-number">
           <ion-badge color="badgemedium" class="difficulty">Mittel</ion-badge>
           <br>
-          {{countMiddle}}
+          {{countMiddle}} x
           <br>
           {{percentMiddle}} %
         </ion-col>
 
-        <ion-col col-4>
+        <ion-col col-4 class="counter-number">
           <ion-badge color="badgehard" class="difficulty">Schwer</ion-badge>
           <br>
-          {{countHard}}
+          {{countHard}} x
           <br>
           {{percentHard}} %
         </ion-col>
@@ -54,15 +54,18 @@
   </ion-item>
 
   <ion-item>
-    <ion-icon name="star" item-left></ion-icon>
+    <ion-icon class="statistics-icon" name="star" item-left></ion-icon>
     &#216; Bewertung: {{averageRating}} Sterne.
   </ion-item>
 
   <ion-item>
-    <ion-icon name="calendar" item-left></ion-icon>
+    <ion-icon class="statistics-icon" name="calendar" item-left></ion-icon>
    {{doneTasksLastMonth}} erledigte Tasks im letzten Monat.
   </ion-item>
 
 </ion-list>
 
 </ion-content>
+<ion-footer class="footer-element">
+  <img src="assets/images/footer-element.png">
+</ion-footer>

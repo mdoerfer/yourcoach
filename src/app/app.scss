@@ -60,10 +60,10 @@ ion-fab {
 }
 
 .list-header {
-  font-family: Raleway;
-  font-weight: 600;
-  font-style: italic;
-  font-size: 11pt;
+  font-family: Raleway !important;
+  font-weight: 600 !important;
+  font-style: italic !important;
+  font-size: 11pt !important;
 }
 
 .item-header {
@@ -209,4 +209,20 @@ ion-fab {
 
 .response-icon {
   color: white !important;
+  font-size: 2.2em !important;
+  padding: 5px !important;
+
+}
+
+.chatText{
+  font-weight: bold !important;
+  font-size: 14pt !important;
+}
+
+.chatIcon{
+  font-size: 27px !important;
+}
+
+.chatButton{
+  height: 30px !important;
 }
