@@ -16,7 +16,7 @@ import {UserService} from "../../services/user.service";
   selector: 'page-task-chat',
   templateUrl: 'task-chat.html',
 })
-export class TaskChatPage implements OnInit  {
+export class TaskChatPage implements OnInit {
   @ViewChild(Content) content: Content;
   task: any;
   chatForm: FormGroup;
@@ -38,58 +38,48 @@ export class TaskChatPage implements OnInit  {
 
     this.initializeForm();
     this.updateTaskMsgs();
-
-    //this.initializeMsgs();
-
   }
 
   /**
    * Scroll to bottom when loaded
    */
   ionViewDidEnter() {
-    if(this.content._scroll) this.content.scrollToBottom(0);
+    this.scrollToBottom();
   }
 
-  /*initializeMsgs(){
-    let chat = [];
-
-    //Add tasks to matching arrays, depending on their state
-    for(let t in this.task.chat) {
-      let msg = chat[t];
-
-      chat.push(msg);
-    }
-
-    console.log(chat);
-    console.log(this.task.msg);
-  }*/
+  scrollToBottom() {
+    if (this.content._scroll) this.content.scrollToBottom(0);
+  }
 
   /**
    * Read task messages on initial load
    * and add listener for changes
    */
-  updateTaskMsgs(){
-    let nodeName: string = '/tasks/'+this.task._id+ '/chat/';
+  updateTaskMsgs() {
+    let nodeName: string = '/tasks/' + this.task._id + '/chat/';
 
     let query = firebase.database()
       .ref(nodeName);
 
-      query.on('value', snapshot => {
+    query.on('value', snapshot => {
       let dbChat = snapshot.val();
       let chat = [];
 
       //Add tasks to matching arrays, depending on their state
-        for(let msgId in dbChat) {
-          let msg = dbChat[msgId];
+      for (let msgId in dbChat) {
+        let msg = dbChat[msgId];
 
-          chat.push(msg);
-        }
+        msg._class = (msg.from === this.uid) ? 'me' : 'other';
+
+        console.log(msg);
+
+        chat.push(msg);
+      }
 
       //Update state
       this.taskMsgs = chat;
-      //Scroll to bottom
-        if(this.content._scroll) this.content.scrollToBottom(0);
-    })
+      this.scrollToBottom();
+    });
   }
 
   /**
@@ -112,10 +102,9 @@ export class TaskChatPage implements OnInit  {
    * Submit chat message
    */
   submitForm() {
-      this.taskService.sendTaskChatMessage(this.task, this.chatForm.get('msg').value);
-      this.chatForm.reset()
+    this.taskService.sendTaskChatMessage(this.task, this.chatForm.get('msg').value);
+    this.chatForm.reset()
   }
-
 
 
 }

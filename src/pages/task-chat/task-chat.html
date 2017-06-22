@@ -7,10 +7,15 @@
 </ion-header>
 
 <ion-content padding class="page-task-chat" id="page-task-chat">
-  <div class="messages">
-    <div class="message" *ngFor="let msg of taskMsgs; let i = index" [ngClass]="{'me': uid === msg.from}">
-    <span *ngIf="task.chat">{{msg.msg}}</span>
+  <div class="no-messages" *ngIf="taskMsgs.length === 0">
+    Es gibt noch keine Nachrichten
   </div>
+  <div class="messages" *ngIf="taskMsgs.length > 0">
+    <div class="chat-row" *ngFor="let msg of taskMsgs; let i = index" >
+      <div class="message" [ngClass]="msg._class">
+        <span>{{msg.msg}}</span>
+      </div>
+    </div>
   </div>
 </ion-content>
 

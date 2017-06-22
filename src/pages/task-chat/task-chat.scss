@@ -1,6 +1,17 @@
 .page-task-chat {
   .messages {
     width: 100%;
+    .chat-row {
+      display: block;
+
+      &:before,
+      &:after {
+        display: table;
+        content: "";
+        clear: both;
+      }
+    }
+
     .message {
       max-width: 70%;
       display: block;
@@ -11,7 +22,6 @@
       border-radius: 5px;
       margin: 5px;
       float: left;
-
     }
     .message.me {
       float: right;
