@@ -105,7 +105,7 @@
       <div *ngIf="gradeAssignments.length == 0"><img class="no-task" src="assets/images/notask.png"></div>
 
       <div *ngIf="gradeAssignments.length > 0">
-        <ion-card *ngFor="let assignment of gradeAssignments; let i = index;" (press)="openActionSheet(assignment._id)">
+        <ion-card *ngFor="let assignment of gradeAssignments; let i = index;" (press)="openActionSheet(assignment._id)" class="task-card">
           <div>
             <ion-item (tap)="toggle(assignment)">
               <ion-grid>
@@ -133,8 +133,14 @@
               </ion-grid>
             </ion-item>
 
+            <ion-row>
+              <ion-col text-left class="rating-col">
+                <rating class="rating" [(ngModel)]="assignment.rating" readOnly="true" max="3"></rating>
+              </ion-col>
+            </ion-row>
+
             <!-- RÜCKMELDUNG-->
-            <ion-list class="icons-wrapper" *ngIf="assignment.responseType!=='Keine'">
+            <ion-list class="icons-wrapper" *ngIf="assignment.open && assignment.responseType!=='Keine'"  >
               <ion-item class="icon-wrapper">
                 <div  (click)="watchResponse(response)" class="icon-background">
                   <ion-icon class="attachment-icon" *ngIf="assignment.responseType=='Bild'" name="camera"></ion-icon>
