@@ -37,6 +37,36 @@ export class TaskService {
   }
 
   /**
+   * Get amount of gradeable assignments
+   *
+   * @param sid
+   * @returns {Promise<T>}
+   */
+  getGradeableAssignments(sid: string) {
+    return new Promise((resolve, reject) => {
+      let uid = this.authService.getActiveUser().uid;
+      let counter = 0;
+
+      firebase.database().ref(this.nodeName + '/').orderByChild('from').equalTo(uid)
+        .once('value', snapshot => {
+
+        }).then(snapshot => {
+        let dbAssignments = snapshot.val();
+
+        for(let assignmentId in dbAssignments) {
+          if (dbAssignments[assignmentId].state === 'grade' && dbAssignments[assignmentId].to === sid) {
+            counter++;
+          }
+        }
+
+        resolve(counter);
+      }, error => {
+        reject(error);
+      });
+    });
+  }
+
+  /**
    * Get all drafts that were created by me
    *
    * @returns {any[]}
@@ -83,8 +113,8 @@ export class TaskService {
       }
 
       //Send gradeable assignments reminder
-      if(!this.assignmentReminderSent) {
-        if(mustBeReminded) {
+      if (!this.assignmentReminderSent) {
+        if (mustBeReminded) {
           //Send notification
           this.notificationService.createNotification(new Notification()
             .setType('assignment:reminder')
@@ -111,6 +141,36 @@ export class TaskService {
   getTasks(cid: string) {
     return this.tasks.filter((task) => {
       return task.from === cid;
+    });
+  }
+
+  /**
+   * Get amount of open tasks
+   *
+   * @param cid
+   * @returns {Promise<T>}
+   */
+  getOpenTasks(cid: string) {
+    return new Promise((resolve, reject) => {
+      let uid = this.authService.getActiveUser().uid;
+      let counter = 0;
+
+      firebase.database().ref(this.nodeName + '/').orderByChild('from').equalTo(cid)
+        .once('value', snapshot => {
+
+        }).then(snapshot => {
+        let dbTasks = snapshot.val();
+
+        for(let taskId in dbTasks) {
+          if (dbTasks[taskId].state === 'open' && dbTasks[taskId].to === uid) {
+            counter++;
+          }
+        }
+
+        resolve(counter);
+      }, error => {
+          reject(error);
+      });
     });
   }
 
@@ -150,8 +210,8 @@ export class TaskService {
       }
 
       //Send open tasks reminder
-      if(!this.taskReminderSent) {
-        if(mustBeReminded) {
+      if (!this.taskReminderSent) {
+        if (mustBeReminded) {
           //Send notification
           this.notificationService.createNotification(new Notification()
             .setType('task:reminder')

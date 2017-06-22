@@ -3,6 +3,7 @@ import {Injectable} from "@angular/core";
 import {AuthService} from "./auth.service";
 import {Events} from "ionic-angular";
 import {UserService} from "./user.service";
+import {TaskService} from "./task.service";
 
 @Injectable()
 export class CoachService {
@@ -12,6 +13,7 @@ export class CoachService {
 
   constructor(private authService: AuthService,
               private userService: UserService,
+              private taskService: TaskService,
               private events: Events) {
     this.observeCoaches();
   }

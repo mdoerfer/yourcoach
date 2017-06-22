@@ -42,9 +42,7 @@
       </ion-avatar>
       <h2 class="item-header">{{student.name}}</h2>
       <p class="item-subheader">{{student.aboutMe}}</p>
-      <p class="claim">0 zu bewertende Tasks</p>
-      <!--p>2 Tasks offen</p> TODO: Tasks and Badgeds
-      <ion-badge color="light" item-right>2</ion-badge-->
+      <p class="claim">{{student?.gradeableAssignments}} zu bewertende Tasks</p>
     </ion-item>
   </ion-list>
 

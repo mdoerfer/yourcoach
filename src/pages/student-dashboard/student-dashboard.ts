@@ -50,7 +50,6 @@ export class StudentDashboardPage implements OnInit {
     this.loadCoaches();
     this.subscribeCoaches();
 
-
     this.subscribeTasks();
 
     this.loadUnreadNotifications();
@@ -64,6 +63,8 @@ export class StudentDashboardPage implements OnInit {
    */
   private loadCoaches() {
     this.coaches = this.coachService.getCoaches();
+
+    this.countOpenTaskAmount();
   }
 
   /**
@@ -71,19 +72,27 @@ export class StudentDashboardPage implements OnInit {
    */
   private subscribeCoaches() {
     //Listen for changes
-    this.events.subscribe('coaches:changed', coaches => {
-      this.coaches = coaches;
-      this.loadOpenTasksStudents();
+    this.events.subscribe('coaches:changed', () => {
+      this.loadCoaches();
     })
   }
 
-  /**
-   * Subscribe to tasks and listen for changes
-   */
   private subscribeTasks() {
+    //Listen for task changes
     this.events.subscribe('tasks:tasks-changed', () => {
-      this.loadOpenTasksStudents();
-    });
+      this.countOpenTaskAmount();
+    })
+  }
+
+  private countOpenTaskAmount() {
+    for(let i = 0; i < this.coaches.length; i++) {
+      this.taskService.getOpenTasks(this.coaches[i]._id)
+        .then(amount => {
+          this.coaches[i].openTasks = amount;
+        }, error => {
+          console.error(error.message);
+        });
+    }
   }
 
   /**
@@ -274,24 +283,6 @@ export class StudentDashboardPage implements OnInit {
       this.coaches = this.coaches.filter((coach) => {
         return coach.name.toLowerCase().indexOf(this.searchQuery.toLowerCase()) > -1;
       });
-    }
-  }
-
-  /**
-   * Counts open tasks for every coach
-   */
-  loadOpenTasksStudents() {
-    let countOpenTasks = 0;
-
-    for (let i = 0; i < this.coaches.length; i++) {
-
-      //countOpenTasks = 0;
-      let coachId = this.coaches[i]._id;
-      this.tasks = this.taskService.getTasks(coachId);
-      let openTasks = this.getTasksByState('open');
-      countOpenTasks = openTasks.length;
-
-      this.coaches[i].openTasks = countOpenTasks;
     }
   }
 

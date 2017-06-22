@@ -12,6 +12,7 @@ import {Notification} from "../../models/notification.model";
 import {NotificationPage} from "../notification/notification";
 import {TaskTemplatesPage} from "../task-templates/task-templates";
 import {SettingsPage} from "../settings/settings";
+import {TaskService} from "../../services/task.service";
 
 @IonicPage()
 @Component({
@@ -29,6 +30,7 @@ export class CoachDashboardPage implements OnInit {
               private studentService: StudentService,
               private inviteService: InviteService,
               private navCtrl: NavController,
+              private taskService: TaskService,
               private actionSheetCtrl: ActionSheetController,
               private events: Events,
               private notificationService: NotificationService) {
@@ -41,6 +43,8 @@ export class CoachDashboardPage implements OnInit {
     this.loadStudents();
     this.subscribeStudents();
 
+    this.subscribeAssignments();
+
     this.loadUnreadNotifications();
     this.subscribeUnreadNotifications();
   }
@@ -50,6 +54,8 @@ export class CoachDashboardPage implements OnInit {
    */
   private loadStudents() {
     this.students = this.studentService.getStudents();
+
+    this.countGradeableAssignments();
   }
 
   /**
@@ -57,9 +63,27 @@ export class CoachDashboardPage implements OnInit {
    */
   private subscribeStudents() {
     //Listen for changes
-    this.events.subscribe('students:changed', students => {
-      this.students = students;
+    this.events.subscribe('students:changed', () => {
+      this.loadStudents();
     })
+  }
+
+  private subscribeAssignments() {
+    //Listen for task changes
+    this.events.subscribe('tasks:assignments-changed', () => {
+      this.countGradeableAssignments();
+    })
+  }
+
+  private countGradeableAssignments() {
+    for(let i = 0; i < this.students.length; i++) {
+      this.taskService.getGradeableAssignments(this.students[i]._id)
+        .then(amount => {
+          this.students[i].gradeableAssignments = amount;
+        }, error => {
+          console.error(error.message);
+        });
+    }
   }
 
   /**
