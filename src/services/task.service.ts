@@ -75,7 +75,7 @@ export class TaskService {
         }
 
         //Check if an gradeable assignments reminder must be sent
-        if (!this.assignmentReminderSent && assignment.state === 'grade') {
+        if (assignment.state === 'grade') {
           mustBeReminded = true;
         }
 
@@ -83,12 +83,14 @@ export class TaskService {
       }
 
       //Send gradeable assignments reminder
-      if(mustBeReminded && !this.assignmentReminderSent) {
-        //Send notification
-        this.notificationService.createNotification(new Notification()
-          .setType('assignment:reminder')
-          .setDescription('Es gibt was zu tun!')
-          .setTo(uid));
+      if(!this.assignmentReminderSent) {
+        if(mustBeReminded) {
+          //Send notification
+          this.notificationService.createNotification(new Notification()
+            .setType('assignment:reminder')
+            .setDescription('Es gibt was zu tun!')
+            .setTo(uid));
+        }
 
         //Set reminder flag
         this.assignmentReminderSent = true;
@@ -140,7 +142,7 @@ export class TaskService {
         }
 
         //Check if an open tasks reminder must be sent
-        if (!this.taskReminderSent && task.state === 'open') {
+        if (task.state === 'open') {
           mustBeReminded = true;
         }
 
@@ -148,12 +150,14 @@ export class TaskService {
       }
 
       //Send open tasks reminder
-      if(mustBeReminded && !this.taskReminderSent) {
-        //Send notification
-        this.notificationService.createNotification(new Notification()
-          .setType('task:reminder')
-          .setDescription('Es gibt was zu tun!')
-          .setTo(uid));
+      if(!this.taskReminderSent) {
+        if(mustBeReminded) {
+          //Send notification
+          this.notificationService.createNotification(new Notification()
+            .setType('task:reminder')
+            .setDescription('Es gibt was zu tun!')
+            .setTo(uid));
+        }
 
         //Set reminder flag
         this.taskReminderSent = true;
