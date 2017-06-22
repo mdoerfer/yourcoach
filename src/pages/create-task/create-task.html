@@ -15,30 +15,29 @@
 
   <form [formGroup]="taskForm" (ngSubmit)="submitForm()">
     <ion-list>
-      <ion-item-divider color="light">
+      <ion-item-divider color="backgrey">
         <ion-icon name="clipboard" item-left></ion-icon>
         Allgemeines
       </ion-item-divider>
 
       <ion-item>
-        <ion-label fixed>Titel</ion-label>
         <ion-input
           type="text"
           block
-          formControlName="title">
+          formControlName="title" placeholder="Titel">
         </ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label fixed>Beschreibung</ion-label>
         <ion-input
           type="text"
           block
-          formControlName="description">
+          formControlName="description"
+        placeholder="Beschreibung">
         </ion-input>
       </ion-item>
 
-      <ion-item-divider color="light">
+      <ion-item-divider color="backgrey">
         <ion-icon name="attach" item-left></ion-icon>
         Anhänge
       </ion-item-divider>
@@ -57,14 +56,14 @@
         </ion-item>
 
         <!-- ADD ATTACHMENT -->
-        <ion-item>
-          <ion-icon name="add" (click)="addAttachment()" item-left></ion-icon>
-          Anhang hinzufügen
+        <ion-item (click)="addAttachment()">
+          <p><ion-icon name="add" item-left></ion-icon>
+          Anhang hinzufügen</p>
         </ion-item>
       </ion-list>
 
-      <ion-item-divider color="light" *ngIf="response !== null">
-        <ion-icon name="attach" item-left></ion-icon>
+      <ion-item-divider color="backgrey" *ngIf="response !== null">
+        <ion-icon name="albums" item-left></ion-icon>
         Vorhandene Rückmeldung
       </ion-item-divider>
 
@@ -90,13 +89,13 @@
         </p>
       </ion-item>
 
-      <ion-item-divider color="light">
+      <ion-item-divider color="backgrey">
         <ion-icon name="cog" item-left></ion-icon>
         Einstellungen
       </ion-item-divider>
 
       <ion-item>
-        <ion-label fixed>Schwierigkeit</ion-label>
+        <ion-label>Schwierigkeit</ion-label>
         <ion-select formControlName="difficulty">
           <ion-option
             *ngFor="let difficulty of difficulties"
@@ -106,7 +105,7 @@
       </ion-item>
 
       <ion-item>
-        <ion-label fixed>Rückmeldung</ion-label>
+        <ion-label>Rückmeldung</ion-label>
         <ion-select formControlName="responseType">
           <ion-option
             *ngFor="let response of responses"
@@ -116,16 +115,16 @@
       </ion-item>
 
       <ion-item *ngIf="taskForm.get('responseType').value != 'Keine'">
-        <ion-label stacked>Was soll der Schüler rückmelden?</ion-label>
         <ion-textarea
           block
-          formControlName="responseInstructions">
+          formControlName="responseInstructions"
+        placeholder="Was soll der Schüler rückmelden?">
         </ion-textarea>
       </ion-item>
 
       <div *ngIf="mode === 'edit'">
         <ion-item>
-          <ion-label fixed>Status</ion-label>
+          <ion-label>Status</ion-label>
           <ion-select formControlName="state">
             <ion-option
               *ngFor="let state of states"
@@ -140,7 +139,7 @@
     </ion-list>
 
     <button
-      ion-button
+      ion-button full color="dark"
       type="submit"
       block
       [disabled]="!taskForm.valid">
