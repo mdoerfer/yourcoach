@@ -35,8 +35,6 @@ export class StudentDashboardPage implements OnInit {
               private actionSheetCtrl: ActionSheetController,
               public alertCtrl: AlertController,
               private events: Events,
-              private userService: UserService,
-              private taskService: TaskService,
               private notificationService: NotificationService) {
   }
 
@@ -50,23 +48,16 @@ export class StudentDashboardPage implements OnInit {
     this.loadCoaches();
     this.subscribeCoaches();
 
-    this.subscribeTasks();
-
     this.loadUnreadNotifications();
     this.subscribeUnreadNotifications();
-
   }
 
 
   /**
    * Load initial coaches from service
    */
-  private loadCoaches(loadFromService = true) {
-    if (loadFromService) {
-      this.coaches = this.coachService.getCoaches();
-    }
-
-    this.countOpenTaskAmount();
+  private loadCoaches() {
+    this.coaches = this.coachService.getCoaches();
   }
 
   /**
@@ -76,29 +67,7 @@ export class StudentDashboardPage implements OnInit {
     //Listen for changes
     this.events.subscribe('coaches:changed', coaches => {
       this.coaches = coaches;
-
-      this.loadCoaches(false);
     })
-  }
-
-  private subscribeTasks() {
-    //Listen for task changes
-    this.events.subscribe('tasks:tasks-changed', () => {
-      this.countOpenTaskAmount();
-    })
-  }
-
-  private countOpenTaskAmount() {
-    for (let i = 0; i < this.coaches.length; i++) {
-      this.taskService.getOpenTasks(this.coaches[i]._id)
-        .then(amount => {
-          if(!this.searchIsActive) {
-            this.coaches[i].openTasks = amount;
-          }
-        }, error => {
-          console.error(error.message);
-        });
-    }
   }
 
   /**
@@ -107,7 +76,6 @@ export class StudentDashboardPage implements OnInit {
   private loadInvites() {
     this.pendingInvites = this.inviteService.getInvites();
   }
-
 
   /**
    * Subscribe to invites and listen for changes

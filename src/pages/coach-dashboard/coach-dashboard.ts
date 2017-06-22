@@ -30,7 +30,6 @@ export class CoachDashboardPage implements OnInit {
               private studentService: StudentService,
               private inviteService: InviteService,
               private navCtrl: NavController,
-              private taskService: TaskService,
               private actionSheetCtrl: ActionSheetController,
               private events: Events,
               private notificationService: NotificationService) {
@@ -43,8 +42,6 @@ export class CoachDashboardPage implements OnInit {
     this.loadStudents();
     this.subscribeStudents();
 
-    this.subscribeAssignments();
-
     this.loadUnreadNotifications();
     this.subscribeUnreadNotifications();
   }
@@ -52,15 +49,8 @@ export class CoachDashboardPage implements OnInit {
   /**
    * Load initial students from service
    */
-  private loadStudents(loadFromService = true) {
-    if (loadFromService) {
-      this.students = this.studentService.getStudents();
-      console.log('Loading students from service');
-    }
-
-    console.log(this.students);
-
-    this.countGradeableAssignments();
+  private loadStudents() {
+    this.students = this.studentService.getStudents();
   }
 
   /**
@@ -70,32 +60,7 @@ export class CoachDashboardPage implements OnInit {
     //Listen for changes
     this.events.subscribe('students:changed', students => {
       this.students = students;
-
-      this.loadStudents(false);
     });
-  }
-
-  private subscribeAssignments() {
-    //Listen for task changes
-    this.events.subscribe('tasks:assignments-changed', () => {
-      this.countGradeableAssignments();
-    })
-  }
-
-  private countGradeableAssignments() {
-    console.log('Counting gradeable assignments');
-    console.log(this.students);
-    for (let i = 0; i < this.students.length; i++) {
-      this.taskService.getGradeableAssignments(this.students[i]._id)
-        .then(amount => {
-          console.log(amount);
-          if(!this.searchIsActive) {
-            this.students[i].gradeableAssignments = amount;
-          }
-        }, error => {
-          console.error(error.message);
-        });
-    }
   }
 
   /**
