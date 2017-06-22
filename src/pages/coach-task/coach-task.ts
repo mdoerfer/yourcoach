@@ -67,8 +67,10 @@ export class CoachTaskPage implements OnInit {
   /**
    * Load initial tasks
    */
-  private loadAssignments() {
-    this.assignments = this.taskService.getAssignments(this.sid);
+  private loadAssignments(loadFromService = true) {
+    if(loadFromService) {
+      this.assignments = this.taskService.getAssignments(this.sid);
+    }
 
     this.openAssignments = this.getAssignmentsByState('open');
     this.gradeAssignments = this.getAssignmentsByState('grade');
@@ -81,6 +83,8 @@ export class CoachTaskPage implements OnInit {
   private subscribeAssignments() {
     this.events.subscribe('tasks:assignments-changed', assignments => {
       this.assignments = assignments;
+
+      this.loadAssignments(false);
     });
   }
 

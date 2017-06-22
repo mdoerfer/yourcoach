@@ -72,8 +72,10 @@ export class StudentTaskPage implements OnInit {
   /**
    * Load initial tasks
    */
-  private loadTasks() {
-    this.tasks = this.taskService.getTasks(this.cid);
+  private loadTasks(loadFromService = true) {
+    if(loadFromService) {
+      this.tasks = this.taskService.getTasks(this.cid);
+    }
 
     this.openTasks = this.getTasksByState('open');
     this.gradeTasks = this.getTasksByState('grade');
@@ -86,6 +88,8 @@ export class StudentTaskPage implements OnInit {
   private subscribeTasks() {
     this.events.subscribe('tasks:tasks-changed', tasks => {
       this.tasks = tasks;
+
+      this.loadTasks(false);
     });
   }
 
