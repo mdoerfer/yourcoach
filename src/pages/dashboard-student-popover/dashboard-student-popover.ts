@@ -1,28 +1,21 @@
 import {Component} from '@angular/core';
-import {NavController, ViewController} from "ionic-angular";
-import {AuthService} from "../../services/auth.service";
-import {RoleChoicePage} from "../role-choice/role-choice";
-import {NotificationPage} from "../notification/notification";
-import {SettingsPage} from "../settings/settings";
-import {TaskTemplatesPage} from "../task-templates/task-templates";
+import {ViewController} from "ionic-angular";
 
 @Component({
   selector: 'page-dashboard-popover',
   templateUrl: 'dashboard-student-popover.html',
 })
 export class DashboardStudentPopoverPage {
-  constructor(public viewCtrl: ViewController,
-              private authService: AuthService,
-              private navCtrl: NavController) {
+  constructor(public viewCtrl: ViewController) {
   }
-
 
   goToSettings() {
-    this.navCtrl.push(SettingsPage);
-    this.close();
+    this.dismissWithData({
+      page: 'settings'
+    });
   }
 
-  private close() {
-    this.viewCtrl.dismiss();
+  private dismissWithData(data) {
+    this.viewCtrl.dismiss(data);
   }
 }

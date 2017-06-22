@@ -34,8 +34,4 @@ export class TaskPopoverPage {
   private dismissWithData(data) {
     this.viewCtrl.dismiss(data);
   }
-
-  private close() {
-    this.viewCtrl.dismiss();
-  }
 }

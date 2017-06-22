@@ -4,13 +4,14 @@ import {
   Events
 } from 'ionic-angular';
 import {DashboardPopoverPage} from "../dashboard-popover/dashboard-popover";
-import {UserService} from "../../services/user.service";
 import {CoachTaskPage} from "../coach-task/coach-task";
 import {StudentService} from "../../services/student.service";
 import {InviteService} from "../../services/invite.service";
 import {NotificationService} from "../../services/notification.service";
 import {Notification} from "../../models/notification.model";
 import {NotificationPage} from "../notification/notification";
+import {TaskTemplatesPage} from "../task-templates/task-templates";
+import {SettingsPage} from "../settings/settings";
 
 @IonicPage()
 @Component({
@@ -25,7 +26,6 @@ export class CoachDashboardPage implements OnInit {
 
   constructor(private popoverCtrl: PopoverController,
               private alertCtrl: AlertController,
-              private userService: UserService,
               private studentService: StudentService,
               private inviteService: InviteService,
               private navCtrl: NavController,
@@ -84,7 +84,7 @@ export class CoachDashboardPage implements OnInit {
    * @param i
    */
   goToTasks(i: number) {
-    if(this.searchIsActive) return;
+    if (this.searchIsActive) return;
 
     let sid = this.students[i]._id;
 
@@ -106,7 +106,7 @@ export class CoachDashboardPage implements OnInit {
    * @param i [The index of the student in the students array]
    */
   openActionSheet(i: number) {
-    if(this.searchIsActive) return;
+    if (this.searchIsActive) return;
 
     let pid = this.students[i].pairingId;
 
@@ -159,7 +159,7 @@ export class CoachDashboardPage implements OnInit {
    * Show student invite prompt
    */
   showPrompt() {
-    if(this.searchIsActive) return;
+    if (this.searchIsActive) return;
 
     let prompt = this.alertCtrl.create({
       title: 'Student einladen',
@@ -200,13 +200,24 @@ export class CoachDashboardPage implements OnInit {
     popover.present({
       ev: myEvent
     });
+
+    popover.onDidDismiss(data => {
+      if (data) {
+        if (data.page === 'task-templates') {
+          this.navCtrl.push(TaskTemplatesPage);
+        }
+        else if (data.page === 'settings') {
+          this.navCtrl.push(SettingsPage);
+        }
+      }
+    });
   }
 
   /**
    * Toggle search
    */
   toggleSearch() {
-    if(this.searchIsActive) {
+    if (this.searchIsActive) {
       this.searchIsActive = false;
       this.loadStudents();
     }
@@ -219,7 +230,7 @@ export class CoachDashboardPage implements OnInit {
    * Close search if it is active
    */
   checkSearch() {
-    if(this.searchIsActive) {
+    if (this.searchIsActive) {
       this.toggleSearch();
     }
   }

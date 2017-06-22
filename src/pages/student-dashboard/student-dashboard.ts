@@ -10,6 +10,7 @@ import {NotificationPage} from "../notification/notification";
 import {DashboardStudentPopoverPage} from "../dashboard-student-popover/dashboard-student-popover";
 import {UserService} from "../../services/user.service";
 import {TaskService} from "../../services/task.service";
+import {SettingsPage} from "../settings/settings";
 
 
 @IonicPage()
@@ -230,6 +231,14 @@ export class StudentDashboardPage implements OnInit {
     let popover = this.popoverCtrl.create(DashboardStudentPopoverPage);
     popover.present({
       ev: myEvent
+    });
+
+    popover.onDidDismiss(data => {
+      if (data) {
+        if (data.page === 'settings') {
+          this.navCtrl.push(SettingsPage);
+        }
+      }
     });
   }
 
