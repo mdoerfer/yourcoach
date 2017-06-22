@@ -83,7 +83,7 @@ export class TaskService {
       }
 
       //Send gradeable assignments reminder
-      if(mustBeReminded) {
+      if(mustBeReminded && !this.assignmentReminderSent) {
         //Send notification
         this.notificationService.createNotification(new Notification()
           .setType('assignment:reminder')
@@ -148,7 +148,7 @@ export class TaskService {
       }
 
       //Send open tasks reminder
-      if(mustBeReminded) {
+      if(mustBeReminded && !this.taskReminderSent) {
         //Send notification
         this.notificationService.createNotification(new Notification()
           .setType('task:reminder')
