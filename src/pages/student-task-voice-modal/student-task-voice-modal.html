@@ -13,7 +13,7 @@
   <ion-item>
     <div *ngIf="response !== null">
       <audio controls>
-        <source [src]="response.url">
+        <source src="{{response?.url}}">
       </audio>
       <button
         ion-button

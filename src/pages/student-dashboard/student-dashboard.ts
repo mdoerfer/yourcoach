@@ -61,8 +61,10 @@ export class StudentDashboardPage implements OnInit {
   /**
    * Load initial coaches from service
    */
-  private loadCoaches() {
-    this.coaches = this.coachService.getCoaches();
+  private loadCoaches(loadFromService = true) {
+    if (loadFromService) {
+      this.coaches = this.coachService.getCoaches();
+    }
 
     this.countOpenTaskAmount();
   }
@@ -74,6 +76,8 @@ export class StudentDashboardPage implements OnInit {
     //Listen for changes
     this.events.subscribe('coaches:changed', coaches => {
       this.coaches = coaches;
+
+      this.loadCoaches(false);
     })
   }
 
@@ -85,10 +89,12 @@ export class StudentDashboardPage implements OnInit {
   }
 
   private countOpenTaskAmount() {
-    for(let i = 0; i < this.coaches.length; i++) {
+    for (let i = 0; i < this.coaches.length; i++) {
       this.taskService.getOpenTasks(this.coaches[i]._id)
         .then(amount => {
-          this.coaches[i].openTasks = amount;
+          if(!this.searchIsActive) {
+            this.coaches[i].openTasks = amount;
+          }
         }, error => {
           console.error(error.message);
         });

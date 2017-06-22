@@ -13,7 +13,7 @@
 
   <form [formGroup]="profileForm" (ngSubmit)="submitForm()">
     <ion-avatar (click)="changeAvatar()">
-      <img [src]="avatar?.url">
+      <img src="{{avatar?.url}}">
     </ion-avatar>
 
     <ion-item>

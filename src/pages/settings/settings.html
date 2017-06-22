@@ -9,51 +9,54 @@
 <ion-content padding>
   <p *ngIf="user === null" text-center>lädt...</p>
   <ion-list *ngIf="user !== null">
-    <ion-list-header>
+    <ion-list-header class="list-header">
       Profil
     </ion-list-header>
     <ion-item (click)="showModalEditProfile()">
       <ion-avatar item-left>
-        <img [src]="user?.avatar.url">
+        <img src="{{user?.avatar.url}}">
       </ion-avatar>
       <h2>{{user?.name}}</h2>
       <h3>{{user?.dateOfBirth}}</h3>
       <p>{{user?.aboutMe}}</p>
     </ion-item>
     <ion-item (click)="goToRoleChoice()">
-      <ion-icon name="repeat" item-left></ion-icon>
+      <ion-icon class="settings-icon" name="repeat" item-left></ion-icon>
       Rolle wechseln
     </ion-item>
     <br>
-    <ion-list-header>
+    <ion-list-header class="list-header">
       Account
     </ion-list-header>
     <ion-item (click)="showFeedbackPrompt()">
-      <ion-icon name="happy" item-left></ion-icon>
+      <ion-icon class="settings-icon" name="happy" item-left></ion-icon>
       Feedback geben
     </ion-item>
     <ion-item (click)="showChangePasswordPrompt()">
-      <ion-icon name="lock" item-left></ion-icon>
+      <ion-icon class="settings-icon" name="lock" item-left></ion-icon>
     Passwort ändern
     </ion-item>
     <ion-item (click)="signOut()">
-      <ion-icon name="log-out" item-left></ion-icon>
+      <ion-icon class="settings-icon" name="log-out" item-left></ion-icon>
       Ausloggen
     </ion-item>
     <ion-item (click)="showDeleteUserConfirm()">
-      <ion-icon name="trash" item-left></ion-icon>
+      <ion-icon class="settings-icon" name="trash" item-left></ion-icon>
       Account löschen
     </ion-item>
   <br>
-  <ion-list-header>
+  <ion-list-header class="list-header">
     Info
   </ion-list-header>
   <ion-item (click)="goToImpressum()">
-    <ion-icon name="information-circle" item-left></ion-icon>
+    <ion-icon class="settings-icon" name="information-circle" item-left></ion-icon>
     Impressum
   </ion-item>
 
   </ion-list>
 </ion-content>
 
+<ion-footer class="footer-element">
+  <img src="assets/images/footer-element.png">
+</ion-footer>
 
