@@ -61,9 +61,11 @@ export class FileService {
                   case 'response':
                     //Add response media reference to task
                     firebase.database().ref('/tasks/' + id + '/response').update(fileData);
+                    break;
                   case 'avatar':
                     //Add avatar media reference to user
                     firebase.database().ref('/users/' + id + '/avatar').update(fileData);
+                    break;
                 }
               });
             })
@@ -108,9 +110,11 @@ export class FileService {
                   case 'response':
                     //Add response media reference to task
                     firebase.database().ref('/tasks/' + id + '/response').update(fileData);
+                    break;
                   case 'avatar':
                     //Add avatar media reference to user
                     firebase.database().ref('/users/' + id + '/avatar').update(fileData);
+                    break;
                 }
               });
             });

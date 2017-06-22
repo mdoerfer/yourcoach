@@ -26,7 +26,7 @@ export class WatchMediaModalPage implements OnInit {
     else if (type === 'mov' || type === 'mp4') {
       this.mediaType = 'Video';
     }
-    else if (type === 'amr' || type === 'mp3') {
+    else if (type === 'amr' || type === 'mp3' || type === 'wav') {
       this.mediaType = 'Sprachnachricht';
     }
     else {
