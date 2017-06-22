@@ -43,10 +43,6 @@
         Anhänge
       </ion-item-divider>
 
-      <ion-item>
-        <ion-icon name="add" (click)="addAttachment()" item-right></ion-icon>
-      </ion-item>
-
       <ion-list>
         <!-- EXISTING ATTACHMENTS -->
         <ion-item *ngFor="let attachment of existingAttachments;let i = index">
@@ -59,7 +55,40 @@
           <p (click)="watchNewAttachment(i)">{{attachment.name}}</p>
           <ion-icon name="trash" item-right (click)="deleteNewAttachment(i)"></ion-icon>
         </ion-item>
+
+        <!-- ADD ATTACHMENT -->
+        <ion-item>
+          <ion-icon name="add" (click)="addAttachment()" item-left></ion-icon>
+          Anhang hinzufügen
+        </ion-item>
       </ion-list>
+
+      <ion-item-divider color="light" *ngIf="response !== null">
+        <ion-icon name="attach" item-left></ion-icon>
+        Vorhandene Rückmeldung
+      </ion-item-divider>
+
+      <ion-item *ngIf="response !== null">
+        <!-- TEXT RÜCKMELDUNG -->
+        <p *ngIf="responseType === 'Text'">
+          {{response}}
+        </p>
+
+        <!-- VIDEO RÜCKMELDUNG -->
+        <p *ngIf="responseType === 'Video'" (click)="watchResponse()">
+          {{response.name}}
+        </p>
+
+        <!-- BILD RÜCKMELDUNG -->
+        <p *ngIf="responseType === 'Bild'" (click)="watchResponse()">
+          {{response.name}}
+        </p>
+
+        <!-- SPRACHNACHRICHT RÜCKMELDUNG -->
+        <p *ngIf="responseType === 'Sprachnachricht'" (click)="watchResponse()">
+          {{response.name}}
+        </p>
+      </ion-item>
 
       <ion-item-divider color="light">
         <ion-icon name="cog" item-left></ion-icon>
@@ -87,12 +116,11 @@
       </ion-item>
 
       <ion-item *ngIf="taskForm.get('responseType').value != 'Keine'">
-        <ion-label fixed>Was soll der Schüler rückmelden?</ion-label>
-        <ion-input
-          type="text"
+        <ion-label stacked>Was soll der Schüler rückmelden?</ion-label>
+        <ion-textarea
           block
           formControlName="responseInstructions">
-        </ion-input>
+        </ion-textarea>
       </ion-item>
 
       <div *ngIf="mode === 'edit'">

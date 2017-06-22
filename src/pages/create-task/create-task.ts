@@ -20,8 +20,13 @@ export class CreateTaskPage implements OnInit {
   responses: string[];
   states: object[];
 
+  //Attachments
   existingAttachments = [];
   newAttachments = [];
+
+  //Existing Response
+  responseType: string;
+  response: any = null;
 
   constructor(private platform: Platform,
               private navParams: NavParams,
@@ -112,6 +117,12 @@ export class CreateTaskPage implements OnInit {
           attachment.tid = this.tid;
 
           this.existingAttachments.push(attachment);
+        }
+
+        if(typeof task.response === 'object' || typeof task.response === 'string') {
+          //Add existing response to task
+          this.responseType = task.responseType;
+          this.response = task.response;
         }
       });
     }
@@ -288,6 +299,13 @@ export class CreateTaskPage implements OnInit {
   deleteExistingAttachment(index) {
     this.taskService.deleteAttachment(this.existingAttachments[index]);
     this.existingAttachments.splice(index, 1);
+  }
+
+  /**
+   * Watch response
+   */
+  watchResponse() {
+    console.log(this.response);
   }
 
 
