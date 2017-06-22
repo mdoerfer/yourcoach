@@ -84,8 +84,8 @@ export class StudentTaskPage implements OnInit {
    * Subscribe to tasks and listen for changes
    */
   private subscribeTasks() {
-    this.events.subscribe('tasks:tasks-changed', () => {
-      this.loadTasks();
+    this.events.subscribe('tasks:tasks-changed', tasks => {
+      this.tasks = tasks;
     });
   }
 

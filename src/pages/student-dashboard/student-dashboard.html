@@ -32,21 +32,27 @@
 </ion-header>
 
 <ion-content padding (click)="checkSearch()" class="contetenFooterFix">
-  <p class="noCoaches" padding *ngIf="coaches.length == 0">
-    <img src="assets/images/noCoaches.png">
+  <p *ngIf="coaches === null">
+    lädt...
   </p>
+  <div *ngIf="coaches !== null">
+    <p class="noCoaches" padding *ngIf="coaches.length == 0">
+      <img src="assets/images/noCoaches.png">
+    </p>
 
-  <ion-list *ngIf="coaches.length > 0">
-    <ion-list-header class="list-header">Meine Coaches</ion-list-header>
-    <ion-item *ngFor="let coach of coaches; let i = index" (tap)="goToTasks(i)" (press)="openActionSheet(i)">
-      <ion-avatar item-left>
-        <img class="list-avatar" [src]="coach.avatar.url">
-      </ion-avatar>
-      <h2 class="item-header">{{coach.name}}</h2>
-      <p class="item-subheader">{{coach.aboutMe}}</p>
-      <p class="claim">{{coach?.openTasks}} Tasks offen</p>
-    </ion-item>
-  </ion-list>
+    <ion-list *ngIf="coaches.length > 0">
+      <ion-list-header class="list-header">Meine Coaches</ion-list-header>
+      <ion-item *ngFor="let coach of coaches; let i = index" (tap)="goToTasks(i)" (press)="openActionSheet(i)">
+        <ion-avatar item-left>
+          <img class="list-avatar" [src]="coach.avatar.url">
+        </ion-avatar>
+        <h2 class="item-header">{{coach.name}}</h2>
+        <p class="item-subheader">{{coach.aboutMe}}</p>
+        <p class="claim">{{coach?.openTasks}} Tasks offen</p>
+      </ion-item>
+    </ion-list>
+  </div>
+
   <ion-list-header class="list-header">Anfragen</ion-list-header>
   <p padding *ngIf="pendingInvites.length == 0">
     Es liegen keine Einladungen vor

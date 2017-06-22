@@ -72,8 +72,8 @@ export class StudentDashboardPage implements OnInit {
    */
   private subscribeCoaches() {
     //Listen for changes
-    this.events.subscribe('coaches:changed', () => {
-      this.loadCoaches();
+    this.events.subscribe('coaches:changed', coaches => {
+      this.coaches = coaches;
     })
   }
 

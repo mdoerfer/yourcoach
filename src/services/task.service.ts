@@ -128,7 +128,7 @@ export class TaskService {
 
       //Update state
       this.assignments = assignments;
-      this.events.publish('tasks:assignments-changed');
+      this.events.publish('tasks:assignments-changed', this.assignments);
     })
   }
 
@@ -225,7 +225,7 @@ export class TaskService {
 
       //Update state
       this.tasks = tasks;
-      this.events.publish('tasks:tasks-changed');
+      this.events.publish('tasks:tasks-changed', this.tasks);
     });
   }
 
