@@ -63,9 +63,9 @@ export class CoachDashboardPage implements OnInit {
    */
   private subscribeStudents() {
     //Listen for changes
-    this.events.subscribe('students:changed', () => {
-      this.loadStudents();
-    })
+    this.events.subscribe('students:changed', students => {
+      this.students = students;
+    });
   }
 
   private subscribeAssignments() {

@@ -79,8 +79,8 @@ export class CoachTaskPage implements OnInit {
    * Subscribe to tasks and listen for changes
    */
   private subscribeAssignments() {
-    this.events.subscribe('tasks:assignments-changed', () => {
-      this.loadAssignments();
+    this.events.subscribe('tasks:assignments-changed', assignments => {
+      this.assignments = assignments;
     });
   }
 
