@@ -10,27 +10,37 @@
   <h2>{{task.title}}</h2>
   <p>{{task.responseInstructions}}</p>
 
-  <form [formGroup]="responseForm" (ngSubmit)="submitForm()">
-    <ion-item>
-      <ion-textarea
-        type="text"
-        autofocus
-        rows="8"
+  <ion-item>
+    <div *ngIf="response !== null">
+      <img [src]="response.url">
+      <button
+        ion-button
         block
-        placeholder="Schreibe deine Rückmeldung..."
-        formControlName="response">
-      </ion-textarea>
-    </ion-item>
+        (click)="addResponse()">Bild ändern
+      </button>
+      <button
+        ion-button
+        block
+        (click)="removeResponse()">Bild entfernen
+      </button>
+    </div>
 
-    <button
-      ion-button
-      type="submit"
-      block
-      [disabled]="!responseForm.valid">
-      <span>Rückmelden</span>
-    </button>
+    <div *ngIf="response === null">
+      <button
+        ion-button
+        block
+        (click)="addResponse()">Bild hochladen
+      </button>
+    </div>
+  </ion-item>
 
-  </form>
+  <button
+    ion-button
+    block
+    [disabled]="response === null"
+    (click)="submitResponse()">
+    <span>Rückmelden</span>
+  </button>
 
   <button color="danger" (click)="dismissModal()"
           ion-button

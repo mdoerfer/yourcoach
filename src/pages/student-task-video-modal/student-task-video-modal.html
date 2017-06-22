@@ -12,7 +12,9 @@
 
   <ion-item>
     <div *ngIf="response !== null">
-      <img [src]="response.url">
+      <video controls>
+        <source [src]="response.url">
+      </video>
       <button
         ion-button
         block

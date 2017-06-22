@@ -71,7 +71,7 @@ export class StudentTaskVideoModalPage {
     this.camera.getPicture({
       destinationType: this.camera.DestinationType.FILE_URI,
       sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM,
-      mediaType: this.camera.MediaType.ALLMEDIA
+      mediaType: this.camera.MediaType.VIDEO
     }).then((_filePath) => {
       let path;
 

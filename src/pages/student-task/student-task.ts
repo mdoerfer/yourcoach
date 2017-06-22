@@ -214,16 +214,8 @@ export class StudentTaskPage implements OnInit {
     imageModal.present();
     imageModal.onDidDismiss(data => {
       if (data) {
-        this.taskService.updateTaskById(task._id, {
-          response: data
-        })
-          .then(data => {
-            this.showToast("Rückmeldung wurde versendet.");
-            this.markTaskAsGradeable(task);
-          })
-          .catch(error => {
-            this.showToast(error.message);
-          });
+        this.fileService.uploadFileToStorage(data.url, task._id, 'response');
+        this.markTaskAsGradeable(task);
       }
     });
   }
@@ -238,16 +230,8 @@ export class StudentTaskPage implements OnInit {
     voiceModal.present();
     voiceModal.onDidDismiss(data => {
       if (data) {
-        this.taskService.updateTaskById(task._id, {
-          response: data
-        })
-          .then(data => {
-            this.showToast("Rückmeldung wurde versendet.");
-            this.markTaskAsGradeable(task);
-          })
-          .catch(error => {
-            this.showToast(error.message);
-          });
+        this.fileService.uploadFileToStorage(data.url, task._id, 'response');
+        this.markTaskAsGradeable(task);
       }
     });
   }
