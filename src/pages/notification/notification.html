@@ -10,7 +10,7 @@
 <ion-content padding>
   <div *ngIf="notifications.length == 0"></div>
   <ion-list *ngIf="notifications.length > 0">
-    <ion-item *ngFor="let notification of notifications; let i = index;" (click)="goToTargetPage(notification)" [class.read]="notification.getRead()">
+    <ion-item class="notificationIcon" *ngFor="let notification of notifications; let i = index;" (click)="goToTargetPage(notification)" [class.read]="notification.getRead()">
       <ion-icon [name]="notification.getInfo().icon" item-left></ion-icon>
       <h2>{{ notification.getInfo().title }}</h2>
       <p>
