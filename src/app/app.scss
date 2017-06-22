@@ -89,10 +89,18 @@ ion-fab {
 }
 
 .footer-element{
-  bottom: -4px !important;
+  bottom: -5px !important;
 }
 
 .footer-element:before{
   top: 19px !important;
+}
+
+.contetenFooterFix{
+  padding-bottom: 0px !important;
+}
+
+.contetenFooterFix div{
+  margin-bottom: 0px !important;
 }
 

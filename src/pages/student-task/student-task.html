@@ -24,7 +24,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding class="contetenFooterFix">
   <div [ngSwitch]="activeTab">
     <div *ngSwitchCase="'open'">
       <div *ngIf="openTasks.length == 0">Es gibt keine offenen Aufgaben von diesem Coach</div>

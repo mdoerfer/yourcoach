@@ -24,7 +24,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding class="contetenFooterFix">
   <div [ngSwitch]="activeTab">
     <div *ngSwitchCase="'open'">
       <div *ngIf="openAssignments.length == 0"><img class="no-task" src="assets/images/notask.png">
