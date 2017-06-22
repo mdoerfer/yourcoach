@@ -118,7 +118,8 @@ export class StudentTaskPage implements OnInit {
    *
    * @param attachment
    */
-  watchAttachment(attachment: any) {
+  watchAttachment(mediaType: string, attachment: any) {
+    console.log(mediaType);
     console.log(attachment);
   }
 
@@ -127,7 +128,8 @@ export class StudentTaskPage implements OnInit {
    *
    * @param response
    */
-  watchResponse(response: any) {
+  watchResponse(mediaType: string, response: any) {
+    console.log(mediaType);
     console.log(response);
   }
 

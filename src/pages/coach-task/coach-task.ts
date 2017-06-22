@@ -192,16 +192,18 @@ export class CoachTaskPage implements OnInit {
    *
    * @param attachment
    */
-  watchAttachment(attachment: any) {
+  watchAttachment(mediaType: string, attachment: any) {
+    console.log(mediaType);
     console.log(attachment);
   }
 
   /**
    * Watch response
-   * 
+   *
    * @param response
    */
-  watchResponse(response: any) {
+  watchResponse(mediaType: string, response: any) {
+    console.log(mediaType);
     console.log(response);
   }
 

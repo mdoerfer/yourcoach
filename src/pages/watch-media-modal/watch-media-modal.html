@@ -1,18 +1,24 @@
-<!--
-  Generated template for the WatchMediaModalPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>watch-media-modal-page</ion-title>
+  <ion-navbar color="primary">
+    <ion-title class="header-title">{{media.name}}</ion-title>
   </ion-navbar>
-
 </ion-header>
-
 
 <ion-content padding>
 
+  <video controls *ngIf="mediaType === 'Video'">
+    <source [src]="media.url">
+  </video>
+
+  <img [src]="media.url" *ngIf="mediaType === 'Bild'">
+
+  <audio controls *ngIf="mediaType === 'Sprachnachricht'">
+    <source [src]="response.url">
+  </audio>
+
+  <button color="danger" (click)="dismissModal()"
+          ion-button
+          block>
+    <span>Schließen</span>
+  </button>
 </ion-content>

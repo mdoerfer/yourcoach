@@ -64,7 +64,7 @@
             <ion-list *ngIf="assignment.open && assignment.attachmentsArr.length">
               <ion-item-divider>Anhänge</ion-item-divider>
               <ion-item *ngFor="let attachment of assignment.attachmentsArr;">
-                <p (click)="watchAttachment(attachment)">{{attachment.name}}</p>
+                <p (click)="watchAttachment(assignment.responseType, attachment)">{{attachment.name}}</p>
               </ion-item>
             </ion-list>
 
@@ -127,7 +127,7 @@
             <ion-list *ngIf="assignment.open && assignment.attachmentsArr.length">
               <ion-item-divider>Anhänge</ion-item-divider>
               <ion-item *ngFor="let attachment of assignment.attachmentsArr;">
-                <p (click)="watchAttachment(attachment)">{{attachment.name}}</p>
+                <p (click)="watchAttachment(assignment.responseType, attachment)">{{attachment.name}}</p>
               </ion-item>
             </ion-list>
 
@@ -143,17 +143,17 @@
               </p>
 
               <!-- VIDEO RÜCKMELDUNG -->
-              <p *ngIf="assignment.responseType === 'Video'" (click)="watchResponse(assignment.response)">
+              <p *ngIf="assignment.responseType === 'Video'" (click)="watchResponse(assignment.responseType, assignment.response)">
                 {{assignment.response.name}}
               </p>
 
               <!-- BILD RÜCKMELDUNG -->
-              <p *ngIf="assignment.responseType === 'Bild'" (click)="watchResponse(assignment.response)">
+              <p *ngIf="assignment.responseType === 'Bild'" (click)="watchResponse(assignment.responseType, assignment.response)">
                 {{assignment.response.name}}
               </p>
 
               <!-- SPRACHNACHRICHT RÜCKMELDUNG -->
-              <p *ngIf="assignment.responseType === 'Sprachnachricht'" (click)="watchResponse(assignment.response)">
+              <p *ngIf="assignment.responseType === 'Sprachnachricht'" (click)="watchResponse(assignment.responseType, assignment.response)">
                 {{assignment.response.name}}
               </p>
             </ion-item>
@@ -214,7 +214,7 @@
             <ion-list *ngIf="assignment.open && assignment.attachmentsArr.length">
               <ion-item-divider>Anhänge</ion-item-divider>
               <ion-item *ngFor="let attachment of assignment.attachmentsArr;">
-                <p (click)="watchAttachment(attachment)">{{attachment.name}}</p>
+                <p (click)="watchAttachment(assignment.responseType, attachment)">{{attachment.name}}</p>
               </ion-item>
             </ion-list>
 
@@ -230,17 +230,17 @@
               </p>
 
               <!-- VIDEO RÜCKMELDUNG -->
-              <p *ngIf="assignment.responseType === 'Video'" (click)="watchResponse(assignment.response)">
+              <p *ngIf="assignment.responseType === 'Video'" (click)="watchResponse(assignment.responseType, assignment.response)">
                 {{assignment.response.name}}
               </p>
 
               <!-- BILD RÜCKMELDUNG -->
-              <p *ngIf="assignment.responseType === 'Bild'" (click)="watchResponse(assignment.response)">
+              <p *ngIf="assignment.responseType === 'Bild'" (click)="watchResponse(assignment.responseType, assignment.response)">
                 {{assignment.response.name}}
               </p>
 
               <!-- SPRACHNACHRICHT RÜCKMELDUNG -->
-              <p *ngIf="assignment.responseType === 'Sprachnachricht'" (click)="watchResponse(assignment.response)">
+              <p *ngIf="assignment.responseType === 'Sprachnachricht'" (click)="watchResponse(assignment.responseType, assignment.response)">
                 {{assignment.response.name}}
               </p>
             </ion-item>
