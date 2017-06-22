@@ -12,7 +12,7 @@
 
   <ion-item>
     <div *ngIf="response !== null">
-      <video controls width="100%">
+      <video class="media-fix" controls>
         <source src="{{response?.url}}">
       </video>
       <button

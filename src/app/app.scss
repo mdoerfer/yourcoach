@@ -266,3 +266,12 @@ ion-fab {
 .rating-done-fix{
   margin-bottom: 10px !important;
 }
+
+.media-fix {
+  max-width: 100%;
+  height: auto;
+  max-height: 100vw;
+  width: auto;
+  margin: 0 auto;
+  display: block;
+}
