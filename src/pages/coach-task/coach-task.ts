@@ -9,6 +9,8 @@ import {TaskService} from "../../services/task.service";
 import {UserService} from "../../services/user.service";
 import {TaskChatPage} from "../task-chat/task-chat";
 import {WatchMediaModalPage} from "../watch-media-modal/watch-media-modal";
+import {StatisticsPage} from "../statistics/statistics";
+import {ProfilePage} from "../profile/profile";
 
 @IonicPage()
 @Component({
@@ -16,7 +18,6 @@ import {WatchMediaModalPage} from "../watch-media-modal/watch-media-modal";
   templateUrl: 'coach-task.html',
 })
 export class CoachTaskPage implements OnInit {
-  createTaskPage = CreateTaskPage;
   activeTab: string = "open";
   sid: string;
   user: object;
@@ -224,6 +225,21 @@ export class CoachTaskPage implements OnInit {
     });
     popover.present({
       ev: myEvent
+    });
+
+    popover.onDidDismiss(data => {
+      if(data) {
+        if(data.page === 'statistic') {
+          this.navCtrl.push(StatisticsPage, {
+            doneTasks: data.doneTasks
+          });
+        }
+        else if(data.page === 'profile') {
+          this.navCtrl.push(ProfilePage, {
+            user: data.user
+          });
+        }
+      }
     });
   }
 

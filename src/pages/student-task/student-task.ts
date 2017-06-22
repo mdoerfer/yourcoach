@@ -13,6 +13,8 @@ import {StudentTaskImageModalPage} from "../student-task-image-modal/student-tas
 import {StudentTaskVoiceModalPage} from "../student-task-voice-modal/student-task-voice-modal";
 import {FileService} from "../../services/file.service";
 import {WatchMediaModalPage} from "../watch-media-modal/watch-media-modal";
+import {StatisticsPage} from "../statistics/statistics";
+import {ProfilePage} from "../profile/profile";
 
 @IonicPage()
 @Component({
@@ -150,6 +152,21 @@ export class StudentTaskPage implements OnInit {
     });
     popover.present({
       ev: myEvent
+    });
+
+    popover.onDidDismiss(data => {
+      if(data) {
+        if(data.page === 'statistic') {
+          this.navCtrl.push(StatisticsPage, {
+            doneTasks: data.doneTasks
+          });
+        }
+        else if(data.page === 'profile') {
+          this.navCtrl.push(ProfilePage, {
+            user: data.user
+          });
+        }
+      }
     });
   }
 
