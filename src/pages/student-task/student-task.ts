@@ -120,9 +120,8 @@ export class StudentTaskPage implements OnInit {
    * @param mediaType
    * @param attachment
    */
-  watchAttachment(mediaType: string, attachment: any) {
+  watchAttachment(attachment: any) {
     this.navCtrl.push(WatchMediaModalPage, {
-      mediaType: mediaType,
       media: attachment
     });
   }
@@ -133,9 +132,8 @@ export class StudentTaskPage implements OnInit {
    * @param mediaType
    * @param response
    */
-  watchResponse(mediaType: string, response: any) {
+  watchResponse(response: any) {
     this.navCtrl.push(WatchMediaModalPage, {
-      mediaType: mediaType,
       media: response
     });
   }

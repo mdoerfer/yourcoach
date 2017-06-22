@@ -272,7 +272,6 @@ export class CreateTaskPage implements OnInit {
    */
   watchNewAttachment(index) {
     this.navCtrl.push(WatchMediaModalPage, {
-      mediaType: this.responseType,
       media: this.newAttachments[index]
     });
   }
@@ -293,7 +292,6 @@ export class CreateTaskPage implements OnInit {
    */
   watchExistingAttachment(index) {
     this.navCtrl.push(WatchMediaModalPage, {
-      mediaType: this.responseType,
       media: this.existingAttachments[index]
     });
   }
@@ -313,7 +311,6 @@ export class CreateTaskPage implements OnInit {
    */
   watchResponse() {
     this.navCtrl.push(WatchMediaModalPage, {
-      mediaType: this.responseType,
       media: this.response
     });
   }
