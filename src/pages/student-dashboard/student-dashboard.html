@@ -32,12 +32,12 @@
 </ion-header>
 
 <ion-content padding (click)="checkSearch()">
-  <ion-list-header class="list-header">Meine Coaches</ion-list-header>
-  <p padding *ngIf="coaches.length == 0">
-    Du hast noch keine Coaches
+  <p class="noCoaches" padding *ngIf="coaches.length == 0">
+    <img src="assets/images/noCoaches.png">
   </p>
 
   <ion-list *ngIf="coaches.length > 0">
+    <ion-list-header class="list-header">Meine Coaches</ion-list-header>
     <ion-item *ngFor="let coach of coaches; let i = index" (tap)="goToTasks(i)" (press)="openActionSheet(i)">
       <ion-avatar item-left>
         <img class="list-avatar" src="assets/images/dummy-avatar.png">
@@ -48,12 +48,12 @@
       <!--   <ion-badge color="light" item-right>{{openTasksStudents[i]}}</ion-badge>    -->
     </ion-item>
   </ion-list>
-  <ion-list-header class="list-header">Anfragen</ion-list-header>
   <p padding *ngIf="pendingInvites.length == 0">
     Es liegen keine Einladungen vor
   </p>
 
   <div *ngIf="pendingInvites.length > 0">
+    <ion-list-header class="list-header">Anfragen</ion-list-header>
     <p *ngFor="let coach of pendingInvites; let i = index">
       <ion-card>
         <ion-item>
