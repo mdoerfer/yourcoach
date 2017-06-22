@@ -246,3 +246,14 @@ ion-fab {
   color: #fdea3d !important;
   border-color: #fdea3d !important;
 }
+
+.popover {
+  padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
+  border-radius: 30px !important;
+
+}
+
+.popover:last-child .item:last-child {
+  border-bottom: none !important;
+}
