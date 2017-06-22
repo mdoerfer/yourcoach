@@ -14,7 +14,7 @@
     </ion-list-header>
     <ion-item (click)="showModalEditProfile()">
       <ion-avatar item-left>
-        <img [src]="user?.avatar.url">
+        <img src="{{user?.avatar.url}}">
       </ion-avatar>
       <h2>{{user?.name}}</h2>
       <h3>{{user?.dateOfBirth}}</h3>

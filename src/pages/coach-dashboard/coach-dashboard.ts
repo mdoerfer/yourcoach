@@ -52,8 +52,10 @@ export class CoachDashboardPage implements OnInit {
   /**
    * Load initial students from service
    */
-  private loadStudents() {
-    this.students = this.studentService.getStudents();
+  private loadStudents(loadFromService = true) {
+    if (loadFromService) {
+      this.students = this.studentService.getStudents();
+    }
 
     this.countGradeableAssignments();
   }
@@ -64,7 +66,7 @@ export class CoachDashboardPage implements OnInit {
   private subscribeStudents() {
     //Listen for changes
     this.events.subscribe('students:changed', students => {
-      this.students = students;
+      this.loadStudents(false);
     });
   }
 
@@ -76,10 +78,12 @@ export class CoachDashboardPage implements OnInit {
   }
 
   private countGradeableAssignments() {
-    for(let i = 0; i < this.students.length; i++) {
+    for (let i = 0; i < this.students.length; i++) {
       this.taskService.getGradeableAssignments(this.students[i]._id)
         .then(amount => {
-          this.students[i].gradeableAssignments = amount;
+          if(!this.searchIsActive) {
+            this.students[i].gradeableAssignments = amount;
+          }
         }, error => {
           console.error(error.message);
         });

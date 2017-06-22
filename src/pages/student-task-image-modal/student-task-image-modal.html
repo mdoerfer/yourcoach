@@ -12,7 +12,7 @@
 
   <ion-item>
     <div *ngIf="response !== null">
-      <img [src]="response.url">
+      <img src="{{response?.url}}">
       <button
         ion-button
         block
