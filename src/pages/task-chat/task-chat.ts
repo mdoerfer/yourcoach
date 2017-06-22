@@ -71,8 +71,6 @@ export class TaskChatPage implements OnInit {
 
         msg._class = (msg.from === this.uid) ? 'me' : 'other';
 
-        console.log(msg);
-
         chat.push(msg);
       }
 
