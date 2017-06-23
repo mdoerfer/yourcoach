@@ -83,7 +83,10 @@
                     <ion-icon class="response-icon" *ngIf="task.responseType=='Video'" name="videocam"></ion-icon>
                     <ion-icon class="response-icon" *ngIf="task.responseType=='Text'" name="paper"></ion-icon>
                     <ion-icon class="response-icon" *ngIf="task.responseType=='Sprachnachricht'" name="musical-notes"></ion-icon>
-                    <div class="chatText">Rückmeldung</div>
+                    <div class="chatText">
+                      <span *ngIf="task.responseType !== 'Keine'">Rückmeldung</span>
+                      <span *ngIf="task.responseType === 'Keine'">Erledigen</span>
+                    </div>
                   </button>
                   <ion-col>
                     <button class="chatButton" ion-button icon-left small (click)="openChat(task)">
