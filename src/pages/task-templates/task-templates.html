@@ -55,6 +55,17 @@
           </ion-item>
         </ion-list>
 
+        <ion-grid>
+          <ion-row *ngIf="task.open">
+            <ion-col text-right>
+              <button class="chatButton" ion-button icon-left small (click)="showModal(i)">
+                <ion-icon class="chatIcon" name="text"></ion-icon>
+                <div class="chatText">Chat</div>
+              </button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
       </div>
     </ion-card>
   </div>
