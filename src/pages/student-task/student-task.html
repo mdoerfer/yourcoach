@@ -27,7 +27,7 @@
 <ion-content padding class="contetenFooterFix">
   <div [ngSwitch]="activeTab">
     <div *ngSwitchCase="'open'">
-      <div *ngIf="openTasks.length == 0"><img class="notasksgradablestudent" src="assets/images/allTasksdone.png"></div>
+      <div *ngIf="openTasks.length == 0"><img class="notasksgradablestudent" src="assets/images/alltasksdone.png"></div>
       <div *ngIf="openTasks.length > 0">
         <ion-card *ngFor="let task of openTasks; let i = index;" (press)="openActionSheet(task._id)" class="task-card">
           <div>
@@ -77,13 +77,13 @@
             <ion-grid>
               <ion-row *ngIf="task.open">
                 <ion-col text-right>
-                  <button  *ngIf="task.responseType!=='Keine'" ion-button icon-left small class="response-background2" (click)="checkIfResponseWanted(task)">
-                    <ion-icon *ngIf="task.responseType=='Keine'"></ion-icon>
+                  <button ion-button icon-left small class="response-background2" (click)="checkIfResponseWanted(task)">
+                    <ion-icon class="response-icon" *ngIf="task.responseType=='Keine'"></ion-icon>
                     <ion-icon class="response-icon" *ngIf="task.responseType=='Bild'" name="camera"></ion-icon>
                     <ion-icon class="response-icon" *ngIf="task.responseType=='Video'" name="videocam"></ion-icon>
                     <ion-icon class="response-icon" *ngIf="task.responseType=='Text'" name="paper"></ion-icon>
                     <ion-icon class="response-icon" *ngIf="task.responseType=='Sprachnachricht'" name="musical-notes"></ion-icon>
-                    <div *ngIf="task.responseType!=='Keine'" class="chatText">Rückmeldung</div>
+                    <div class="chatText">Rückmeldung</div>
                   </button>
                   <ion-col>
                     <button class="chatButton" ion-button icon-left small (click)="openChat(task)">
